@@ -56,6 +56,7 @@ npm run serve        # build + http://localhost:8080
 ```
 src/
   site.json          phone, office, base URL, form endpoint, GTM id, index flag
+  keywords.json      ?kw= allowlist, EN+ES
   cities.json        14 cities + LA default: slug, default language, serve/local lines EN+ES
   strings/en.json    English copy (§6)
   strings/es.json    Spanish master copy (§7). Not a translation. Same keys 1:1.
@@ -81,15 +82,23 @@ qa.js                the checklist, automated
 
 ```json
 { "name", "phone" (10 digits), "phone_display", "lang", "city", "city_slug",
-  "practice": "car", "page", "source" (UTM/gclid/referrer JSON), "submitted_at", "tcpa" }
+  "practice": "car", "page", "source" (UTM/gclid/referrer JSON), "kw", "submitted_at", "tcpa" }
 ```
 
-then redirects to `/thank-you/?lang=<lang>`. When empty (staging) it redirects without posting. On a failed POST it shows the phone number instead of eating the lead. Honeypot field `website`. `dataLayer` events: `lead_submit`, `lead_error`, `phone_click`, `lang_toggle`.
+then redirects to `/thank-you/?lang=<lang>`. When empty (staging) it redirects without posting. On a failed POST it shows the phone number instead of eating the lead. Honeypot field `website`. `dataLayer` events: `lead_submit`, `lead_error`, `phone_click`, `lang_toggle`, each carrying `lang`, `city`, `kw`.
 
-## Assets to drop in
+## Keyword match (`?kw=`)
 
-- `src/assets/logo-white.svg` — the shipped file is a text wordmark placeholder. Replace with the firm's real white logo, same filename.
-- `src/assets/img/kyle-hindin.jpg` — Kyle in the hero. Until it exists the page shows a dark placeholder, never a broken image.
+Page-side dynamic keyword insertion, allowlisted. `?kw=rear-end` (or `utm_term` when it exactly matches a token) swaps only the first sentence of the hero subhead, in whichever language is showing. Tokens live in `src/keywords.json`:
+
+`rear-end`, `uber`, `lyft`, `hit-and-run`, `drunk-driver`, `truck`, `motorcycle`, `pedestrian`, `bicycle`, `freeway`, `intersection`, `passenger`, `whiplash`
+
+Anything not on the list is ignored and the default copy shows. Raw search terms never reach the page. The token is sent with the lead as `kw` and on every `dataLayer` event. Ad ops: put `kw=<token>` in the ad group's final URL suffix.
+
+## Assets
+
+- `src/assets/logo-white.png` — the firm's white logo (1101×180, transparent). Sits on the navy header bar.
+- `src/assets/img/hindin-team.webp` — Robert and Kyle Hindin, cutout on transparent, in the hero.
 
 ## Wave 2
 

@@ -18,6 +18,8 @@ const STR = {
   en: JSON.parse(fs.readFileSync(path.join(SRC, "strings/en.json"), "utf8")),
   es: JSON.parse(fs.readFileSync(path.join(SRC, "strings/es.json"), "utf8")),
 };
+const KW = JSON.parse(fs.readFileSync(path.join(SRC, "keywords.json"), "utf8"));
+delete KW._note;
 const template = fs.readFileSync(path.join(SRC, "template.html"), "utf8");
 const tyTemplate = fs.readFileSync(path.join(SRC, "thankyou.html"), "utf8");
 const YEAR = String(new Date().getFullYear());
@@ -77,7 +79,7 @@ function jsonld(city, s) {
     url: absUrl(cityPath(city)),
     telephone: site.phoneTel,
     priceRange: "Free consultation. No fee unless we recover.",
-    image: absUrl("/assets/logo-white.svg"),
+    image: absUrl("/assets/logo-white.png"),
     address: { "@type": "PostalAddress", streetAddress: site.office.street, addressLocality: site.office.city, addressRegion: site.office.state, postalCode: site.office.zip, addressCountry: "US" },
     areaServed: [{ "@type": "City", name: city.name }, { "@type": "AdministrativeArea", name: "Los Angeles County" }],
     openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "17:00" }],
@@ -110,6 +112,7 @@ function buildCity(city) {
     robots: site.index ? "index, follow" : "noindex, nofollow",
     jsonld: jsonld(city, s),
     i18nJson: jsonForScript(i18n),
+    kwJson: jsonForScript(KW),
     formAction: site.formEndpoint || (prefix + site.thankYouPath),
     thankYouUrl: prefix + site.thankYouPath,
     ismaelHidden: s.ismael ? "" : "hidden",

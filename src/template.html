@@ -29,7 +29,7 @@
 <header class="hdr">
   <div class="wrap hdr__in">
     <a class="logo" href="{{site.pathPrefix}}/" aria-label="Robert Hindin &amp; Associates">
-      <img src="{{site.pathPrefix}}/assets/logo-white.svg" alt="Robert Hindin &amp; Associates" width="220" height="44">
+      <img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180">
     </a>
     <div class="hdr__right">
       <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click">
@@ -48,7 +48,11 @@
     <div class="hero__copy">
       <p class="eyebrow" data-i18n="eyebrow">{{eyebrow}}</p>
       <h1 data-i18n="hero_h1">{{hero_h1}}</h1>
-      <p class="lead" data-i18n="hero_sub">{{hero_sub}}</p>
+      <p class="lead"><span class="kw" data-i18n="hero_kw">{{hero_kw}}</span> <span data-i18n="hero_sub">{{hero_sub}}</span></p>
+      <figure class="hero__photo">
+        <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" data-i18n-attr="alt:hero_img_alt" width="1080" height="1080" loading="eager" fetchpriority="high">
+        <figcaption data-i18n="hero_photo_cap">{{hero_photo_cap}}</figcaption>
+      </figure>
       <ul class="checks">
         <li data-i18n="hero_b1">{{hero_b1}}</li>
         <li data-i18n="hero_b2">{{hero_b2}}</li>
@@ -61,11 +65,9 @@
         <li data-i18n="benefit_2">{{benefit_2}}</li>
         <li data-i18n="benefit_3">{{benefit_3}}</li>
       </ul>
-      <figure class="kyle">
-        <img src="{{site.pathPrefix}}/assets/img/kyle-hindin.jpg" alt="{{hero_img_alt}}" data-i18n-attr="alt:hero_img_alt" width="96" height="120" loading="eager" onerror="this.parentNode.classList.add('kyle--missing')">
-        <figcaption><strong>Kyle Hindin</strong><span data-i18n="hero_kyle_line">{{hero_kyle_line}}</span></figcaption>
-      </figure>
+      <p class="cred"><strong>Kyle Hindin</strong> · <span data-i18n="hero_kyle_line">{{hero_kyle_line}}</span></p>
     </div>
+
 
     <div class="hero__side">
       <div class="card form-card" id="lead">
@@ -79,6 +81,7 @@
           <input type="hidden" name="practice" value="car">
           <input type="hidden" name="page" value="{{page.canonical}}">
           <input type="hidden" name="source" value="">
+          <input type="hidden" name="kw" value="">
           <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
           <label class="field">
             <span data-i18n="form_name">{{form_name}}</span>
@@ -286,7 +289,7 @@
   <a class="sticky__form" href="#lead" data-i18n="sticky_form">{{sticky_form}}</a>
 </div>
 
-<script>window.__RHA_I18N={{page.i18nJson}};</script>
+<script>window.__RHA_I18N={{page.i18nJson}};window.__RHA_KW={{page.kwJson}};</script>
 <script src="{{site.pathPrefix}}/assets/lander.js"></script>
 </body>
 </html>

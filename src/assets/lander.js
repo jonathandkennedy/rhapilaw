@@ -4,11 +4,19 @@
   var I18N = window.__RHA_I18N || {};
   var root = document.documentElement;
   var DEFAULT = root.getAttribute("data-default-lang") || "en";
+  var KW = window.__RHA_KW || {};
+  // Allowlisted keyword token: ?kw=rear-end (or utm_term when it exactly matches a token). Anything else is ignored.
+  var KW_TOKEN = "";
+  try {
+    var qs = new URLSearchParams(location.search);
+    var raw = (qs.get("kw") || qs.get("utm_term") || "").toLowerCase().trim().replace(/[\s_]+/g, "-");
+    if (Object.prototype.hasOwnProperty.call(KW, raw)) KW_TOKEN = raw;
+  } catch (e) {}
 
   function track(ev, data) {
     try {
       window.dataLayer = window.dataLayer || [];
-      var o = { event: ev, lang: root.getAttribute("data-lang"), city: root.getAttribute("data-city") || "" };
+      var o = { event: ev, lang: root.getAttribute("data-lang"), city: root.getAttribute("data-city") || "", kw: KW_TOKEN };
       if (data) for (var k in data) o[k] = data[k];
       window.dataLayer.push(o);
     } catch (e) {}
@@ -38,6 +46,11 @@
         var kv = pairs[p].split(":"); if (kv.length < 2) continue;
         var val = s[kv[1].trim()]; if (val != null) a.setAttribute(kv[0].trim(), val.replace(/<[^>]+>/g, ""));
       }
+    }
+    if (KW_TOKEN && KW[KW_TOKEN] && KW[KW_TOKEN][lang]) {
+      var kwEls = document.querySelectorAll('[data-i18n="hero_kw"]');
+      for (var q = 0; q < kwEls.length; q++) kwEls[q].textContent = KW[KW_TOKEN][lang];
+      root.setAttribute("data-kw", KW_TOKEN);
     }
     root.setAttribute("lang", lang);
     root.setAttribute("data-lang", lang);
@@ -82,6 +95,8 @@
   var phoneIn = form.querySelector('input[name="phone"]');
   var btn = form.querySelector('button[type="submit"]');
   var srcIn = form.querySelector('input[name="source"]');
+  var kwIn = form.querySelector('input[name="kw"]');
+  if (kwIn) kwIn.value = KW_TOKEN;
 
   try {
     var q = new URLSearchParams(location.search), src = {};
@@ -134,6 +149,7 @@
       practice: form.querySelector('input[name="practice"]').value,
       page: location.href,
       source: srcIn ? srcIn.value : "",
+      kw: KW_TOKEN,
       submitted_at: new Date().toISOString(),
       tcpa: s.form_tcpa ? s.form_tcpa.replace(/<[^>]+>/g, "") : ""
     };

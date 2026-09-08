@@ -11,12 +11,14 @@
   "skip": "Skip to content",
 
   "hero_h1": "The insurance company already has a lawyer for your {City} crash.<br>You should too.",
-  "hero_sub": "You're hurt. They're already working — to pay you less. Robert Hindin &amp; Associates has represented injured people in California since 1975 and has never represented an insurance company. Free case review. We call you.",
+  "hero_kw": "You're hurt.",
+  "hero_sub": "They're already working — to pay you less. Robert Hindin &amp; Associates has represented injured people in California since 1975 and has never represented an insurance company. Free case review. We call you.",
   "hero_b1": "No fee unless we recover",
   "hero_b2": "We talk to the insurance company. You don't.",
   "hero_b3": "5.0 on 130+ Google reviews · West Los Angeles office",
   "hero_call": "Call (310) 473-0337 — free case review",
-  "hero_img_alt": "Kyle Hindin, personal injury attorney at Robert Hindin & Associates",
+  "hero_img_alt": "Robert Hindin and Kyle Hindin, Robert Hindin & Associates",
+  "hero_photo_cap": "Robert Hindin (licensed 1975) and Kyle Hindin",
   "hero_kyle_line": "Handles these cases personally · USC · Chapman Law · Super Lawyers Rising Stars 2022–2026",
   "ismael": "",
 

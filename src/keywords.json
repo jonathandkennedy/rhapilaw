@@ -1,0 +1,16 @@
+{
+  "_note": "Allowlisted ad-group tokens for ?kw=. Each swaps ONLY the first sentence of the hero subhead (hero_kw). Anything not listed falls back to the default. Spanish stays usted.",
+  "rear-end":      { "en": "Rear-ended and hurting.",                    "es": "Lo chocaron por detrás y está lastimado." },
+  "uber":          { "en": "Hurt in an Uber or Lyft.",                   "es": "Lastimado en un Uber o Lyft." },
+  "lyft":          { "en": "Hurt in an Uber or Lyft.",                   "es": "Lastimado en un Uber o Lyft." },
+  "hit-and-run":   { "en": "Hit and run, and you're the one hurt.",      "es": "Se dieron a la fuga y usted quedó lastimado." },
+  "drunk-driver":  { "en": "Hit by a drunk driver.",                     "es": "Lo chocó un conductor ebrio." },
+  "truck":         { "en": "Hit by a truck.",                            "es": "Lo golpeó un camión." },
+  "motorcycle":    { "en": "Hurt on your motorcycle.",                   "es": "Lastimado en su moto." },
+  "pedestrian":    { "en": "Hit while walking.",                         "es": "Lo atropellaron caminando." },
+  "bicycle":       { "en": "Hit on your bike.",                          "es": "Lo golpearon en su bicicleta." },
+  "freeway":       { "en": "Crash on the freeway.",                      "es": "Choque en la freeway." },
+  "intersection":  { "en": "Hit at an intersection.",                    "es": "Lo chocaron en un crucero." },
+  "passenger":     { "en": "Hurt as a passenger.",                       "es": "Lastimado como pasajero." },
+  "whiplash":      { "en": "Neck and back pain after the crash.",        "es": "Dolor de cuello y espalda después del choque." }
+}

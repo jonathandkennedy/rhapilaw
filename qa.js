@@ -9,6 +9,7 @@ const DIST = path.resolve(__dirname, process.argv[2] || "dist");
 const cities = JSON.parse(fs.readFileSync(path.join(__dirname, "src/cities.json"), "utf8"));
 const ES = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/es.json"), "utf8"));
 const EN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/en.json"), "utf8"));
+const KW = JSON.parse(fs.readFileSync(path.join(__dirname, "src/keywords.json"), "utf8"));
 const PHONE = "(310) 473-0337";
 let fails = 0, checks = 0;
 function ok(cond, msg) { checks++; if (!cond) { fails++; console.log("  FAIL  " + msg); } }
@@ -45,6 +46,15 @@ console.log("Spanish strings");
   ok(EN.res_offer === "$85,000" && EN.res_result === "$375,000", "results must be the one released case (EN)");
 }
 
+console.log("Keyword allowlist");
+for (const k of Object.keys(KW)) {
+  if (k === "_note") continue;
+  ok(/^[a-z0-9-]+$/.test(k), `keywords.${k}: token must be lowercase a-z0-9-`);
+  ok(typeof KW[k].en === "string" && typeof KW[k].es === "string", `keywords.${k}: needs en + es`);
+  ok(!/\b(tú|ti|contigo|tuyo|tuya|tu|tus|te)\b/i.test(KW[k].es || ""), `keywords.${k}: tú-register in ES`);
+  ok(/\.$/.test(KW[k].en) && /\.$/.test(KW[k].es), `keywords.${k}: sentence must end with a period (it precedes the subhead)`);
+}
+
 // ---- Per-city checks on built HTML ----
 console.log("Built pages");
 const spanishDefault = cities.filter(c => c.defaultLang === "es").map(c => c.name);
@@ -55,7 +65,7 @@ for (const c of cities) {
   const html = fs.readFileSync(file, "utf8");
   const text = strip(html);
   const label = (c.slug || "/") + " (" + c.name + ")";
-  const m = html.match(/window\.__RHA_I18N=(\{[\s\S]*?\});<\/script>/);
+  const m = html.match(/window\.__RHA_I18N=(\{[\s\S]*?\});(?:window\.__RHA_KW=|<\/script>)/);
   ok(m, `${label}: i18n JSON missing`);
   const i18n = m ? JSON.parse(m[1].replace(/<\\\//g, "</")) : { en: {}, es: {} };
   const es = i18n.es, en = i18n.en;
@@ -94,12 +104,14 @@ for (const c of cities) {
     ok(html.includes(en.hero_h1), `${label}: EN-default page not pre-rendered in English`);
   }
   ok(html.includes('data-lang-toggle'), `${label}: language toggle missing`);
+  ok(html.includes('window.__RHA_KW=') && html.includes('<input type="hidden" name="kw" value="">'), `${label}: keyword swap not wired`);
+  ok(html.includes('data-i18n="hero_kw"') && es.hero_kw === "Usted está lastimado." && en.hero_kw === "You're hurt.", `${label}: hero_kw default sentence`);
 }
 
 // Thank-you
 {
   const html = fs.readFileSync(path.join(DIST, "thank-you/index.html"), "utf8");
-  const m = html.match(/window\.__RHA_I18N=(\{[\s\S]*?\});<\/script>/);
+  const m = html.match(/window\.__RHA_I18N=(\{[\s\S]*?\});(?:window\.__RHA_KW=|<\/script>)/);
   const i18n = m ? JSON.parse(m[1].replace(/<\\\//g, "</")) : { es: {} };
   ok(i18n.es.ty_h1 === ES.ty_h1, "thank-you: ES h1 bundled for ?lang=es");
   ok(html.includes('data-default-lang="en"') && /new URLSearchParams\(location\.search\)\.get\("lang"\)/.test(html), "thank-you: respects ?lang=");
