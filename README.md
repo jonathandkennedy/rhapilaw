@@ -90,7 +90,7 @@ then redirects to `/thank-you/?lang=<lang>`. When empty (staging) it redirects w
 
 ## Thank-you page
 
-After the lead posts, the page stores name/phone/city in `sessionStorage` and redirects to `/thank-you/?lang=<lang>`. There the person can answer four optional questions (when the crash was, seen a doctor, insurer contact, what happened). Those post to the same Formspree form as a second submission with subject "Lead details: <city> — <name> <phone>", so intake can match them to the lead. The page also offers a vCard (`assets/rha.vcf`), the three next steps, the firm bio and result, a "Find out more about us" button to `site.json → corporateUrl` (opens in a new tab with UTM tags), and the reviews. Set `googleReviewsUrl` to show a "Read our Google reviews" button; it stays hidden while empty.
+After the lead posts, the page stores name/phone/city in `sessionStorage` and redirects to `/thank-you/?lang=<lang>`. There the person can answer four optional questions (when the crash was, seen a doctor, insurer contact, what happened). Those post to the same Formspree form as a second submission with subject "Lead details: <city> — <name> <phone>", so intake can match them to the lead. The page also offers a vCard (`assets/rha.vcf`), the three next steps, the firm bio and result, a "Find out more about us" button to `site.json → corporateUrl` (opens in a new tab with UTM tags), and the reviews. `googleReviewsUrl` is the firm's Google Business Profile share link, shown as a "Read our Google reviews" button (no UTM appended, to keep the Google redirect intact).
 
 ## Deploy (Vercel)
 

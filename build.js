@@ -150,7 +150,7 @@ function buildThankYou() {
     toggleHref: prefix + site.thankYouPath + "?lang=es",
     formAction: site.formEndpoint || (prefix + site.thankYouPath),
     corporateHref: link(site.corporateUrl),
-    reviewsHref: link(site.googleReviewsUrl),
+    reviewsHref: site.googleReviewsUrl || "",
     reviewsHidden: site.googleReviewsUrl ? "" : "hidden",
     gtmHead: g.head, gtmBody: g.body,
   };
