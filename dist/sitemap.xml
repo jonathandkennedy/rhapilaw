@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://rhapilaw.com/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/?lang=es"/></url>
   <url><loc>https://rhapilaw.com/compton/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/compton/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/compton/?lang=es"/></url>
   <url><loc>https://rhapilaw.com/huntington-park/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/huntington-park/?lang=en"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/huntington-park/"/></url>
   <url><loc>https://rhapilaw.com/van-nuys/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/van-nuys/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/van-nuys/?lang=es"/></url>
@@ -14,5 +15,5 @@
   <url><loc>https://rhapilaw.com/lynwood/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/lynwood/?lang=en"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/lynwood/"/></url>
   <url><loc>https://rhapilaw.com/norwalk/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/norwalk/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/norwalk/?lang=es"/></url>
   <url><loc>https://rhapilaw.com/pico-rivera/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/pico-rivera/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/pico-rivera/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/?lang=es"/></url>
+  <url><loc>https://rhapilaw.com/los-angeles/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/los-angeles/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/los-angeles/?lang=es"/></url>
 </urlset>

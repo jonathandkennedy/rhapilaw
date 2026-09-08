@@ -1,5 +1,11 @@
 [
   {
+    "path": "/",
+    "url": "https://rhapilaw.com/",
+    "lang": "en",
+    "city": "Hub"
+  },
+  {
     "path": "/compton/",
     "url": "https://rhapilaw.com/compton/",
     "lang": "en",
@@ -84,8 +90,8 @@
     "city": "Pico Rivera"
   },
   {
-    "path": "/",
-    "url": "https://rhapilaw.com/",
+    "path": "/los-angeles/",
+    "url": "https://rhapilaw.com/los-angeles/",
     "lang": "en",
     "city": "Los Angeles"
   }

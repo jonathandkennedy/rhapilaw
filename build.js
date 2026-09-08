@@ -22,6 +22,7 @@ const KW = JSON.parse(fs.readFileSync(path.join(SRC, "keywords.json"), "utf8"));
 delete KW._note;
 const template = fs.readFileSync(path.join(SRC, "template.html"), "utf8");
 const tyTemplate = fs.readFileSync(path.join(SRC, "thankyou.html"), "utf8");
+const hubTemplate = fs.readFileSync(path.join(SRC, "hub.html"), "utf8");
 const YEAR = String(new Date().getFullYear());
 const prefix = (site.pathPrefix || "").replace(/\/$/, "");
 
@@ -162,6 +163,35 @@ function buildThankYou() {
   fs.writeFileSync(path.join(dir, "index.html"), html);
 }
 
+
+function buildHub(built) {
+  const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
+  const s = stringsFor("en", la);
+  const i18n = { en: stringsFor("en", la), es: stringsFor("es", la) };
+  const g = gtm();
+  const cards = cities.map(c => {
+    const p = prefix + cityPath(c);
+    const isDefault = !!c.isDefault;
+    const name = isDefault ? `<span data-i18n="hub_default">${esc(s.hub_default)}</span>` : esc(c.name);
+    const serve = `<span data-i18n="hub_serve_${c.slug}">${esc(c.serve_en)}</span>`;
+    i18n.en["hub_serve_" + c.slug] = c.serve_en; i18n.es["hub_serve_" + c.slug] = c.serve_es;
+    const en = `<a href="${p}${c.defaultLang === "es" ? "?lang=en" : ""}" hreflang="en" lang="en"><span data-i18n="hub_en">${esc(s.hub_en)}</span></a>`;
+    const es = `<a href="${p}${c.defaultLang === "es" ? "" : "?lang=es"}" hreflang="es" lang="es"><span data-i18n="hub_es">${esc(s.hub_es)}</span></a>`;
+    return `      <li class="city-card${isDefault ? " city-card--default" : ""}${c.defaultLang === "es" ? " city-card--es" : ""}">
+        <h3><a href="${p}">${name}</a></h3>
+        <p>${serve}</p>
+        <div class="city-card__links">${c.defaultLang === "es" ? es + en : en + es}</div>
+      </li>`;
+  }).join("\n");
+  const page = {
+    canonical: absUrl("/"), robots: site.index ? "index, follow" : "noindex, nofollow",
+    cityCards: cards, i18nJson: jsonForScript(i18n), kwJson: jsonForScript(KW), gtmHead: g.head, gtmBody: g.body,
+  };
+  const ctx = Object.assign({}, s, { page, site });
+  ctx.hub_desc = esc(s.hub_desc); ctx.hero_img_alt = esc(s.hero_img_alt);
+  fs.writeFileSync(path.join(OUT, "index.html"), render(hubTemplate, ctx));
+}
+
 function copyDir(from, to) {
   fs.mkdirSync(to, { recursive: true });
   for (const ent of fs.readdirSync(from, { withFileTypes: true })) {
@@ -175,12 +205,14 @@ function main() {
   fs.mkdirSync(OUT, { recursive: true });
   const built = cities.map(buildCity);
   buildThankYou();
+  buildHub(built);
   copyDir(path.join(SRC, "assets"), path.join(OUT, "assets"));
   fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\n${site.index ? "Allow" : "Disallow"}: /\nDisallow: ${prefix}${site.thankYouPath}\nSitemap: ${absUrl("/sitemap.xml")}\n`);
+  built.unshift({ path: "/", url: absUrl("/"), lang: "en", city: "Hub" });
   const sm = built.map(b => `  <url><loc>${b.url}</loc><xhtml:link rel="alternate" hreflang="en" href="${b.lang === "en" ? b.url : b.url + "?lang=en"}"/><xhtml:link rel="alternate" hreflang="es" href="${b.lang === "es" ? b.url : b.url + "?lang=es"}"/></url>`).join("\n");
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sm}\n</urlset>\n`);
   fs.writeFileSync(path.join(OUT, "pages.json"), JSON.stringify(built, null, 2));
   for (const b of built) console.log(`${b.lang.toUpperCase()}  ${b.path.padEnd(18)} ${b.city}`);
-  console.log(`\nBuilt ${built.length} city pages + thank-you -> ${path.relative(ROOT, OUT) || "."}/`);
+  console.log(`\nBuilt hub + ${built.length - 1} city pages + thank-you -> ${path.relative(ROOT, OUT) || "."}/`);
 }
 main();

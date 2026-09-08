@@ -176,6 +176,28 @@ section{padding:48px 0}
 .sticky__call{background:var(--accent)}
 .sticky__form{background:var(--navy-2)}
 
+/* hub */
+.hub{padding-bottom:64px}
+.hub__hero{background:var(--white);padding:40px 0 0;border-bottom:1px solid var(--line)}
+.hub__hero-grid{display:grid;gap:20px;align-items:end}
+.hub__hero-grid>div{padding-bottom:36px}
+.hub__photo{margin:0;width:min(260px,70%);justify-self:center}
+.hub__photo img{width:100%;height:auto}
+.hub__cities{background:var(--soft);border-bottom:1px solid var(--line)}
+.city-grid{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.city-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.city-card h3{margin-bottom:4px;font-size:1.25rem}
+.city-card h3 a{text-decoration:none;color:var(--ink)}
+.city-card h3 a:hover{color:var(--accent-dark)}
+.city-card p{margin:0 0 12px;font-size:.95rem;color:var(--muted)}
+.city-card__links{display:flex;gap:8px;flex-wrap:wrap}
+.city-card__links a{text-decoration:none;font-weight:800;font-size:.9rem;border:2px solid var(--navy);color:var(--navy);border-radius:999px;padding:6px 14px}
+.city-card__links a:first-child{background:var(--navy);color:#fff}
+.city-card--es{border-left:4px solid var(--gold)}
+.city-card--default{grid-column:1/-1;background:var(--gold-soft);border-color:#f1dc8a}
+.hub__note{margin:18px 0 0;font-weight:700;color:var(--ink)}
+.hub__about{background:var(--white)}
+
 /* thank-you */
 .ty{padding-bottom:0}
 .ty__hero{background:var(--white);padding:40px 0 48px;border-bottom:1px solid var(--line)}
@@ -225,6 +247,10 @@ section{padding:48px 0}
   .steps__list{grid-template-columns:repeat(3,1fr)}
   .steps__list li{padding-left:0;padding-top:56px}
   .final__btns{flex-direction:row;justify-content:center}
+  .hub{padding-bottom:0}
+  .hub__hero-grid{grid-template-columns:1fr 300px;gap:40px}
+  .hub__photo{width:100%;justify-self:end}
+  .city-grid{grid-template-columns:repeat(3,1fr)}
   .ty__grid{grid-template-columns:1fr 1fr;align-items:start;gap:40px}
   .ty__btns{flex-direction:row}
   .ty__about-grid{grid-template-columns:300px 1fr;align-items:start;gap:40px}

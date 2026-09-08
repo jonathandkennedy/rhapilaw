@@ -112,6 +112,16 @@ for (const c of cities) {
   ok(html.includes('data-i18n="hero_kw"') && es.hero_kw === "Usted está lastimado." && en.hero_kw === "You're hurt.", `${label}: hero_kw default sentence`);
 }
 
+// Hub
+{
+  const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  ok(/class="city-grid"/.test(html), "hub: city grid present");
+  for (const c of cities) ok(html.includes(`href="${c.slug ? "/" + c.slug + "/" : "/"}"`), `hub: link to ${c.name}`);
+  ok(html.includes('href="/huntington-park/?lang=en"') && html.includes('href="/compton/?lang=es"'), "hub: EN/ES links per city");
+  ok(!/<form/.test(html), "hub: no form (hub routes, it doesn't capture)");
+  ok((strip(html).match(/\(310\) 473-0337/g) || []).length >= 3, "hub: phone");
+}
+
 // Thank-you
 {
   const html = fs.readFileSync(path.join(DIST, "thank-you/index.html"), "utf8");

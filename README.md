@@ -34,7 +34,8 @@ Same system as the Goldberg hub. Not their copy, not their leaks.
 | `/lynwood/` | Lynwood | **ES** |
 | `/norwalk/` | Norwalk | EN |
 | `/pico-rivera/` | Pico Rivera | EN |
-| `/` | Los Angeles (default) | EN |
+| `/los-angeles/` | Los Angeles (default) | EN |
+| `/` | **Hub**: every city page with English and Spanish links | EN, honours `?lang=es` |
 | `/thank-you/` | post-submit, `noindex`: confirmation, optional qualifying questions, what happens next, who we are, links to the corporate site, reviews | EN, honours `?lang=es` |
 
 Every page carries both languages. `?lang=es` forces Spanish, `?lang=en` forces English, the header toggle flips without reload and rewrites the URL.

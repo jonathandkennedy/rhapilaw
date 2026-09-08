@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-lang="en" data-default-lang="en" data-city="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,q=null;try{q=new URLSearchParams(location.search).get("lang")}catch(e){}var def=d.getAttribute("data-default-lang");var l=(q==="es"||q==="en")?q:def;d.setAttribute("lang",l);d.setAttribute("data-lang",l);if(l!==def){d.classList.add("lang-pending")}})();</script>
+<style>.lang-pending body{visibility:hidden}</style>
+<title data-i18n="hub_title">{{hub_title}}</title>
+<meta name="description" content="{{hub_desc}}" data-i18n-attr="content:hub_desc">
+<meta name="robots" content="{{page.robots}}">
+<link rel="canonical" href="{{page.canonical}}">
+<link rel="alternate" hreflang="en" href="{{page.canonical}}">
+<link rel="alternate" hreflang="es" href="{{page.canonical}}?lang=es">
+<link rel="icon" href="{{site.pathPrefix}}/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{site.pathPrefix}}/assets/styles.css">
+{{page.gtmHead}}
+</head>
+<body class="hub">
+{{page.gtmBody}}
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="{{site.pathPrefix}}/" aria-label="Robert Hindin &amp; Associates"><img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180"></a>
+    <div class="hdr__right">
+      <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="hdr__num">{{site.phoneDisplay}}</span><span class="hdr__sub" data-i18n="call_sub">{{call_sub}}</span></a>
+      <a class="lang" href="{{site.pathPrefix}}/?lang=es" data-lang-toggle hreflang="es" lang="es"><span data-i18n="lang_toggle">{{lang_toggle}}</span></a>
+    </div>
+  </div>
+</header>
+<main>
+<section class="hub__hero">
+  <div class="wrap hub__hero-grid">
+    <div>
+      <p class="eyebrow" data-i18n="hub_eyebrow">{{hub_eyebrow}}</p>
+      <h1 data-i18n="hub_h1">{{hub_h1}}</h1>
+      <p class="lead" data-i18n="hub_sub">{{hub_sub}}</p>
+      <a class="btn btn--accent" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="hero_call">{{hero_call}}</a>
+    </div>
+    <figure class="hub__photo"><img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" data-i18n-attr="alt:hero_img_alt" width="1080" height="1080" loading="eager"></figure>
+  </div>
+</section>
+<section class="stats" aria-label="firm facts">
+  <div class="wrap stats__in">
+    <span data-i18n="stat_1">{{stat_1}}</span><span data-i18n="stat_2">{{stat_2}}</span><span data-i18n="stat_3">{{stat_3}}</span><span data-i18n="stat_4">{{stat_4}}</span>
+  </div>
+</section>
+<section class="hub__cities">
+  <div class="wrap">
+    <h2 data-i18n="hub_grid_h2">{{hub_grid_h2}}</h2>
+    <ul class="city-grid">
+{{page.cityCards}}
+    </ul>
+    <p class="hub__note" data-i18n="hub_not_listed">{{hub_not_listed}}</p>
+  </div>
+</section>
+<section class="hub__about">
+  <div class="wrap">
+    <h2 data-i18n="hub_about_h2">{{hub_about_h2}}</h2>
+    <p class="lead" data-i18n="hub_about_p">{{hub_about_p}}</p>
+    <p class="badges" data-i18n="who_badges">{{who_badges}}</p>
+  </div>
+</section>
+<section class="final">
+  <div class="wrap">
+    <h2 data-i18n="final_h2">{{final_h2}}</h2>
+    <p class="final__p" data-i18n="final_p">{{final_p}}</p>
+    <div class="final__btns"><a class="btn btn--accent btn--big" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="final_call">{{final_call}}</a></div>
+    <p class="hours" data-i18n="hours">{{hours}}</p>
+  </div>
+</section>
+</main>
+<footer class="ftr">
+  <div class="wrap">
+    <p class="ftr__firm">Robert Hindin &amp; Associates</p>
+    <p data-i18n="footer_office">{{footer_office}}</p>
+    <p data-i18n="footer_hours">{{footer_hours}}</p>
+    <p class="ftr__ad" data-i18n="footer_ad">{{footer_ad}}</p>
+    <p class="ftr__copy" data-i18n="footer_copy">{{footer_copy}}</p>
+  </div>
+</footer>
+<div class="sticky"><a class="sticky__call" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="sticky_call">{{sticky_call}}</a><a class="sticky__form" href="#cities" data-i18n="hub_grid_h2">{{hub_grid_h2}}</a></div>
+<script>window.__RHA_I18N={{page.i18nJson}};window.__RHA_KW={{page.kwJson}};</script>
+<script src="{{site.pathPrefix}}/assets/lander.js"></script>
+</body>
+</html>
