@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="{{html_lang}}" data-lang="{{html_lang}}" data-default-lang="{{page.defaultLang}}" data-city="{{page.name}}" data-city-slug="{{page.slugOrDefault}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,q=null;try{q=new URLSearchParams(location.search).get("lang")}catch(e){}var def=d.getAttribute("data-default-lang");var l=(q==="es"||q==="en")?q:def;d.setAttribute("lang",l);d.setAttribute("data-lang",l);if(l!==def){d.classList.add("lang-pending")}})();</script>
+<style>.lang-pending body{visibility:hidden}</style>
+<title data-i18n="meta_title">{{meta_title}}</title>
+<meta name="description" content="{{meta_desc}}" data-i18n-attr="content:meta_desc">
+<meta name="robots" content="{{page.robots}}">
+<link rel="canonical" href="{{page.canonical}}">
+<link rel="alternate" hreflang="en" href="{{page.urlEn}}">
+<link rel="alternate" hreflang="es" href="{{page.urlEs}}">
+<link rel="alternate" hreflang="x-default" href="{{page.urlEn}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{meta_title}}" data-i18n-attr="content:meta_title">
+<meta property="og:description" content="{{meta_desc}}" data-i18n-attr="content:meta_desc">
+<meta property="og:url" content="{{page.canonical}}">
+<meta name="theme-color" content="#0b1f3a">
+<link rel="icon" href="{{site.pathPrefix}}/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{site.pathPrefix}}/assets/styles.css">
+<script type="application/ld+json">{{page.jsonld}}</script>
+{{page.gtmHead}}
+</head>
+<body>
+{{page.gtmBody}}
+<a class="skip" href="#lead" data-i18n="skip">{{skip}}</a>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="{{site.pathPrefix}}/" aria-label="Robert Hindin &amp; Associates">
+      <img src="{{site.pathPrefix}}/assets/logo-white.svg" alt="Robert Hindin &amp; Associates" width="220" height="44">
+    </a>
+    <div class="hdr__right">
+      <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click">
+        <span class="hdr__num">{{site.phoneDisplay}}</span>
+        <span class="hdr__sub" data-i18n="call_sub">{{call_sub}}</span>
+      </a>
+      <a class="btn btn--accent hdr__cta" href="#lead" data-i18n="header_cta">{{header_cta}}</a>
+      <a class="lang" href="{{page.toggleHref}}" data-lang-toggle hreflang="{{page.toggleLang}}" lang="{{page.toggleLang}}" aria-label="{{lang_toggle_aria}}" data-i18n-attr="aria-label:lang_toggle_aria"><span data-i18n="lang_toggle">{{lang_toggle}}</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow" data-i18n="eyebrow">{{eyebrow}}</p>
+      <h1 data-i18n="hero_h1">{{hero_h1}}</h1>
+      <p class="lead" data-i18n="hero_sub">{{hero_sub}}</p>
+      <ul class="checks">
+        <li data-i18n="hero_b1">{{hero_b1}}</li>
+        <li data-i18n="hero_b2">{{hero_b2}}</li>
+        <li data-i18n="hero_b3">{{hero_b3}}</li>
+      </ul>
+      <p class="ismael" data-i18n="ismael" data-hide-empty {{page.ismaelHidden}}>{{ismael}}</p>
+      <a class="btn btn--accent btn--wide hero__call" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="hero_call">{{hero_call}}</a>
+      <ul class="benefits" aria-label="benefits">
+        <li data-i18n="benefit_1">{{benefit_1}}</li>
+        <li data-i18n="benefit_2">{{benefit_2}}</li>
+        <li data-i18n="benefit_3">{{benefit_3}}</li>
+      </ul>
+      <figure class="kyle">
+        <img src="{{site.pathPrefix}}/assets/img/kyle-hindin.jpg" alt="{{hero_img_alt}}" data-i18n-attr="alt:hero_img_alt" width="96" height="120" loading="eager" onerror="this.parentNode.classList.add('kyle--missing')">
+        <figcaption><strong>Kyle Hindin</strong><span data-i18n="hero_kyle_line">{{hero_kyle_line}}</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="hero__side">
+      <div class="card form-card" id="lead">
+        <h2 data-i18n="form_h2">{{form_h2}}</h2>
+        <p class="form-card__sub" data-i18n="form_sub">{{form_sub}}</p>
+        <p class="chip" data-i18n="form_chip">{{form_chip}}</p>
+        <form class="lead-form" method="post" action="{{page.formAction}}" data-endpoint="{{site.formEndpoint}}" data-thankyou="{{page.thankYouUrl}}" novalidate>
+          <input type="hidden" name="lang" value="{{html_lang}}">
+          <input type="hidden" name="city" value="{{page.name}}">
+          <input type="hidden" name="city_slug" value="{{page.slugOrDefault}}">
+          <input type="hidden" name="practice" value="car">
+          <input type="hidden" name="page" value="{{page.canonical}}">
+          <input type="hidden" name="source" value="">
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <label class="field">
+            <span data-i18n="form_name">{{form_name}}</span>
+            <input type="text" name="name" autocomplete="name" required minlength="2" placeholder="{{form_name_ph}}" data-i18n-attr="placeholder:form_name_ph">
+          </label>
+          <label class="field">
+            <span data-i18n="form_phone">{{form_phone}}</span>
+            <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="{{form_phone_ph}}" data-i18n-attr="placeholder:form_phone_ph">
+          </label>
+          <p class="form-err" role="alert" hidden></p>
+          <p class="tcpa" data-i18n="form_tcpa">{{form_tcpa}}</p>
+          <button type="submit" class="btn btn--accent btn--wide" data-i18n="form_submit">{{form_submit}}</button>
+          <p class="form-note" data-i18n="form_note">{{form_note}}</p>
+        </form>
+        <p class="orcall" data-i18n="form_orcall">{{form_orcall}}</p>
+        <p class="trust" data-i18n="form_trust">{{form_trust}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats" aria-label="firm facts">
+  <div class="wrap stats__in">
+    <span data-i18n="stat_1">{{stat_1}}</span>
+    <span data-i18n="stat_2">{{stat_2}}</span>
+    <span data-i18n="stat_3">{{stat_3}}</span>
+    <span data-i18n="stat_4">{{stat_4}}</span>
+  </div>
+</section>
+
+<section class="local">
+  <div class="wrap">
+    <p class="local__serve" data-i18n="local_serve">{{local_serve}}</p>
+    <p class="local__proof" data-i18n="local_proof">{{local_proof}}</p>
+    <p class="local__office"><span data-i18n="local_office_label">{{local_office_label}}</span> <span data-i18n="local_office">{{local_office}}</span> · <a href="tel:{{site.phoneTel}}" data-track="phone_click">{{site.phoneDisplay}}</a></p>
+  </div>
+</section>
+
+<section class="offer">
+  <div class="wrap offer__grid">
+    <div>
+      <h2 data-i18n="offer_h2">{{offer_h2}}</h2>
+      <p data-i18n="offer_p1">{{offer_p1}}</p>
+      <p data-i18n="offer_p2">{{offer_p2}}</p>
+      <p class="strong" data-i18n="offer_p3">{{offer_p3}}</p>
+      <div class="mech">
+        <h3 data-i18n="mech_h3">{{mech_h3}}</h3>
+        <p data-i18n="mech_p">{{mech_p}}</p>
+      </div>
+    </div>
+    <div class="card stack">
+      <h3 data-i18n="stack_h3">{{stack_h3}}</h3>
+      <ul class="checks">
+        <li data-i18n="stack_1">{{stack_1}}</li>
+        <li data-i18n="stack_2">{{stack_2}}</li>
+        <li data-i18n="stack_3">{{stack_3}}</li>
+        <li data-i18n="stack_4">{{stack_4}}</li>
+        <li data-i18n="stack_5">{{stack_5}}</li>
+        <li data-i18n="stack_6">{{stack_6}}</li>
+      </ul>
+      <a class="btn btn--accent btn--wide" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="hero_call">{{hero_call}}</a>
+    </div>
+  </div>
+</section>
+
+<section class="ins">
+  <div class="wrap">
+    <h2 data-i18n="ins_h2">{{ins_h2}}</h2>
+    <p class="lead" data-i18n="ins_p1">{{ins_p1}}</p>
+    <ul class="plain">
+      <li data-i18n="ins_l1">{{ins_l1}}</li>
+      <li data-i18n="ins_l2">{{ins_l2}}</li>
+      <li data-i18n="ins_l3">{{ins_l3}}</li>
+      <li data-i18n="ins_l4">{{ins_l4}}</li>
+    </ul>
+    <p data-i18n="ins_p3">{{ins_p3}}</p>
+    <div class="tactics">
+      <div class="tactic"><h3 data-i18n="tactic_1_t">{{tactic_1_t}}</h3><p data-i18n="tactic_1_b">{{tactic_1_b}}</p></div>
+      <div class="tactic"><h3 data-i18n="tactic_2_t">{{tactic_2_t}}</h3><p data-i18n="tactic_2_b">{{tactic_2_b}}</p></div>
+      <div class="tactic"><h3 data-i18n="tactic_3_t">{{tactic_3_t}}</h3><p data-i18n="tactic_3_b">{{tactic_3_b}}</p></div>
+      <div class="tactic"><h3 data-i18n="tactic_4_t">{{tactic_4_t}}</h3><p data-i18n="tactic_4_b">{{tactic_4_b}}</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="time">
+  <div class="wrap">
+    <h2 data-i18n="time_h2">{{time_h2}}</h2>
+    <p data-i18n="time_p1">{{time_p1}}</p>
+    <p class="strong" data-i18n="time_p2">{{time_p2}}</p>
+    <ul class="plain">
+      <li data-i18n="time_l1">{{time_l1}}</li>
+      <li data-i18n="time_l2">{{time_l2}}</li>
+      <li data-i18n="time_l3">{{time_l3}}</li>
+      <li data-i18n="time_l4">{{time_l4}}</li>
+    </ul>
+    <p data-i18n="time_p3">{{time_p3}}</p>
+    <a class="btn btn--accent" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="time_cta">{{time_cta}}</a>
+  </div>
+</section>
+
+<section class="results">
+  <div class="wrap">
+    <h2 data-i18n="res_h2">{{res_h2}}</h2>
+    <div class="result">
+      <div class="result__row"><span data-i18n="res_offer_label">{{res_offer_label}}</span><strong class="result__offer" data-i18n="res_offer">{{res_offer}}</strong></div>
+      <div class="result__row result__row--win"><span data-i18n="res_result_label">{{res_result_label}}</span><strong class="result__win" data-i18n="res_result">{{res_result}}</strong></div>
+    </div>
+    <p class="disc" data-i18n="res_disc">{{res_disc}}</p>
+  </div>
+</section>
+
+<section class="who">
+  <div class="wrap">
+    <h2 data-i18n="who_h2">{{who_h2}}</h2>
+    <div class="who__grid">
+      <div class="who__card"><h3 data-i18n="who_kyle_n">{{who_kyle_n}}</h3><p data-i18n="who_kyle">{{who_kyle}}</p></div>
+      <div class="who__card"><h3 data-i18n="who_robert_n">{{who_robert_n}}</h3><p data-i18n="who_robert">{{who_robert}}</p></div>
+      <div class="who__card"><h3 data-i18n="who_team_n">{{who_team_n}}</h3><p data-i18n="who_team">{{who_team}}</p></div>
+    </div>
+    <p class="badges" data-i18n="who_badges">{{who_badges}}</p>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="wrap">
+    <h2 data-i18n="rev_h2">{{rev_h2}}</h2>
+    <p class="rev-frame" data-i18n="rev_frame">{{rev_frame}}</p>
+    <div class="rev__grid">
+      <blockquote class="rev" lang="en">
+        <p class="rev__q" data-i18n="rev_1_q">{{rev_1_q}}</p>
+        <footer><cite data-i18n="rev_1_n">{{rev_1_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer>
+        <p class="rev__cap" data-i18n="rev_1_cap" data-hide-empty {{page.capHidden}}>{{rev_1_cap}}</p>
+      </blockquote>
+      <blockquote class="rev" lang="en">
+        <p class="rev__q" data-i18n="rev_2_q">{{rev_2_q}}</p>
+        <footer><cite data-i18n="rev_2_n">{{rev_2_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer>
+      </blockquote>
+      <blockquote class="rev" lang="en">
+        <p class="rev__q" data-i18n="rev_3_q">{{rev_3_q}}</p>
+        <footer><cite data-i18n="rev_3_n">{{rev_3_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <h2 data-i18n="faq_h2">{{faq_h2}}</h2>
+    <dl class="faq__list">
+      <div class="faq__item"><dt data-i18n="faq_1_q">{{faq_1_q}}</dt><dd data-i18n="faq_1_a">{{faq_1_a}}</dd></div>
+      <div class="faq__item"><dt data-i18n="faq_2_q">{{faq_2_q}}</dt><dd data-i18n="faq_2_a">{{faq_2_a}}</dd></div>
+      <div class="faq__item"><dt data-i18n="faq_3_q">{{faq_3_q}}</dt><dd data-i18n="faq_3_a">{{faq_3_a}}</dd></div>
+      <div class="faq__item"><dt data-i18n="faq_4_q">{{faq_4_q}}</dt><dd data-i18n="faq_4_a">{{faq_4_a}}</dd></div>
+      <div class="faq__item faq__item--key" id="faq-5"><dt data-i18n="faq_5_q">{{faq_5_q}}</dt><dd data-i18n="faq_5_a">{{faq_5_a}}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="steps">
+  <div class="wrap">
+    <h2 data-i18n="steps_h2">{{steps_h2}}</h2>
+    <ol class="steps__list">
+      <li><h3 data-i18n="step_1_t">{{step_1_t}}</h3><p data-i18n="step_1_b">{{step_1_b}}</p></li>
+      <li><h3 data-i18n="step_2_t">{{step_2_t}}</h3><p data-i18n="step_2_b">{{step_2_b}}</p></li>
+      <li><h3 data-i18n="step_3_t">{{step_3_t}}</h3><p data-i18n="step_3_b">{{step_3_b}}</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2 data-i18n="final_h2">{{final_h2}}</h2>
+    <p class="final__p" data-i18n="final_p">{{final_p}}</p>
+    <div class="final__btns">
+      <a class="btn btn--accent btn--big" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="final_call">{{final_call}}</a>
+      <a class="btn btn--ghost" href="#lead" data-i18n="final_form">{{final_form}}</a>
+    </div>
+    <ul class="checks checks--light final__stack">
+      <li data-i18n="stack_1">{{stack_1}}</li>
+      <li data-i18n="stack_2">{{stack_2}}</li>
+      <li data-i18n="stack_3">{{stack_3}}</li>
+      <li data-i18n="stack_4">{{stack_4}}</li>
+      <li data-i18n="stack_5">{{stack_5}}</li>
+      <li data-i18n="stack_6">{{stack_6}}</li>
+    </ul>
+    <p class="hours" data-i18n="hours">{{hours}}</p>
+  </div>
+</section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <p class="ftr__firm">Robert Hindin &amp; Associates</p>
+    <p data-i18n="footer_office">{{footer_office}}</p>
+    <p data-i18n="footer_hours">{{footer_hours}}</p>
+    <p data-i18n="footer_sol">{{footer_sol}}</p>
+    <p class="ftr__ad" data-i18n="footer_ad">{{footer_ad}}</p>
+    <p class="ftr__copy" data-i18n="footer_copy">{{footer_copy}}</p>
+  </div>
+</footer>
+
+<div class="sticky" aria-hidden="false">
+  <a class="sticky__call" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="sticky_call">{{sticky_call}}</a>
+  <a class="sticky__form" href="#lead" data-i18n="sticky_form">{{sticky_form}}</a>
+</div>
+
+<script>window.__RHA_I18N={{page.i18nJson}};</script>
+<script src="{{site.pathPrefix}}/assets/lander.js"></script>
+</body>
+</html>

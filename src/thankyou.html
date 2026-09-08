@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" data-lang="en" data-default-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,q=null;try{q=new URLSearchParams(location.search).get("lang")}catch(e){}var def=d.getAttribute("data-default-lang");var l=(q==="es"||q==="en")?q:def;d.setAttribute("lang",l);d.setAttribute("data-lang",l);if(l!==def){d.classList.add("lang-pending")}})();</script>
+<style>.lang-pending body{visibility:hidden}</style>
+<title data-i18n="ty_title">{{ty_title}}</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="{{site.pathPrefix}}/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{site.pathPrefix}}/assets/styles.css">
+{{page.gtmHead}}
+</head>
+<body class="ty">
+{{page.gtmBody}}
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="{{site.pathPrefix}}/" aria-label="Robert Hindin &amp; Associates"><img src="{{site.pathPrefix}}/assets/logo-white.svg" alt="Robert Hindin &amp; Associates" width="220" height="44"></a>
+    <div class="hdr__right">
+      <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="hdr__num">{{site.phoneDisplay}}</span><span class="hdr__sub" data-i18n="call_sub">{{call_sub}}</span></a>
+      <a class="lang" href="{{page.toggleHref}}" data-lang-toggle hreflang="es" lang="es"><span data-i18n="lang_toggle">{{lang_toggle}}</span></a>
+    </div>
+  </div>
+</header>
+<main class="ty__main">
+  <div class="wrap ty__box">
+    <p class="eyebrow" data-i18n="eyebrow">{{eyebrow}}</p>
+    <h1 data-i18n="ty_h1">{{ty_h1}}</h1>
+    <p class="lead" data-i18n="ty_body">{{ty_body}}</p>
+    <p class="form-note" data-i18n="ty_hours">{{ty_hours}}</p>
+    <div class="final__btns">
+      <a class="btn btn--accent" href="tel:{{site.phoneTel}}" data-track="phone_click"><span data-i18n="ty_save">{{ty_save}}</span>: {{site.phoneDisplay}}</a>
+      <a class="btn btn--ghost btn--dark" href="{{site.pathPrefix}}/" data-back data-i18n="ty_back">{{ty_back}}</a>
+    </div>
+  </div>
+</main>
+<footer class="ftr">
+  <div class="wrap">
+    <p class="ftr__firm">Robert Hindin &amp; Associates</p>
+    <p data-i18n="footer_office">{{footer_office}}</p>
+    <p data-i18n="footer_hours">{{footer_hours}}</p>
+    <p class="ftr__ad" data-i18n="footer_ad">{{footer_ad}}</p>
+    <p class="ftr__copy" data-i18n="footer_copy">{{footer_copy}}</p>
+  </div>
+</footer>
+<script>window.__RHA_I18N={{page.i18nJson}};</script>
+<script src="{{site.pathPrefix}}/assets/lander.js"></script>
+</body>
+</html>

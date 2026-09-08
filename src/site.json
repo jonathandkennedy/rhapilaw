@@ -1,0 +1,21 @@
+{
+  "firm": "Robert Hindin & Associates",
+  "firmShort": "Hindin Law",
+  "phoneDisplay": "(310) 473-0337",
+  "phoneTel": "+13104730337",
+  "office": {
+    "street": "11400 W Olympic Blvd, Suite 200",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zip": "90064"
+  },
+  "hours": "Mo-Fr 08:00-17:00",
+  "rating": "5.0",
+  "reviewCount": "130",
+  "baseUrl": "https://rhapilaw.com",
+  "pathPrefix": "",
+  "formEndpoint": "",
+  "thankYouPath": "/thank-you/",
+  "gtmId": "",
+  "index": true
+}

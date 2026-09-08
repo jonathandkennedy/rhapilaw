@@ -1,0 +1,153 @@
+[
+  {
+    "slug": "compton",
+    "name": "Compton",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Compton and the 91 / 110 / 710 / Alameda corridor.",
+    "local_en": "Alameda and 710 cameras overwrite in days. If you crashed in Compton, the letters go out now.",
+    "serve_es": "Sirviendo Compton y el corredor 91 / 110 / 710 / Alameda.",
+    "local_es": "Las cámaras de Alameda y de la 710 se borran en días. Si chocó en Compton, las cartas salen ya."
+  },
+  {
+    "slug": "huntington-park",
+    "name": "Huntington Park",
+    "defaultLang": "es",
+    "spanishAds": true,
+    "serve_en": "Serving Huntington Park, Florence / 710 / 110.",
+    "local_en": "Hablamos español. Ismael is on the team. Florence and the 710 don't wait.",
+    "serve_es": "Sirviendo Huntington Park, Florence / 710 / 110.",
+    "local_es": "Hablamos español. Ismael está en el equipo. Florence y la 710 no esperan."
+  },
+  {
+    "slug": "van-nuys",
+    "name": "Van Nuys",
+    "defaultLang": "en",
+    "spanishAds": false,
+    "serve_en": "Serving Van Nuys and the 405 / 101 corridor.",
+    "local_en": "A crash on Van Nuys Blvd isn't a \"fender bender\" to the adjuster. We preserve the video now.",
+    "serve_es": "Sirviendo Van Nuys y el corredor de la 405 / 101.",
+    "local_es": "Un choque en Van Nuys Blvd no es “un toquecito” para el ajustador. Conservamos el video ya."
+  },
+  {
+    "slug": "pomona",
+    "name": "Pomona",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Pomona and the 10 / 57 / 60 / 210 freeways.",
+    "local_en": "Pomona is the east end of the county. Same insurers, same delay. Real office in West LA.",
+    "serve_es": "Sirviendo Pomona y las freeways 10 / 57 / 60 / 210.",
+    "local_es": "Pomona es el este del condado. Misma aseguradora, mismo retraso. Oficina real en West LA."
+  },
+  {
+    "slug": "palmdale",
+    "name": "Palmdale",
+    "defaultLang": "en",
+    "spanishAds": false,
+    "serve_en": "Serving Palmdale and the Antelope Valley, the 14 freeway.",
+    "local_en": "The drive to the doctor is long. That's part of the damages too. We document it.",
+    "serve_es": "Sirviendo Palmdale y el Valle del Antílope, freeway 14.",
+    "local_es": "El viaje al doctor es largo. Eso también es parte del daño. Lo documentamos."
+  },
+  {
+    "slug": "hawthorne",
+    "name": "Hawthorne",
+    "defaultLang": "en",
+    "spanishAds": false,
+    "serve_en": "Serving Hawthorne and the South Bay, 405 / 105.",
+    "local_en": "LAX traffic. It's not a \"soft tissue\" claim the adjuster gets to forget.",
+    "serve_es": "Sirviendo Hawthorne y South Bay, 405 / 105.",
+    "local_es": "Tráfico de LAX. No es un “tejido suave” que se le olvide al ajustador."
+  },
+  {
+    "slug": "downey",
+    "name": "Downey",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Downey and the 5 / 605 / 105.",
+    "local_en": "We're the West LA firm that actually takes Downey crashes.",
+    "serve_es": "Sirviendo Downey y las 5 / 605 / 105.",
+    "local_es": "Somos la firma de West LA que sí toma los choques de Downey."
+  },
+  {
+    "slug": "inglewood",
+    "name": "Inglewood",
+    "defaultLang": "en",
+    "spanishAds": false,
+    "serve_en": "Serving Inglewood, Century and the 405.",
+    "local_en": "Stadium and airport traffic. Same insurance playbook.",
+    "serve_es": "Sirviendo Inglewood, Century y la 405.",
+    "local_es": "Tráfico del estadio y del aeropuerto. Mismo manual de la aseguradora."
+  },
+  {
+    "slug": "paramount",
+    "name": "Paramount",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Paramount, 105 / 710.",
+    "local_en": "Small city, same insurers, same stall tactic.",
+    "serve_es": "Sirviendo Paramount, 105 / 710.",
+    "local_es": "Ciudad chica, mismas aseguradoras, misma táctica de alargar."
+  },
+  {
+    "slug": "baldwin-park",
+    "name": "Baldwin Park",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Baldwin Park and the 10 corridor.",
+    "local_en": "SGV commuters and delivery trucks. Every policy has to be identified.",
+    "serve_es": "Sirviendo Baldwin Park y el corredor de la 10.",
+    "local_es": "SGV, tráficos y camiones de entrega. Hay que identificar a cada póliza."
+  },
+  {
+    "slug": "bellflower",
+    "name": "Bellflower",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Bellflower, 91 / 605.",
+    "local_en": "We take the insurance company's calls so you can go to therapy.",
+    "serve_es": "Sirviendo Bellflower, 91 / 605.",
+    "local_es": "Nosotros tomamos las llamadas de la aseguradora para que usted vaya a terapia."
+  },
+  {
+    "slug": "lynwood",
+    "name": "Lynwood",
+    "defaultLang": "es",
+    "spanishAds": true,
+    "serve_en": "Serving Lynwood, 105 / 710 / Imperial.",
+    "local_en": "Your immigration status doesn't take away your claim in California. Call.",
+    "serve_es": "Sirviendo Lynwood, 105 / 710 / Imperial.",
+    "local_es": "Su estatus no le quita el reclamo en California. Llame."
+  },
+  {
+    "slug": "norwalk",
+    "name": "Norwalk",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Norwalk, 5 / 105 / 605.",
+    "local_en": "A crash in the 562 doesn't get \"fixed\" with a recorded statement.",
+    "serve_es": "Sirviendo Norwalk, 5 / 105 / 605.",
+    "local_es": "Un choque en el 562 no se “arregla” con una declaración grabada."
+  },
+  {
+    "slug": "pico-rivera",
+    "name": "Pico Rivera",
+    "defaultLang": "en",
+    "spanishAds": true,
+    "serve_en": "Serving Pico Rivera, 605 / Whittier / Washington.",
+    "local_en": "Same insurers as downtown. Different zip. Same fight.",
+    "serve_es": "Sirviendo Pico Rivera, 605 / Whittier / Washington.",
+    "local_es": "Mismas aseguradoras que en el centro. Distinto zip. Misma pelea."
+  },
+  {
+    "slug": "",
+    "name": "Los Angeles",
+    "defaultLang": "en",
+    "spanishAds": false,
+    "isDefault": true,
+    "serve_en": "Serving Los Angeles from our office on Olympic Blvd.",
+    "local_en": "405, 10, 101, 110, 710. This city's traffic is no excuse for underpaying you.",
+    "serve_es": "Sirviendo Los Ángeles desde nuestra oficina en Olympic Blvd.",
+    "local_es": "405, 10, 101, 110, 710. El tráfico de esta ciudad no es una excusa para que le paguen de menos."
+  }
+]
