@@ -22,18 +22,120 @@
     </div>
   </div>
 </header>
-<main class="ty__main">
-  <div class="wrap ty__box">
-    <p class="eyebrow" data-i18n="eyebrow">{{eyebrow}}</p>
-    <h1 data-i18n="ty_h1">{{ty_h1}}</h1>
-    <p class="lead" data-i18n="ty_body">{{ty_body}}</p>
-    <p class="form-note" data-i18n="ty_hours">{{ty_hours}}</p>
-    <div class="final__btns">
-      <a class="btn btn--accent" href="tel:{{site.phoneTel}}" data-track="phone_click"><span data-i18n="ty_save">{{ty_save}}</span>: {{site.phoneDisplay}}</a>
-      <a class="btn btn--ghost btn--dark" href="{{site.pathPrefix}}/" data-back data-i18n="ty_back">{{ty_back}}</a>
+
+<main>
+<section class="ty__hero">
+  <div class="wrap ty__grid">
+    <div class="ty__box">
+      <p class="eyebrow" data-i18n="ty_eyebrow">{{ty_eyebrow}}</p>
+      <h1 data-i18n="ty_h1">{{ty_h1}}</h1>
+      <p class="lead" data-i18n="ty_body">{{ty_body}}</p>
+      <p class="form-note" data-i18n="ty_hours">{{ty_hours}}</p>
+      <div class="ty__btns">
+        <a class="btn btn--accent" href="tel:{{site.phoneTel}}" data-track="phone_click"><span data-i18n="ty_call_btn">{{ty_call_btn}}</span> · {{site.phoneDisplay}}</a>
+        <a class="btn btn--ghost btn--dark" href="{{site.pathPrefix}}/assets/rha.vcf" download="Robert-Hindin-Associates.vcf" data-track="vcard" data-i18n="ty_vcard">{{ty_vcard}}</a>
+      </div>
+    </div>
+    <div class="card qual">
+      <h2 data-i18n="ty_q_h2">{{ty_q_h2}}</h2>
+      <p class="qual__sub" data-i18n="ty_q_sub">{{ty_q_sub}}</p>
+      <form class="qual-form" method="post" action="{{page.formAction}}" data-endpoint="{{site.formEndpoint}}" novalidate>
+        <input type="hidden" name="lang" value="en">
+        <input type="hidden" name="type" value="lead_details">
+        <input type="hidden" name="name" value="">
+        <input type="hidden" name="phone" value="">
+        <input type="hidden" name="city" value="">
+        <input type="hidden" name="kw" value="">
+        <fieldset class="q">
+          <legend data-i18n="ty_q1">{{ty_q1}}</legend>
+          <div class="q__opts">
+            <label><input type="radio" name="when" value="today"><span data-i18n="ty_q1_a">{{ty_q1_a}}</span></label>
+            <label><input type="radio" name="when" value="this_week"><span data-i18n="ty_q1_b">{{ty_q1_b}}</span></label>
+            <label><input type="radio" name="when" value="this_month"><span data-i18n="ty_q1_c">{{ty_q1_c}}</span></label>
+            <label><input type="radio" name="when" value="over_month"><span data-i18n="ty_q1_d">{{ty_q1_d}}</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="q">
+          <legend data-i18n="ty_q2">{{ty_q2}}</legend>
+          <div class="q__opts">
+            <label><input type="radio" name="doctor" value="yes"><span data-i18n="ty_q2_a">{{ty_q2_a}}</span></label>
+            <label><input type="radio" name="doctor" value="er"><span data-i18n="ty_q2_b">{{ty_q2_b}}</span></label>
+            <label><input type="radio" name="doctor" value="not_yet"><span data-i18n="ty_q2_c">{{ty_q2_c}}</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="q">
+          <legend data-i18n="ty_q3">{{ty_q3}}</legend>
+          <div class="q__opts">
+            <label><input type="radio" name="insurer" value="no"><span data-i18n="ty_q3_a">{{ty_q3_a}}</span></label>
+            <label><input type="radio" name="insurer" value="called"><span data-i18n="ty_q3_b">{{ty_q3_b}}</span></label>
+            <label><input type="radio" name="insurer" value="offered"><span data-i18n="ty_q3_c">{{ty_q3_c}}</span></label>
+          </div>
+        </fieldset>
+        <label class="field">
+          <span data-i18n="ty_q4">{{ty_q4}}</span>
+          <textarea name="story" rows="3" maxlength="1000" placeholder="{{ty_q4_ph}}" data-i18n-attr="placeholder:ty_q4_ph"></textarea>
+        </label>
+        <p class="form-err" role="alert" hidden></p>
+        <button type="submit" class="btn btn--accent btn--wide" data-i18n="ty_q_submit">{{ty_q_submit}}</button>
+      </form>
+      <p class="qual__done" hidden><span data-i18n="ty_q_done">{{ty_q_done}}</span></p>
     </div>
   </div>
+</section>
+
+<section class="steps">
+  <div class="wrap">
+    <h2 data-i18n="ty_next_h2">{{ty_next_h2}}</h2>
+    <ol class="steps__list">
+      <li><h3 data-i18n="ty_next_1_t">{{ty_next_1_t}}</h3><p data-i18n="ty_next_1_b">{{ty_next_1_b}}</p></li>
+      <li><h3 data-i18n="ty_next_2_t">{{ty_next_2_t}}</h3><p data-i18n="ty_next_2_b">{{ty_next_2_b}}</p></li>
+      <li><h3 data-i18n="ty_next_3_t">{{ty_next_3_t}}</h3><p data-i18n="ty_next_3_b">{{ty_next_3_b}}</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="who ty__about">
+  <div class="wrap ty__about-grid">
+    <figure class="ty__photo">
+      <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" data-i18n-attr="alt:hero_img_alt" width="1080" height="1080" loading="lazy">
+      <figcaption data-i18n="hero_photo_cap">{{hero_photo_cap}}</figcaption>
+    </figure>
+    <div>
+      <h2 data-i18n="ty_about_h2">{{ty_about_h2}}</h2>
+      <p class="lead" data-i18n="ty_about_p">{{ty_about_p}}</p>
+      <div class="who__grid who__grid--stack">
+        <div class="who__card"><h3 data-i18n="who_kyle_n">{{who_kyle_n}}</h3><p data-i18n="who_kyle">{{who_kyle}}</p></div>
+        <div class="who__card"><h3 data-i18n="who_robert_n">{{who_robert_n}}</h3><p data-i18n="who_robert">{{who_robert}}</p></div>
+        <div class="who__card"><h3 data-i18n="who_team_n">{{who_team_n}}</h3><p data-i18n="who_team">{{who_team}}</p></div>
+      </div>
+      <p class="badges" data-i18n="who_badges">{{who_badges}}</p>
+      <div class="result result--compact">
+        <div class="result__row"><span data-i18n="res_offer_label">{{res_offer_label}}</span><strong class="result__offer" data-i18n="res_offer">{{res_offer}}</strong></div>
+        <div class="result__row result__row--win"><span data-i18n="res_result_label">{{res_result_label}}</span><strong class="result__win" data-i18n="res_result">{{res_result}}</strong></div>
+      </div>
+      <p class="disc" data-i18n="res_disc">{{res_disc}}</p>
+      <div class="ty__links">
+        <a class="btn btn--accent btn--big" href="{{page.corporateHref}}" target="_blank" rel="noopener" data-track="corporate_click" data-i18n="ty_site_btn">{{ty_site_btn}}</a>
+        <p class="ty__links-sub" data-i18n="ty_site_sub">{{ty_site_sub}}</p>
+        <a class="btn btn--ghost btn--dark" href="{{page.reviewsHref}}" target="_blank" rel="noopener" data-track="reviews_click" data-i18n="ty_reviews_btn" {{page.reviewsHidden}}>{{ty_reviews_btn}}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="wrap">
+    <h2 data-i18n="rev_h2">{{rev_h2}}</h2>
+    <p class="rev-frame" data-i18n="rev_frame">{{rev_frame}}</p>
+    <div class="rev__grid">
+      <blockquote class="rev" lang="en"><p class="rev__q" data-i18n="rev_1_q">{{rev_1_q}}</p><footer><cite data-i18n="rev_1_n">{{rev_1_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer></blockquote>
+      <blockquote class="rev" lang="en"><p class="rev__q" data-i18n="rev_2_q">{{rev_2_q}}</p><footer><cite data-i18n="rev_2_n">{{rev_2_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer></blockquote>
+      <blockquote class="rev" lang="en"><p class="rev__q" data-i18n="rev_3_q">{{rev_3_q}}</p><footer><cite data-i18n="rev_3_n">{{rev_3_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer></blockquote>
+    </div>
+  </div>
+</section>
 </main>
+
 <footer class="ftr">
   <div class="wrap">
     <p class="ftr__firm">Robert Hindin &amp; Associates</p>
@@ -43,7 +145,7 @@
     <p class="ftr__copy" data-i18n="footer_copy">{{footer_copy}}</p>
   </div>
 </footer>
-<script>window.__RHA_I18N={{page.i18nJson}};</script>
+<script>window.__RHA_I18N={{page.i18nJson}};window.__RHA_KW={{page.kwJson}};</script>
 <script src="{{site.pathPrefix}}/assets/lander.js"></script>
 </body>
 </html>

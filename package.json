@@ -8,5 +8,5 @@
     "qa": "node build.js && node qa.js",
     "serve": "node build.js && python3 -m http.server 8080 --directory dist"
   },
-  "engines": { "node": ">=18" }
+  "engines": { "node": "22.x" }
 }

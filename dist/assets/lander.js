@@ -87,6 +87,36 @@
     if (tel) track("phone_click", { href: tel.getAttribute("href") });
   });
 
+  // Thank-you page: optional qualifying questions, matched to the lead by phone.
+  var qual = document.querySelector("form.qual-form");
+  if (qual) {
+    var lead = {};
+    try { lead = JSON.parse(sessionStorage.getItem("rha_lead") || "{}") || {}; } catch (e) {}
+    ["name", "phone", "city", "kw"].forEach(function (k) { var i = qual.querySelector('input[name="' + k + '"]'); if (i && lead[k]) i.value = lead[k]; });
+    var backs = document.querySelectorAll("[data-back]");
+    for (var bb = 0; bb < backs.length; bb++) if (lead.city_slug) backs[bb].setAttribute("href", "/" + (lead.city_slug === "los-angeles" ? "" : lead.city_slug + "/"));
+    var qErr = qual.querySelector(".form-err"), qBtn = qual.querySelector('button[type="submit"]');
+    qual.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var s = I18N[root.getAttribute("data-lang")] || I18N[DEFAULT] || {};
+      var fd = new FormData(qual), data = {};
+      fd.forEach(function (v, k) { data[k] = v; });
+      var answered = data.when || data.doctor || data.insurer || (data.story && data.story.trim());
+      if (!answered) return;
+      data.lang = root.getAttribute("data-lang");
+      data.page = location.href;
+      data.submitted_at = new Date().toISOString();
+      data._subject = "Lead details: " + (data.city || "?") + " — " + (data.name || "?") + " " + (data.phone || "");
+      var endpoint = qual.getAttribute("data-endpoint") || "";
+      function ok() { qual.hidden = true; var d = document.querySelector(".qual__done"); if (d) d.hidden = false; track("lead_details", { when: data.when, doctor: data.doctor, insurer: data.insurer }); }
+      function bad() { qBtn.disabled = false; if (qErr) { qErr.textContent = s.ty_q_err || "That didn't go through."; qErr.hidden = false; } }
+      qBtn.disabled = true;
+      if (!endpoint) { ok(); return; }
+      fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
+        .then(function (r) { r.ok ? ok() : bad(); }).catch(bad);
+    });
+  }
+
   // Lead form
   var form = document.querySelector("form.lead-form");
   if (!form) return;
@@ -159,7 +189,11 @@
     var label = btn.innerHTML;
     btn.disabled = true; btn.innerHTML = s.form_sending || "Sending…";
 
-    function done() { track("lead_submit", { practice: payload.practice }); location.href = thanks; }
+    function done() {
+      try { sessionStorage.setItem("rha_lead", JSON.stringify({ name: name, phone: digits, city: payload.city, city_slug: payload.city_slug, lang: lang, kw: KW_TOKEN })); } catch (e) {}
+      track("lead_submit", { practice: payload.practice });
+      location.href = thanks;
+    }
     function fail() { btn.disabled = false; btn.innerHTML = label; showErr(s.form_err_send || "That didn't go through. Call (310) 473-0337."); track("lead_error"); }
 
     if (!endpoint) { done(); return; }

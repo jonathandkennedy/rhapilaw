@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;Robert Hindin & Associates;;;
+FN:Robert Hindin & Associates
+ORG:Robert Hindin & Associates
+TEL;TYPE=WORK,VOICE:+13104730337
+ADR;TYPE=WORK:;;11400 W Olympic Blvd, Suite 200;Los Angeles;CA;90064;USA
+URL:https://www.rhapilaw.com
+NOTE:Personal injury attorneys. Mon-Fri 8am-5pm.
+END:VCARD

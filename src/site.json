@@ -17,5 +17,7 @@
   "formEndpoint": "https://formspree.io/f/xqpkgbyg",
   "thankYouPath": "/thank-you/",
   "gtmId": "",
-  "index": true
+  "index": true,
+  "corporateUrl": "https://www.rhapilaw.com",
+  "googleReviewsUrl": ""
 }

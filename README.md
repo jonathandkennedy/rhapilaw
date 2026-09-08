@@ -35,7 +35,7 @@ Same system as the Goldberg hub. Not their copy, not their leaks.
 | `/norwalk/` | Norwalk | EN |
 | `/pico-rivera/` | Pico Rivera | EN |
 | `/` | Los Angeles (default) | EN |
-| `/thank-you/` | post-submit, `noindex` | EN, honours `?lang=es` |
+| `/thank-you/` | post-submit, `noindex`: confirmation, optional qualifying questions, what happens next, who we are, links to the corporate site, reviews | EN, honours `?lang=es` |
 
 Every page carries both languages. `?lang=es` forces Spanish, `?lang=en` forces English, the header toggle flips without reload and rewrites the URL.
 
@@ -87,6 +87,14 @@ qa.js                the checklist, automated
 ```
 
 then redirects to `/thank-you/?lang=<lang>`. When empty (staging) it redirects without posting. On a failed POST it shows the phone number instead of eating the lead. Honeypot field `website`. `dataLayer` events: `lead_submit`, `lead_error`, `phone_click`, `lang_toggle`, each carrying `lang`, `city`, `kw`.
+
+## Thank-you page
+
+After the lead posts, the page stores name/phone/city in `sessionStorage` and redirects to `/thank-you/?lang=<lang>`. There the person can answer four optional questions (when the crash was, seen a doctor, insurer contact, what happened). Those post to the same Formspree form as a second submission with subject "Lead details: <city> — <name> <phone>", so intake can match them to the lead. The page also offers a vCard (`assets/rha.vcf`), the three next steps, the firm bio and result, a "Find out more about us" button to `site.json → corporateUrl` (opens in a new tab with UTM tags), and the reviews. Set `googleReviewsUrl` to show a "Read our Google reviews" button; it stays hidden while empty.
+
+## Deploy (Vercel)
+
+`vercel.json` sets the output directory to `dist`, trailing slashes on (matches the canonicals), and cache headers for `/assets/`. Build command is `npm run build`. Node is pinned to 22.x.
 
 ## Keyword match (`?kw=`)
 

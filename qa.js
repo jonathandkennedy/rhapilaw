@@ -46,6 +46,10 @@ console.log("Spanish strings");
   ok(EN.res_offer === "$85,000" && EN.res_result === "$375,000", "results must be the one released case (EN)");
 }
 
+{
+  const ek = Object.keys(EN).filter(k => typeof EN[k] === "string"), sk = Object.keys(ES).filter(k => typeof ES[k] === "string");
+  ok(ek.every(k => k in ES) && sk.every(k => k in EN), "EN/ES key parity: " + ek.filter(k => !(k in ES)).concat(sk.filter(k => !(k in EN))).join(","));
+}
 console.log("Keyword allowlist");
 for (const k of Object.keys(KW)) {
   if (k === "_note") continue;
@@ -115,6 +119,11 @@ for (const c of cities) {
   const i18n = m ? JSON.parse(m[1].replace(/<\\\//g, "</")) : { es: {} };
   ok(i18n.es.ty_h1 === ES.ty_h1, "thank-you: ES h1 bundled for ?lang=es");
   ok(html.includes('data-default-lang="en"') && /new URLSearchParams\(location\.search\)\.get\("lang"\)/.test(html), "thank-you: respects ?lang=");
+  ok(/class="qual-form"/.test(html) && html.includes('name="story"'), "thank-you: qualifying form present");
+  ok(/href="https:\/\/www\.rhapilaw\.com\?utm_source=lander[^"]*" target="_blank" rel="noopener"/.test(html), "thank-you: corporate link with UTM, new tab");
+  ok(html.includes('href="/assets/rha.vcf"') && fs.existsSync(path.join(DIST, "assets/rha.vcf")), "thank-you: vCard");
+  ok(i18n.es.ty_q_h2 && !/\b(tú|contigo)\b/i.test(JSON.stringify(i18n.es)), "thank-you: ES strings usted-only");
+  ok(!/24\/7/.test(strip(html)), "thank-you: 24/7");
 }
 
 console.log(`\n${checks} checks, ${fails} failures`);

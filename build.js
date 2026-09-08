@@ -142,8 +142,21 @@ function buildThankYou() {
   const s = stringsFor("en", la);
   const i18n = { en: stringsFor("en", la), es: stringsFor("es", la) };
   const g = gtm();
-  const page = { i18nJson: jsonForScript(i18n), toggleHref: prefix + site.thankYouPath + "?lang=es", gtmHead: g.head, gtmBody: g.body };
-  const html = render(tyTemplate, Object.assign({}, s, { page, site }));
+  const utm = "utm_source=lander&utm_medium=thankyou&utm_campaign=city-landers";
+  const link = u => u ? u + (u.includes("?") ? "&" : "?") + utm : "";
+  const page = {
+    i18nJson: jsonForScript(i18n),
+    kwJson: jsonForScript(KW),
+    toggleHref: prefix + site.thankYouPath + "?lang=es",
+    formAction: site.formEndpoint || (prefix + site.thankYouPath),
+    corporateHref: link(site.corporateUrl),
+    reviewsHref: link(site.googleReviewsUrl),
+    reviewsHidden: site.googleReviewsUrl ? "" : "hidden",
+    gtmHead: g.head, gtmBody: g.body,
+  };
+  const ctx = Object.assign({}, s, { page, site });
+  ctx.hero_img_alt = esc(s.hero_img_alt); ctx.ty_q4_ph = esc(s.ty_q4_ph);
+  const html = render(tyTemplate, ctx);
   const dir = path.join(OUT, site.thankYouPath.replace(/^\/|\/$/g, ""));
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), html);
