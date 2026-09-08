@@ -14,7 +14,7 @@
   "reviewCount": "130",
   "baseUrl": "https://rhapilaw.com",
   "pathPrefix": "",
-  "formEndpoint": "",
+  "formEndpoint": "https://formspree.io/f/xqpkgbyg",
   "thankYouPath": "/thank-you/",
   "gtmId": "",
   "index": true

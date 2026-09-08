@@ -151,7 +151,8 @@
       source: srcIn ? srcIn.value : "",
       kw: KW_TOKEN,
       submitted_at: new Date().toISOString(),
-      tcpa: s.form_tcpa ? s.form_tcpa.replace(/<[^>]+>/g, "") : ""
+      tcpa: s.form_tcpa ? s.form_tcpa.replace(/<[^>]+>/g, "") : "",
+      _subject: "New lead: " + form.querySelector('input[name="city"]').value + " (" + lang.toUpperCase() + (KW_TOKEN ? ", " + KW_TOKEN : "") + ") — " + name
     };
     var endpoint = form.getAttribute("data-endpoint") || "";
     var thanks = withLang(form.getAttribute("data-thankyou") || "/thank-you/", lang);

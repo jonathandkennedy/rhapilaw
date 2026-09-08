@@ -78,11 +78,12 @@ qa.js                the checklist, automated
 
 ## Form
 
-`site.json → formEndpoint`. When set, the form POSTs JSON:
+`site.json → formEndpoint` is set to the firm's Formspree form (`https://formspree.io/f/xqpkgbyg`). The form POSTs JSON:
 
 ```json
 { "name", "phone" (10 digits), "phone_display", "lang", "city", "city_slug",
-  "practice": "car", "page", "source" (UTM/gclid/referrer JSON), "kw", "submitted_at", "tcpa" }
+  "practice": "car", "page", "source" (UTM/gclid/referrer JSON), "kw", "submitted_at", "tcpa",
+  "_subject": "New lead: Compton (ES, rear-end) — <name>" }
 ```
 
 then redirects to `/thank-you/?lang=<lang>`. When empty (staging) it redirects without posting. On a failed POST it shows the phone number instead of eating the lead. Honeypot field `website`. `dataLayer` events: `lead_submit`, `lead_error`, `phone_click`, `lang_toggle`, each carrying `lang`, `city`, `kw`.
