@@ -63,12 +63,19 @@ function cityPath(city) { return city.slug ? `/${city.slug}/` : "/"; }
 function absUrl(p) { return site.baseUrl.replace(/\/$/, "") + prefix + p; }
 
 function gtm() {
-  if (!site.gtmId) return { head: "", body: "" };
-  const id = site.gtmId;
-  return {
-    head: `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${id}');</script>`,
-    body: `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${id}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`,
-  };
+  // Tag loading order: GTM if set (manage GA4/Ads inside the container); otherwise gtag.js directly with GA4 and/or Google Ads IDs.
+  let head = "", body = "";
+  if (site.gtmId) {
+    const id = site.gtmId;
+    head += `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${id}');</script>`;
+    body += `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${id}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
+  }
+  const ids = [site.ga4Id, site.googleAdsId].filter(Boolean);
+  if (!site.gtmId && ids.length) {
+    head += `<script async src="https://www.googletagmanager.com/gtag/js?id=${ids[0]}"></script>`;
+    head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${ids.map(i => `gtag('config','${i}');`).join("")}</script>`;
+  }
+  return { head, body };
 }
 
 function jsonld(city, s) {

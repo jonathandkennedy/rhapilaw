@@ -97,6 +97,15 @@ After the lead posts, the page stores name/phone/city in `sessionStorage` and re
 
 `vercel.json` sets the output directory to `dist`, trailing slashes on (matches the canonicals), and cache headers for `/assets/`. Build command is `npm run build`. Node is pinned to 22.x.
 
+## Analytics
+
+Nothing is installed until an ID is set in `src/site.json`:
+
+- `gtmId` (`GTM-XXXXXXX`): loads Google Tag Manager on every page. Manage GA4 and Google Ads inside the container; page events arrive as Custom Event triggers.
+- `ga4Id` (`G-XXXXXXXXXX`) and/or `googleAdsId` (`AW-XXXXXXXXX`): used only when `gtmId` is empty. Loads gtag.js directly and sends page events as GA4 events.
+
+Events fired by the pages, each with `lang`, `city`, `kw`: `lead_submit` (the conversion), `lead_details`, `lead_error`, `phone_click`, `lang_toggle`, `vcard`, `corporate_click`, `reviews_click`. Mark `lead_submit` and `phone_click` as conversions in GA4 / import them into Google Ads.
+
 ## Keyword match (`?kw=`)
 
 Page-side dynamic keyword insertion, allowlisted. `?kw=rear-end` (or `utm_term` when it exactly matches a token) swaps only the first sentence of the hero subhead, in whichever language is showing. Tokens live in `src/keywords.json`:
