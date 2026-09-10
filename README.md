@@ -99,12 +99,13 @@ After the lead posts, the page stores name/phone/city in `sessionStorage` and re
 
 ## Analytics
 
-Nothing is installed until an ID is set in `src/site.json`:
+Configured in `src/site.json` and loaded on every page (landers, hub, thank-you):
 
-- `gtmId` (`GTM-XXXXXXX`): loads Google Tag Manager on every page. Manage GA4 and Google Ads inside the container; page events arrive as Custom Event triggers.
-- `ga4Id` (`G-XXXXXXXXXX`) and/or `googleAdsId` (`AW-XXXXXXXXX`): used only when `gtmId` is empty. Loads gtag.js directly and sends page events as GA4 events.
+- `ga4Id` = `G-K9CNL0LV5B`: the Google tag (gtag.js) loads directly, same as the snippet from the GA4 admin. Pageviews and the events below reach GA4 with no container work.
+- `gtmId` = `GTM-N7PDDTKX`: the Tag Manager container loads alongside it for tags added later (Google Ads, call tracking). **Do not add a GA4 configuration tag for G-K9CNL0LV5B inside the container**, or pageviews double-count. Page events are on the `dataLayer` as Custom Event triggers.
+- `googleAdsId` (`AW-…`): optional, added to the same gtag config when set.
 
-Events fired by the pages, each with `lang`, `city`, `kw`: `lead_submit` (the conversion), `lead_details`, `lead_error`, `phone_click`, `lang_toggle`, `vcard`, `corporate_click`, `reviews_click`. Mark `lead_submit` and `phone_click` as conversions in GA4 / import them into Google Ads.
+Events fired by the pages, each with `lang`, `city`, `kw`: `lead_submit` (the conversion), `lead_details`, `lead_error`, `phone_click`, `lang_toggle`, `vcard`, `corporate_click`, `reviews_click`. In GA4 → Admin → Events, mark `lead_submit` and `phone_click` as key events.
 
 ## Keyword match (`?kw=`)
 

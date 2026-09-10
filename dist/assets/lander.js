@@ -18,12 +18,11 @@
       window.dataLayer = window.dataLayer || [];
       var o = { event: ev, lang: root.getAttribute("data-lang"), city: root.getAttribute("data-city") || "", kw: KW_TOKEN };
       if (data) for (var k in data) o[k] = data[k];
-      if (typeof window.gtag === "function") { // gtag.js (GA4 direct): send as a GA4 event
+      if (typeof window.gtag === "function") { // GA4 direct: send as a GA4 event
         var params = {}; for (var pk in o) if (pk !== "event") params[pk] = o[pk];
         window.gtag("event", ev, params);
-      } else {
-        window.dataLayer.push(o); // GTM: pick up as a Custom Event trigger
       }
+      window.dataLayer.push(o); // GTM: available as a Custom Event trigger
     } catch (e) {}
   }
 

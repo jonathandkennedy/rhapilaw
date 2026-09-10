@@ -16,10 +16,10 @@
   "pathPrefix": "",
   "formEndpoint": "https://formspree.io/f/xqpkgbyg",
   "thankYouPath": "/thank-you/",
-  "gtmId": "",
+  "gtmId": "GTM-N7PDDTKX",
   "index": true,
   "corporateUrl": "https://www.rhapilaw.com",
   "googleReviewsUrl": "https://share.google/0slbBxFRLLynaT2Lt",
-  "ga4Id": "",
+  "ga4Id": "G-K9CNL0LV5B",
   "googleAdsId": ""
 }
