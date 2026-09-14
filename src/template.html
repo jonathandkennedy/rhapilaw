@@ -1,17 +1,14 @@
 <!doctype html>
-<html lang="{{html_lang}}" data-lang="{{html_lang}}" data-default-lang="{{page.defaultLang}}" data-city="{{page.name}}" data-city-slug="{{page.slugOrDefault}}">
+<html lang="{{page.lang}}" data-lang="{{page.lang}}" data-city="{{page.name}}" data-city-slug="{{page.slug}}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){var d=document.documentElement,q=null;try{q=new URLSearchParams(location.search).get("lang")}catch(e){}var def=d.getAttribute("data-default-lang");var l=(q==="es"||q==="en")?q:def;d.setAttribute("lang",l);d.setAttribute("data-lang",l);if(l!==def){d.classList.add("lang-pending")}})();</script>
-<style>.lang-pending body{visibility:hidden}</style>
+<script>(function(){try{var q=new URLSearchParams(location.search),l=q.get("lang");if(!l)return;var p=location.pathname,es=/^\/es(\/|$)/.test(p);if(l==="es"&&!es){q.delete("lang");location.replace("/es"+p+(q.toString()?"?"+q:"")+location.hash)}else if(l==="en"&&es){q.delete("lang");location.replace(p.replace(/^\/es/,"")+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}})();</script>
 <title data-i18n="meta_title">{{meta_title}}</title>
 <meta name="description" content="{{meta_desc}}" data-i18n-attr="content:meta_desc">
 <meta name="robots" content="{{page.robots}}">
 <link rel="canonical" href="{{page.canonical}}">
-<link rel="alternate" hreflang="en" href="{{page.urlEn}}">
-<link rel="alternate" hreflang="es" href="{{page.urlEs}}">
-<link rel="alternate" hreflang="x-default" href="{{page.urlEn}}">
+{{page.hreflang}}
 <meta property="og:type" content="website">
 <meta property="og:title" content="{{meta_title}}" data-i18n-attr="content:meta_title">
 <meta property="og:description" content="{{meta_desc}}" data-i18n-attr="content:meta_desc">
@@ -28,7 +25,7 @@
 
 <header class="hdr">
   <div class="wrap hdr__in">
-    <a class="logo" href="{{site.pathPrefix}}/" aria-label="Robert Hindin &amp; Associates">
+    <a class="logo" href="{{page.hubHref}}" aria-label="Robert Hindin &amp; Associates">
       <img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180">
     </a>
     <div class="hdr__right">
@@ -37,7 +34,7 @@
         <span class="hdr__sub" data-i18n="call_sub">{{call_sub}}</span>
       </a>
       <a class="btn btn--accent hdr__cta" href="#lead" data-i18n="header_cta">{{header_cta}}</a>
-      <a class="lang" href="{{page.toggleHref}}" data-lang-toggle hreflang="{{page.toggleLang}}" lang="{{page.toggleLang}}" aria-label="{{lang_toggle_aria}}" data-i18n-attr="aria-label:lang_toggle_aria"><span data-i18n="lang_toggle">{{lang_toggle}}</span></a>
+      <a class="lang" href="{{page.toggleHref}}" hreflang="{{page.toggleLang}}" lang="{{page.toggleLang}}" aria-label="{{lang_toggle_aria}}">{{lang_toggle}}</a>
     </div>
   </div>
 </header>
@@ -75,9 +72,9 @@
         <p class="form-card__sub" data-i18n="form_sub">{{form_sub}}</p>
         <p class="chip" data-i18n="form_chip">{{form_chip}}</p>
         <form class="lead-form" method="post" action="{{page.formAction}}" data-endpoint="{{site.formEndpoint}}" data-thankyou="{{page.thankYouUrl}}" novalidate>
-          <input type="hidden" name="lang" value="{{html_lang}}">
+          <input type="hidden" name="lang" value="{{page.lang}}">
           <input type="hidden" name="city" value="{{page.name}}">
-          <input type="hidden" name="city_slug" value="{{page.slugOrDefault}}">
+          <input type="hidden" name="city_slug" value="{{page.slug}}">
           <input type="hidden" name="practice" value="car">
           <input type="hidden" name="page" value="{{page.canonical}}">
           <input type="hidden" name="source" value="">
@@ -273,23 +270,14 @@
 </section>
 </main>
 
-<footer class="ftr">
-  <div class="wrap">
-    <p class="ftr__firm">Robert Hindin &amp; Associates</p>
-    <p data-i18n="footer_office">{{footer_office}}</p>
-    <p data-i18n="footer_hours">{{footer_hours}}</p>
-    <p data-i18n="footer_sol">{{footer_sol}}</p>
-    <p class="ftr__ad" data-i18n="footer_ad">{{footer_ad}}</p>
-    <p class="ftr__copy" data-i18n="footer_copy">{{footer_copy}}</p>
-  </div>
-</footer>
+{{page.footer}}
 
 <div class="sticky" aria-hidden="false">
   <a class="sticky__call" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="sticky_call">{{sticky_call}}</a>
   <a class="sticky__form" href="#lead" data-i18n="sticky_form">{{sticky_form}}</a>
 </div>
 
-<script>window.__RHA_I18N={{page.i18nJson}};window.__RHA_KW={{page.kwJson}};</script>
+<script>window.__RHA_S={{page.strJson}};window.__RHA_KW={{page.kwJson}};</script>
 <script src="{{site.pathPrefix}}/assets/lander.js"></script>
 </body>
 </html>

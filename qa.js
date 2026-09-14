@@ -1,139 +1,138 @@
 #!/usr/bin/env node
-/* Spanish QA checklist (§7.15) run against dist/. Exit 1 on any failure.
- * Also checks the English side for the locked-in facts (phone, office, hours, no 24/7).
- */
+/* QA for dist/: Spanish checklist (§7.15), locked facts, hreflang/canonical integrity, footer, legal pages. Exit 1 on failure. */
 "use strict";
 const fs = require("fs");
 const path = require("path");
 const DIST = path.resolve(__dirname, process.argv[2] || "dist");
+const site = JSON.parse(fs.readFileSync(path.join(__dirname, "src/site.json"), "utf8"));
 const cities = JSON.parse(fs.readFileSync(path.join(__dirname, "src/cities.json"), "utf8"));
 const ES = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/es.json"), "utf8"));
 const EN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/en.json"), "utf8"));
 const KW = JSON.parse(fs.readFileSync(path.join(__dirname, "src/keywords.json"), "utf8"));
 const PHONE = "(310) 473-0337";
+const BASE = site.baseUrl.replace(/\/$/, "");
 let fails = 0, checks = 0;
 function ok(cond, msg) { checks++; if (!cond) { fails++; console.log("  FAIL  " + msg); } }
 function strip(html) { return html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " "); }
 function flat(o) { return Object.keys(o).filter(k => typeof o[k] === "string").map(k => [k, o[k]]); }
+function read(p) { return fs.readFileSync(path.join(DIST, p.replace(/^\//, ""), "index.html"), "utf8"); }
+const TU = /\b(tú|ti|contigo|tuyo|tuya|tuyos|tuyas|tu|tus|te)\b/i;
 
-// ---- String-level checks on the Spanish master (independent of city) ----
 console.log("Spanish strings");
 {
-  // No tú anywhere. Words that only exist in tú-register: tú, ti, contigo, tuyo/a, and unaccented "tu/tus" as possessives.
-  const TU = /\b(tú|ti|contigo|tuyo|tuya|tuyos|tuyas|tu|tus|te)\b/i;
-  for (const [k, v] of flat(ES)) {
-    const txt = v.replace(/<[^>]+>/g, " ");
-    ok(!TU.test(txt), `es.${k} uses tú-register: "${(txt.match(TU) || [])[0]}"`);
-  }
-  // Translator-speak / Spain-isms / bill-sounding phrases from the Don't column
+  for (const [k, v] of flat(ES)) ok(!TU.test(v.replace(/<[^>]+>/g, " ")), `es.${k} uses tú-register: "${(v.match(TU) || [])[0]}"`);
   const BAD = [/\bevaluaci[oó]n\b/i, /\bbufete\b/i, /sin cargos hasta ganar/i, /Comptonía/i, /Parque Huntington/i, /24\s*\/\s*7/, /las 24 horas/i];
   for (const [k, v] of flat(ES)) for (const re of BAD) ok(!re.test(v), `es.${k} matches banned phrase ${re}`);
-  // "Compañía de seguros" at most once across the page copy
-  const cds = flat(ES).map(([, v]) => v).join(" ").match(/compañía de seguros/gi) || [];
-  ok(cds.length <= 1, `"compañía de seguros" appears ${cds.length}× (limit 1)`);
-  // Goldberg Spanish H1 must not ship
+  ok((flat(ES).map(([, v]) => v).join(" ").match(/compañía de seguros/gi) || []).length <= 1, `"compañía de seguros" over limit`);
   ok(!/Lesionado en un accidente de auto en/i.test(ES.hero_h1), "hero_h1 is the Goldberg H1");
-  // City at the end of the H1's first clause
-  ok(/en \{City\}\./.test(ES.hero_h1), "hero_h1 does not end its first line with 'en {City}.'");
-  // Phone present in the places that must carry it
-  for (const k of ["form_tcpa", "hero_call", "form_orcall", "footer_office", "final_p", "ty_body"]) ok(ES[k].includes(PHONE), `es.${k} missing ${PHONE}`);
-  ok(/Robert Hindin/.test(ES.footer_ad) && /Publicidad de abogados/.test(ES.footer_ad), "footer_ad: responsible attorney / advertising line");
-  ok(/Ismael/.test(ES.ismael) && /Ismael/.test(ES.faq_5_a), "Ismael missing from ismael line / FAQ 5");
-  ok(/papeles/.test(ES.faq_5_q) && /emergencia/.test(ES.faq_5_q) && /ingl[eé]s/.test(ES.faq_5_q), "FAQ 5 must cover papeles / emergencia / idioma");
-  ok(/8am–5pm/.test(ES.hours) && /8am–5pm/.test(ES.footer_hours), "hours not Mon–Fri 8–5");
+  ok(/en \{City\}\./.test(ES.hero_h1), "hero_h1 must end its first line with 'en {City}.'");
+  for (const k of ["form_tcpa", "hero_call", "form_orcall", "footer_office", "final_p", "ty_body"]) ok(ES[k].includes(PHONE), `es.${k} missing phone`);
+  ok(/Robert Hindin/.test(ES.footer_ad) && /Publicidad de abogados/.test(ES.footer_ad), "footer_ad: responsible attorney");
+  ok(/Ismael/.test(ES.ismael) && /Ismael/.test(ES.faq_5_a), "Ismael missing");
+  ok(/papeles/.test(ES.faq_5_q) && /emergencia/.test(ES.faq_5_q) && /ingl[eé]s/.test(ES.faq_5_q), "FAQ 5 coverage");
+  ok(/8am–5pm/.test(ES.hours) && /8am–5pm/.test(ES.footer_hours), "hours");
   ok(!/24\/7/.test(JSON.stringify(EN)), "EN copy ships 24/7");
-  ok(ES.res_offer === "$85,000" && ES.res_result === "$375,000", "results must be the one released case");
-  ok(EN.res_offer === "$85,000" && EN.res_result === "$375,000", "results must be the one released case (EN)");
-}
-
-{
+  ok(ES.res_offer === "$85,000" && ES.res_result === "$375,000" && EN.res_offer === "$85,000" && EN.res_result === "$375,000", "results must be the one released case");
   const ek = Object.keys(EN).filter(k => typeof EN[k] === "string"), sk = Object.keys(ES).filter(k => typeof ES[k] === "string");
   ok(ek.every(k => k in ES) && sk.every(k => k in EN), "EN/ES key parity: " + ek.filter(k => !(k in ES)).concat(sk.filter(k => !(k in EN))).join(","));
+  for (const f of ["privacy.es.html", "terms.es.html"]) {
+    const txt = fs.readFileSync(path.join(__dirname, "src/legal", f), "utf8").replace(/<[^>]+>/g, " ");
+    ok(!TU.test(txt), `legal/${f} uses tú-register: "${(txt.match(TU) || [])[0]}"`);
+  }
 }
+
 console.log("Keyword allowlist");
 for (const k of Object.keys(KW)) {
   if (k === "_note") continue;
-  ok(/^[a-z0-9-]+$/.test(k), `keywords.${k}: token must be lowercase a-z0-9-`);
+  ok(/^[a-z0-9-]+$/.test(k), `keywords.${k}: token charset`);
   ok(typeof KW[k].en === "string" && typeof KW[k].es === "string", `keywords.${k}: needs en + es`);
-  ok(!/\b(tú|ti|contigo|tuyo|tuya|tu|tus|te)\b/i.test(KW[k].es || ""), `keywords.${k}: tú-register in ES`);
-  ok(/\.$/.test(KW[k].en) && /\.$/.test(KW[k].es), `keywords.${k}: sentence must end with a period (it precedes the subhead)`);
+  ok(!TU.test(KW[k].es || ""), `keywords.${k}: tú-register`);
+  ok(/\.$/.test(KW[k].en) && /\.$/.test(KW[k].es), `keywords.${k}: must end with a period`);
 }
 
-// ---- Per-city checks on built HTML ----
 console.log("Built pages");
 const spanishDefault = cities.filter(c => c.defaultLang === "es").map(c => c.name);
-ok(spanishDefault.includes("Huntington Park") && spanishDefault.includes("Lynwood") && spanishDefault.length === 2, "Only Huntington Park and Lynwood default to ES: " + spanishDefault.join(", "));
+ok(spanishDefault.length === 2 && spanishDefault.includes("Huntington Park") && spanishDefault.includes("Lynwood"), "Spanish-default cities: " + spanishDefault.join(", "));
 
-for (const c of cities) {
-  const file = path.join(DIST, c.slug || "", "index.html");
-  const html = fs.readFileSync(file, "utf8");
+/** Checks shared by every page: canonical self, hreflang triplet, footer, no ?lang in internal links, phone, no 24/7. */
+function common(label, html, lang, logical, xDefaultLang, indexable) {
   const text = strip(html);
-  const label = (c.slug || "/") + " (" + c.name + ")";
-  const m = html.match(/window\.__RHA_I18N=(\{[\s\S]*?\});(?:window\.__RHA_KW=|<\/script>)/);
-  ok(m, `${label}: i18n JSON missing`);
-  const i18n = m ? JSON.parse(m[1].replace(/<\\\//g, "</")) : { en: {}, es: {} };
-  const es = i18n.es, en = i18n.en;
-
-  ok(html.includes(`data-default-lang="${c.defaultLang}"`), `${label}: default lang attr`);
-  ok(html.includes(`<html lang="${c.defaultLang}"`), `${label}: html lang`);
-  ok(html.includes(`<input type="hidden" name="lang" value="${c.defaultLang}">`), `${label}: form lang hidden input`);
-  ok((text.match(/\(310\) 473-0337/g) || []).length >= 5, `${label}: phone appears fewer than 5 times`);
-  ok(!/\b512\b/.test(text), `${label}: a 512 number leaked in`);
-  ok(text.includes("11400 W Olympic Blvd, Suite 200"), `${label}: office address missing`);
+  const en = `${BASE}${logical}`, es = `${BASE}/es${logical}`, self = lang === "es" ? es : en, xd = xDefaultLang === "es" ? es : en;
+  ok(html.includes(`<html lang="${lang}"`), `${label}: html lang`);
+  ok(html.includes(`<link rel="canonical" href="${self}">`), `${label}: canonical must be self (${self})`);
+  ok(html.includes(`<link rel="alternate" hreflang="en" href="${en}">`), `${label}: hreflang en`);
+  ok(html.includes(`<link rel="alternate" hreflang="es" href="${es}">`), `${label}: hreflang es`);
+  ok(html.includes(`<link rel="alternate" hreflang="x-default" href="${xd}">`), `${label}: hreflang x-default -> ${xd}`);
+  ok(!/href="[^"]*[?&]lang=/.test(html), `${label}: internal link still uses ?lang=`);
+  ok(html.includes(indexable ? 'content="index, follow"' : 'content="noindex, nofollow"'), `${label}: robots`);
+  ok(html.includes(`href="${lang === "es" ? "/es" : ""}/privacy/"`) && html.includes(`href="${lang === "es" ? "/es" : ""}/terms/"`), `${label}: footer privacy/terms links`);
+  for (const c of cities) ok(html.includes(`href="${lang === "es" ? "/es" : ""}/${c.slug}/"`), `${label}: footer cross-link to ${c.name}`);
+  ok(html.includes(`href="${lang === "es" ? "" : "/es"}${logical}"`), `${label}: footer/header link to other language`);
+  ok(text.includes("11400 W Olympic Blvd, Suite 200"), `${label}: office address`);
+  ok((text.match(/\(310\) 473-0337/g) || []).length >= 3, `${label}: phone`);
+  ok(!/\b512\b/.test(text), `${label}: 512 number`);
+  ok(!/24\/7/.test(text), `${label}: 24/7`);
   ok(!/\{City\}|\{serve\}|\{local\}|\{year\}|\{\{/.test(html), `${label}: unsubstituted token`);
-  ok(!/24\/7/.test(text), `${label}: 24/7 on page`);
-  ok(!/Google Guaranteed/i.test(text), `${label}: fake Google Guaranteed badge`);
+  ok(!/data-i18n/.test(html), `${label}: runtime i18n hooks leaked into output`);
+  ok(html.includes("G-K9CNL0LV5B") && html.includes("GTM-N7PDDTKX"), `${label}: analytics tags`);
+  if (lang === "es") ok(!TU.test(text.replace(/Kyle, Abby, and Ismael[\s\S]*?recover\./g, "")), `${label}: tú-register on ES page`);
+}
 
-  // ES side (available on every page through the toggle)
-  if (c.name !== "Los Angeles") {
-    ok(es.hero_h1.includes(`en ${c.name}.`), `${label}: ES H1 city splice — got "${es.hero_h1}"`);
-    ok(new RegExp(`\\b${c.name}\\b`).test(es.local_serve), `${label}: ES serve line lacks English city name`);
-  }
-  ok(!/\b(tú|contigo)\b/i.test(JSON.stringify(es)), `${label}: tú in ES bundle`);
-  ok(es.ismael.includes("Ismael"), `${label}: ES Ismael line missing`);
-  ok(en.ismael === "", `${label}: Ismael line should be ES-only`);
-  ok(es.faq_5_q.includes("papeles"), `${label}: ES FAQ 5 missing`);
-  ok(html.includes('id="faq-5"') && !/<details/.test(html), `${label}: FAQ must not be an accordion`);
-  for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(text.includes(n), `${label}: review attribution ${n} missing`);
-  ok(es.footer_ad.includes("Robert Hindin"), `${label}: ES footer responsible attorney`);
-  ok(es.footer_office.includes(PHONE), `${label}: ES office line phone`);
-
-  // Default-ES pages must be pre-rendered in Spanish (no English flash)
-  if (c.defaultLang === "es") {
-    ok(html.includes(es.hero_h1), `${label}: ES-default page not pre-rendered in Spanish`);
-    ok(html.includes(es.faq_5_a), `${label}: FAQ 5 answer not in ES HTML`);
-    ok(!html.replace(/<script[\s\S]*?<\/script>/g, "").includes(en.hero_h1), `${label}: English H1 present on ES-default page`);
-    ok(/<p class="ismael" data-i18n="ismael" data-hide-empty >/.test(html), `${label}: Ismael line hidden on ES-default page`);
+for (const c of cities) for (const lang of ["en", "es"]) {
+  const logical = `/${c.slug}/`;
+  const label = (lang === "es" ? "/es" : "") + logical;
+  const html = read((lang === "es" ? "/es" : "") + logical);
+  const text = strip(html);
+  common(label, html, lang, logical, c.defaultLang, true);
+  ok(html.includes(`<input type="hidden" name="lang" value="${lang}">`), `${label}: form lang`);
+  ok(html.includes(`data-thankyou="${lang === "es" ? "/es" : ""}/thank-you/"`), `${label}: thank-you redirect in page language`);
+  ok(!/Google Guaranteed/i.test(text), `${label}: fake badge`);
+  ok(html.includes('id="faq-5"') && !/<details/.test(html), `${label}: FAQ not an accordion`);
+  for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(text.includes(n), `${label}: review ${n}`);
+  ok(html.includes('window.__RHA_KW=') && html.includes('<input type="hidden" name="kw" value="">') && html.includes('class="kw"'), `${label}: keyword swap wired`);
+  ok(html.includes('"@type":"LegalService"') && html.includes(`"inLanguage":"${lang}"`), `${label}: JSON-LD`);
+  if (lang === "es") {
+    if (!c.isDefault) ok(text.includes(`para su choque en ${c.name}.`), `${label}: ES H1 city splice`);
+    ok(/<p class="ismael" >/.test(html) || /<p class="ismael">/.test(html), `${label}: Ismael line must be visible on ES`);
+    ok(text.includes("No tengo papeles"), `${label}: FAQ 5`);
+    ok(text.includes("Reseñas reales de Google"), `${label}: ES review frame`);
+    ok(text.includes("Publicidad de abogados") && text.includes("Abogado responsable: Robert Hindin"), `${label}: ES footer advertising`);
   } else {
-    ok(html.includes(en.hero_h1), `${label}: EN-default page not pre-rendered in English`);
+    ok(/<p class="ismael" hidden>/.test(html), `${label}: Ismael line hidden on EN`);
+    ok(text.includes(`for your ${c.name} crash.`), `${label}: EN H1`);
   }
-  ok(html.includes('data-lang-toggle'), `${label}: language toggle missing`);
-  ok(html.includes('window.__RHA_KW=') && html.includes('<input type="hidden" name="kw" value="">'), `${label}: keyword swap not wired`);
-  ok(html.includes('data-i18n="hero_kw"') && es.hero_kw === "Usted está lastimado." && en.hero_kw === "You're hurt.", `${label}: hero_kw default sentence`);
 }
 
-// Hub
-{
-  const html = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
-  ok(/class="city-grid"/.test(html), "hub: city grid present");
-  for (const c of cities) ok(html.includes(`href="${c.slug ? "/" + c.slug + "/" : "/"}"`), `hub: link to ${c.name}`);
-  ok(html.includes('href="/huntington-park/?lang=en"') && html.includes('href="/compton/?lang=es"'), "hub: EN/ES links per city");
-  ok(!/<form/.test(html), "hub: no form (hub routes, it doesn't capture)");
-  ok((strip(html).match(/\(310\) 473-0337/g) || []).length >= 3, "hub: phone");
+for (const lang of ["en", "es"]) {
+  const pre = lang === "es" ? "/es" : "";
+  const hub = read(pre + "/");
+  common(pre + "/", hub, lang, "/", "en", true);
+  ok(/class="city-grid"/.test(hub) && !/<form/.test(hub), "hub: grid, no form");
+  for (const c of cities) ok(hub.includes(`href="/${c.slug}/"`) && hub.includes(`href="/es/${c.slug}/"`), `${pre}/ hub: EN+ES links to ${c.name}`);
+  const ty = read(pre + "/thank-you/");
+  common(pre + "/thank-you/", ty, lang, "/thank-you/", "en", false);
+  ok(/class="qual-form"/.test(ty) && ty.includes(`<input type="hidden" name="lang" value="${lang}">`), `${pre}/thank-you/: qualifying form`);
+  ok(/href="https:\/\/www\.rhapilaw\.com\?utm_source=lander[^"]*" target="_blank" rel="noopener"/.test(ty), `${pre}/thank-you/: corporate link`);
+  ok(ty.includes('href="/assets/rha.vcf"') && fs.existsSync(path.join(DIST, "assets/rha.vcf")), `${pre}/thank-you/: vCard`);
+  for (const kind of ["privacy", "terms"]) {
+    const html = read(`${pre}/${kind}/`), text = strip(html);
+    common(`${pre}/${kind}/`, html, lang, `/${kind}/`, "en", true);
+    ok(text.length > 4000, `${pre}/${kind}/: body too short (${text.length})`);
+    ok(/STOP/.test(text) && /Formspree/.test(text) && /G-K9CNL0LV5B/.test(text.replace(/\s/g, "")) || kind === "terms", `${pre}/${kind}/: privacy specifics`);
+    ok(/Robert Hindin/.test(text) && text.includes("11400 W Olympic Blvd"), `${pre}/${kind}/: responsible attorney + address`);
+    if (kind === "terms") ok(html.includes(`href="${pre}/privacy/"`), `${pre}/terms/: links privacy`);
+  }
 }
 
-// Thank-you
 {
-  const html = fs.readFileSync(path.join(DIST, "thank-you/index.html"), "utf8");
-  const m = html.match(/window\.__RHA_I18N=(\{[\s\S]*?\});(?:window\.__RHA_KW=|<\/script>)/);
-  const i18n = m ? JSON.parse(m[1].replace(/<\\\//g, "</")) : { es: {} };
-  ok(i18n.es.ty_h1 === ES.ty_h1, "thank-you: ES h1 bundled for ?lang=es");
-  ok(html.includes('data-default-lang="en"') && /new URLSearchParams\(location\.search\)\.get\("lang"\)/.test(html), "thank-you: respects ?lang=");
-  ok(/class="qual-form"/.test(html) && html.includes('name="story"'), "thank-you: qualifying form present");
-  ok(/href="https:\/\/www\.rhapilaw\.com\?utm_source=lander[^"]*" target="_blank" rel="noopener"/.test(html), "thank-you: corporate link with UTM, new tab");
-  ok(html.includes('href="/assets/rha.vcf"') && fs.existsSync(path.join(DIST, "assets/rha.vcf")), "thank-you: vCard");
-  ok(i18n.es.ty_q_h2 && !/\b(tú|contigo)\b/i.test(JSON.stringify(i18n.es)), "thank-you: ES strings usted-only");
-  ok(!/24\/7/.test(strip(html)), "thank-you: 24/7");
+  const sm = fs.readFileSync(path.join(DIST, "sitemap.xml"), "utf8");
+  const locs = (sm.match(/<loc>[^<]+<\/loc>/g) || []).length;
+  ok(locs === (cities.length + 3) * 2, `sitemap: expected ${(cities.length + 3) * 2} urls, got ${locs}`);
+  ok(!/thank-you/.test(sm), "sitemap: thank-you must not be listed");
+  ok((sm.match(/hreflang="x-default"/g) || []).length === locs, "sitemap: x-default on every url");
+  ok(!/\?lang=/.test(sm), "sitemap: no query variants");
+  const v = JSON.parse(fs.readFileSync(path.join(__dirname, "vercel.json"), "utf8"));
+  ok(Array.isArray(v.redirects) && v.redirects.length === 2, "vercel.json: ?lang redirects");
 }
 
 console.log(`\n${checks} checks, ${fails} failures`);

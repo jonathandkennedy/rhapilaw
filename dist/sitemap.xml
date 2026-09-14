@@ -1,19 +1,219 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://rhapilaw.com/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/compton/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/compton/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/compton/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/huntington-park/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/huntington-park/?lang=en"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/huntington-park/"/></url>
-  <url><loc>https://rhapilaw.com/van-nuys/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/van-nuys/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/van-nuys/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/pomona/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/pomona/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/pomona/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/palmdale/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/palmdale/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/palmdale/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/hawthorne/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/hawthorne/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/hawthorne/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/downey/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/downey/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/downey/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/inglewood/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/inglewood/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/inglewood/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/paramount/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/paramount/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/paramount/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/baldwin-park/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/baldwin-park/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/baldwin-park/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/bellflower/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/bellflower/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/bellflower/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/lynwood/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/lynwood/?lang=en"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/lynwood/"/></url>
-  <url><loc>https://rhapilaw.com/norwalk/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/norwalk/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/norwalk/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/pico-rivera/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/pico-rivera/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/pico-rivera/?lang=es"/></url>
-  <url><loc>https://rhapilaw.com/los-angeles/</loc><xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/los-angeles/"/><xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/los-angeles/?lang=es"/></url>
+  <url>
+    <loc>https://rhapilaw.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/compton/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/compton/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/compton/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/compton/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/huntington-park/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/huntington-park/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/huntington-park/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/es/huntington-park/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/van-nuys/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/van-nuys/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/van-nuys/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/van-nuys/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/pomona/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/pomona/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/pomona/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/pomona/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/palmdale/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/palmdale/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/palmdale/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/palmdale/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/hawthorne/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/hawthorne/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/hawthorne/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/hawthorne/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/downey/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/downey/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/downey/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/downey/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/inglewood/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/inglewood/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/inglewood/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/inglewood/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/paramount/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/paramount/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/paramount/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/paramount/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/baldwin-park/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/baldwin-park/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/baldwin-park/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/baldwin-park/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/bellflower/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/bellflower/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/bellflower/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/bellflower/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/lynwood/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/lynwood/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/lynwood/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/es/lynwood/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/norwalk/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/norwalk/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/norwalk/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/norwalk/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/pico-rivera/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/pico-rivera/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/pico-rivera/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/pico-rivera/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/los-angeles/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/los-angeles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/los-angeles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/los-angeles/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/privacy/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/terms/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/compton/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/compton/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/compton/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/compton/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/huntington-park/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/huntington-park/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/huntington-park/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/es/huntington-park/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/van-nuys/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/van-nuys/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/van-nuys/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/van-nuys/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/pomona/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/pomona/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/pomona/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/pomona/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/palmdale/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/palmdale/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/palmdale/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/palmdale/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/hawthorne/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/hawthorne/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/hawthorne/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/hawthorne/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/downey/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/downey/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/downey/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/downey/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/inglewood/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/inglewood/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/inglewood/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/inglewood/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/paramount/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/paramount/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/paramount/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/paramount/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/baldwin-park/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/baldwin-park/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/baldwin-park/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/baldwin-park/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/bellflower/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/bellflower/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/bellflower/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/bellflower/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/lynwood/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/lynwood/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/lynwood/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/es/lynwood/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/norwalk/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/norwalk/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/norwalk/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/norwalk/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/pico-rivera/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/pico-rivera/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/pico-rivera/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/pico-rivera/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/los-angeles/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/los-angeles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/los-angeles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/los-angeles/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/privacy/"/>
+  </url>
+  <url>
+    <loc>https://rhapilaw.com/es/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rhapilaw.com/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rhapilaw.com/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rhapilaw.com/terms/"/>
+  </url>
 </urlset>

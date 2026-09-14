@@ -164,11 +164,28 @@ section{padding:48px 0}
 .final__stack{display:inline-block;text-align:left;margin:8px auto 18px}
 .hours{opacity:.9;font-size:.95rem;max-width:560px;margin:0 auto}
 
-.ftr{background:#08172c;color:rgba(255,255,255,.8);padding:32px 0 40px;font-size:.85rem}
+.ftr{background:#08172c;color:rgba(255,255,255,.82);padding:36px 0 44px;font-size:.88rem}
+.ftr a{color:#fff}
 .ftr p{margin-bottom:10px}
-.ftr__firm{font-weight:800;color:#fff;font-size:1rem}
+.ftr__grid{display:grid;gap:22px;margin-bottom:18px}
+.ftr__firm{font-weight:800;color:#fff;font-size:1.05rem}
+.ftr__h{font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.06em;font-size:.78rem;margin-bottom:8px}
+.ftr__links{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.ftr__sms{opacity:.8;font-size:.8rem}
+.ftr__cities{line-height:1.9;border-top:1px solid rgba(255,255,255,.14);padding-top:16px}
+.ftr__cities a{text-decoration:none;opacity:.9}
+.ftr__cities a:hover{text-decoration:underline;opacity:1}
 .ftr__ad{opacity:.75;font-size:.78rem;line-height:1.5}
 .ftr__copy{opacity:.6}
+
+/* legal pages */
+.legal{padding-bottom:0}
+.legal__main{background:var(--white);padding:40px 0 56px}
+.legal__box{max-width:800px}
+.legal__box h2{font-size:1.25rem;margin-top:1.6em}
+.legal__box li{margin-bottom:6px}
+.legal__box code{background:var(--soft);padding:1px 5px;border-radius:4px}
+.legal__date{color:var(--muted);font-size:.9rem}
 
 /* sticky mobile bar */
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:1px;background:var(--navy);box-shadow:0 -4px 14px rgba(0,0,0,.25)}
@@ -247,6 +264,7 @@ section{padding:48px 0}
   .steps__list{grid-template-columns:repeat(3,1fr)}
   .steps__list li{padding-left:0;padding-top:56px}
   .final__btns{flex-direction:row;justify-content:center}
+  .ftr__grid{grid-template-columns:1.4fr 1fr}
   .hub{padding-bottom:0}
   .hub__hero-grid{grid-template-columns:1fr 300px;gap:40px}
   .hub__photo{width:100%;justify-self:end}

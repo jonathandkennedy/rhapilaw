@@ -3,96 +3,246 @@
     "path": "/",
     "url": "https://rhapilaw.com/",
     "lang": "en",
-    "city": "Hub"
+    "kind": "hub"
   },
   {
     "path": "/compton/",
     "url": "https://rhapilaw.com/compton/",
     "lang": "en",
+    "kind": "city",
     "city": "Compton"
   },
   {
     "path": "/huntington-park/",
     "url": "https://rhapilaw.com/huntington-park/",
-    "lang": "es",
+    "lang": "en",
+    "kind": "city",
     "city": "Huntington Park"
   },
   {
     "path": "/van-nuys/",
     "url": "https://rhapilaw.com/van-nuys/",
     "lang": "en",
+    "kind": "city",
     "city": "Van Nuys"
   },
   {
     "path": "/pomona/",
     "url": "https://rhapilaw.com/pomona/",
     "lang": "en",
+    "kind": "city",
     "city": "Pomona"
   },
   {
     "path": "/palmdale/",
     "url": "https://rhapilaw.com/palmdale/",
     "lang": "en",
+    "kind": "city",
     "city": "Palmdale"
   },
   {
     "path": "/hawthorne/",
     "url": "https://rhapilaw.com/hawthorne/",
     "lang": "en",
+    "kind": "city",
     "city": "Hawthorne"
   },
   {
     "path": "/downey/",
     "url": "https://rhapilaw.com/downey/",
     "lang": "en",
+    "kind": "city",
     "city": "Downey"
   },
   {
     "path": "/inglewood/",
     "url": "https://rhapilaw.com/inglewood/",
     "lang": "en",
+    "kind": "city",
     "city": "Inglewood"
   },
   {
     "path": "/paramount/",
     "url": "https://rhapilaw.com/paramount/",
     "lang": "en",
+    "kind": "city",
     "city": "Paramount"
   },
   {
     "path": "/baldwin-park/",
     "url": "https://rhapilaw.com/baldwin-park/",
     "lang": "en",
+    "kind": "city",
     "city": "Baldwin Park"
   },
   {
     "path": "/bellflower/",
     "url": "https://rhapilaw.com/bellflower/",
     "lang": "en",
+    "kind": "city",
     "city": "Bellflower"
   },
   {
     "path": "/lynwood/",
     "url": "https://rhapilaw.com/lynwood/",
-    "lang": "es",
+    "lang": "en",
+    "kind": "city",
     "city": "Lynwood"
   },
   {
     "path": "/norwalk/",
     "url": "https://rhapilaw.com/norwalk/",
     "lang": "en",
+    "kind": "city",
     "city": "Norwalk"
   },
   {
     "path": "/pico-rivera/",
     "url": "https://rhapilaw.com/pico-rivera/",
     "lang": "en",
+    "kind": "city",
     "city": "Pico Rivera"
   },
   {
     "path": "/los-angeles/",
     "url": "https://rhapilaw.com/los-angeles/",
     "lang": "en",
+    "kind": "city",
     "city": "Los Angeles"
+  },
+  {
+    "path": "/privacy/",
+    "url": "https://rhapilaw.com/privacy/",
+    "lang": "en",
+    "kind": "privacy"
+  },
+  {
+    "path": "/terms/",
+    "url": "https://rhapilaw.com/terms/",
+    "lang": "en",
+    "kind": "terms"
+  },
+  {
+    "path": "/es/",
+    "url": "https://rhapilaw.com/es/",
+    "lang": "es",
+    "kind": "hub"
+  },
+  {
+    "path": "/es/compton/",
+    "url": "https://rhapilaw.com/es/compton/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Compton"
+  },
+  {
+    "path": "/es/huntington-park/",
+    "url": "https://rhapilaw.com/es/huntington-park/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Huntington Park"
+  },
+  {
+    "path": "/es/van-nuys/",
+    "url": "https://rhapilaw.com/es/van-nuys/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Van Nuys"
+  },
+  {
+    "path": "/es/pomona/",
+    "url": "https://rhapilaw.com/es/pomona/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Pomona"
+  },
+  {
+    "path": "/es/palmdale/",
+    "url": "https://rhapilaw.com/es/palmdale/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Palmdale"
+  },
+  {
+    "path": "/es/hawthorne/",
+    "url": "https://rhapilaw.com/es/hawthorne/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Hawthorne"
+  },
+  {
+    "path": "/es/downey/",
+    "url": "https://rhapilaw.com/es/downey/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Downey"
+  },
+  {
+    "path": "/es/inglewood/",
+    "url": "https://rhapilaw.com/es/inglewood/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Inglewood"
+  },
+  {
+    "path": "/es/paramount/",
+    "url": "https://rhapilaw.com/es/paramount/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Paramount"
+  },
+  {
+    "path": "/es/baldwin-park/",
+    "url": "https://rhapilaw.com/es/baldwin-park/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Baldwin Park"
+  },
+  {
+    "path": "/es/bellflower/",
+    "url": "https://rhapilaw.com/es/bellflower/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Bellflower"
+  },
+  {
+    "path": "/es/lynwood/",
+    "url": "https://rhapilaw.com/es/lynwood/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Lynwood"
+  },
+  {
+    "path": "/es/norwalk/",
+    "url": "https://rhapilaw.com/es/norwalk/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Norwalk"
+  },
+  {
+    "path": "/es/pico-rivera/",
+    "url": "https://rhapilaw.com/es/pico-rivera/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Pico Rivera"
+  },
+  {
+    "path": "/es/los-angeles/",
+    "url": "https://rhapilaw.com/es/los-angeles/",
+    "lang": "es",
+    "kind": "city",
+    "city": "Los Angeles"
+  },
+  {
+    "path": "/es/privacy/",
+    "url": "https://rhapilaw.com/es/privacy/",
+    "lang": "es",
+    "kind": "privacy"
+  },
+  {
+    "path": "/es/terms/",
+    "url": "https://rhapilaw.com/es/terms/",
+    "lang": "es",
+    "kind": "terms"
   }
 ]

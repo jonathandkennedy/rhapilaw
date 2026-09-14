@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* Builds dist/ from src/. Zero dependencies.
- *   node build.js            -> dist/
- *   node build.js --out=path -> custom output dir
+ * Every page is rendered twice: English at /<path>/ and Spanish at /es/<path>/.
+ * No runtime language swapping; hreflang en / es / x-default on every page.
  */
 "use strict";
 const fs = require("fs");
@@ -20,52 +20,50 @@ const STR = {
 };
 const KW = JSON.parse(fs.readFileSync(path.join(SRC, "keywords.json"), "utf8"));
 delete KW._note;
-const template = fs.readFileSync(path.join(SRC, "template.html"), "utf8");
-const tyTemplate = fs.readFileSync(path.join(SRC, "thankyou.html"), "utf8");
-const hubTemplate = fs.readFileSync(path.join(SRC, "hub.html"), "utf8");
+const T = {
+  lander: fs.readFileSync(path.join(SRC, "template.html"), "utf8"),
+  thanks: fs.readFileSync(path.join(SRC, "thankyou.html"), "utf8"),
+  hub: fs.readFileSync(path.join(SRC, "hub.html"), "utf8"),
+  legal: fs.readFileSync(path.join(SRC, "legal.html"), "utf8"),
+};
 const YEAR = String(new Date().getFullYear());
 const prefix = (site.pathPrefix || "").replace(/\/$/, "");
+const LANGS = ["en", "es"];
 
-function sub(str, city) {
-  return str
-    .replace(/\{City\}/g, city.name)
-    .replace(/\{serve\}/g, city["serve_" + this.lang] || "")
-    .replace(/\{local\}/g, city["local_" + this.lang] || "")
-    .replace(/\{year\}/g, YEAR);
-}
+// ---------- helpers ----------
+function esc(v) { return String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function jsonForScript(o) { return JSON.stringify(o).replace(/<\//g, "<\\/").replace(/<!--/g, "<\\!--"); }
+function absUrl(p) { return site.baseUrl.replace(/\/$/, "") + prefix + p; }
+function langPath(lang, p) { return (lang === "es" ? "/es" : "") + p; }
+function cityPath(city) { return `/${city.slug}/`; }
 
-/** Strings for one language with the city substituted in. Drops nested objects (wave2). */
 function stringsFor(lang, city) {
-  const out = {};
-  const s = STR[lang];
-  const ctx = { lang };
+  const out = {}, s = STR[lang];
   for (const k of Object.keys(s)) {
     if (typeof s[k] !== "string") continue;
-    out[k] = sub.call(ctx, s[k], city);
+    out[k] = s[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR);
   }
   return out;
 }
 
-function esc(v) { return String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
-function jsonForScript(o) { return JSON.stringify(o).replace(/<\//g, "<\\/").replace(/<!--/g, "<\\!--"); }
-
 function render(tpl, ctx) {
-  return tpl.replace(/\{\{([a-zA-Z0-9_.]+)\}\}/g, (m, key) => {
-    const parts = key.split(".");
+  const html = tpl.replace(/\{\{([a-zA-Z0-9_.]+)\}\}/g, (m, key) => {
     let v = ctx;
-    for (const p of parts) { v = v == null ? undefined : v[p]; }
+    for (const p of key.split(".")) v = v == null ? undefined : v[p];
     if (v === undefined) throw new Error("Unresolved template token: " + key);
     return v;
   });
+  // No runtime i18n: strip the swap hooks so the output is plain HTML.
+  return html.replace(/ data-i18n(?:-attr)?="[^"]*"/g, "").replace(/ data-hide-empty/g, "");
 }
 
-function cityPath(city) { return city.slug ? `/${city.slug}/` : "/"; }
-function absUrl(p) { return site.baseUrl.replace(/\/$/, "") + prefix + p; }
+function write(p, html) {
+  const dir = path.join(OUT, p.replace(/^\//, ""));
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, "index.html"), html);
+}
 
-function gtm() {
-  // GA4 (gtag.js) loads directly whenever ga4Id/googleAdsId are set, so measurement never depends on container setup.
-  // GTM loads alongside it when gtmId is set, for tags added later. Do NOT add a GA4 configuration tag inside GTM
-  // for the same measurement ID, or pageviews double-count.
+function tags() {
   let head = "", body = "";
   const ids = [site.ga4Id, site.googleAdsId].filter(Boolean);
   if (ids.length) {
@@ -73,20 +71,89 @@ function gtm() {
     head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${ids.map(i => `gtag('config','${i}');`).join("")}</script>`;
   }
   if (site.gtmId) {
-    const id = site.gtmId;
-    head += `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${id}');</script>`;
-    body += `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${id}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
+    head += `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.gtmId}');</script>`;
+    body += `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${site.gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
   }
   return { head, body };
 }
 
-function jsonld(city, s) {
-  const o = {
+/** hreflang triplet + canonical for a logical page path p (e.g. "/compton/"). x-default follows the city's default language. */
+function alternates(p, xDefaultLang) {
+  const en = absUrl(langPath("en", p)), es = absUrl(langPath("es", p));
+  const xd = xDefaultLang === "es" ? es : en;
+  return { en, es, xd, links: `<link rel="alternate" hreflang="en" href="${en}">\n<link rel="alternate" hreflang="es" href="${es}">\n<link rel="alternate" hreflang="x-default" href="${xd}">` };
+}
+
+/** Shared footer: contact, legal links, language alternate, city cross-links. */
+function footer(lang, s, p) {
+  const other = lang === "es" ? "en" : "es";
+  const cityLinks = cities.map(c => `<a href="${prefix}${langPath(lang, cityPath(c))}">${esc(c.name)}</a>`).join(" · ");
+  const ext = u => u ? u + (u.includes("?") ? "&" : "?") + "utm_source=lander&utm_medium=footer" : "";
+  return `<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <p class="ftr__firm">Robert Hindin &amp; Associates</p>
+        <p>${s.footer_office}</p>
+        <p>${s.footer_hours}</p>
+        <p class="ftr__sms">${s.footer_sms}</p>
+      </div>
+      <div>
+        <p class="ftr__h">${s.footer_legal_h}</p>
+        <ul class="ftr__links">
+          <li><a href="${prefix}${langPath(lang, "/privacy/")}">${s.footer_privacy}</a></li>
+          <li><a href="${prefix}${langPath(lang, "/terms/")}">${s.footer_terms}</a></li>
+          <li><a href="${prefix}${langPath(lang, "/")}">${s.footer_hub}</a></li>
+          <li><a href="${prefix}${langPath(other, p)}" hreflang="${other}" lang="${other}">${s.footer_alt_lang}</a></li>
+          ${site.corporateUrl ? `<li><a href="${ext(site.corporateUrl)}" target="_blank" rel="noopener" data-track="corporate_click">${s.footer_site}</a></li>` : ""}
+          ${site.googleReviewsUrl ? `<li><a href="${site.googleReviewsUrl}" target="_blank" rel="noopener" data-track="reviews_click">${s.footer_reviews}</a></li>` : ""}
+        </ul>
+      </div>
+    </div>
+    <p class="ftr__cities"><strong>${s.footer_cities_h}:</strong> ${cityLinks}</p>
+    <p>${s.footer_sol}</p>
+    <p class="ftr__ad">${s.footer_ad}</p>
+    <p class="ftr__copy">${s.footer_copy}</p>
+  </div>
+</footer>`;
+}
+
+function baseCtx(lang, city, p, xDefaultLang) {
+  const s = stringsFor(lang, city);
+  const alt = alternates(p, xDefaultLang);
+  const g = tags();
+  const other = lang === "es" ? "en" : "es";
+  const page = {
+    lang, other,
+    path: prefix + langPath(lang, p),
+    canonical: lang === "es" ? alt.es : alt.en,
+    hreflang: alt.links,
+    toggleHref: prefix + langPath(other, p),
+    toggleLang: other,
+    robots: site.index ? "index, follow" : "noindex, nofollow",
+    footer: footer(lang, s, p),
+    strJson: jsonForScript(s),
+    kwJson: jsonForScript(Object.fromEntries(Object.entries(KW).map(([k, v]) => [k, v[lang]]))),
+    thankYouUrl: prefix + langPath(lang, site.thankYouPath),
+    formAction: site.formEndpoint || (prefix + langPath(lang, site.thankYouPath)),
+    hubHref: prefix + langPath(lang, "/"),
+    privacyHref: prefix + langPath(lang, "/privacy/"),
+    termsHref: prefix + langPath(lang, "/terms/"),
+    gtmHead: g.head, gtmBody: g.body,
+  };
+  const ctx = Object.assign({}, s, { page, site });
+  for (const k of ["meta_desc", "meta_title", "hero_img_alt", "form_name_ph", "form_phone_ph", "lang_toggle_aria", "ty_q4_ph", "hub_desc"]) if (s[k] != null) ctx[k] = esc(s[k]);
+  return { s, page, ctx };
+}
+
+function jsonld(city, s, page) {
+  return jsonForScript({
     "@context": "https://schema.org",
     "@type": "LegalService",
-    "@id": absUrl(cityPath(city)) + "#firm",
+    "@id": page.canonical + "#firm",
     name: site.firm,
-    url: absUrl(cityPath(city)),
+    url: page.canonical,
+    inLanguage: page.lang,
     telephone: site.phoneTel,
     priceRange: "Free consultation. No fee unless we recover.",
     image: absUrl("/assets/logo-white.png"),
@@ -98,107 +165,61 @@ function jsonld(city, s) {
     aggregateRating: { "@type": "AggregateRating", ratingValue: site.rating, reviewCount: site.reviewCount, bestRating: "5" },
     knowsLanguage: ["en", "es"],
     slogan: s.eyebrow,
-  };
-  return jsonForScript(o);
+  });
 }
 
-function buildCity(city) {
-  const lang = city.defaultLang || "en";
-  const s = stringsFor(lang, city);
-  const i18n = { en: stringsFor("en", city), es: stringsFor("es", city) };
+// ---------- pages ----------
+const built = []; // { path, url, lang, kind, alt: {en, es} }
+
+function buildCity(city, lang) {
   const p = cityPath(city);
-  const url = absUrl(p);
-  const g = gtm();
-  const other = lang === "es" ? "en" : "es";
-  const page = {
-    name: city.name,
-    slugOrDefault: city.slug || "los-angeles",
-    defaultLang: lang,
-    canonical: url,
-    urlEn: lang === "en" ? url : url + "?lang=en",
-    urlEs: lang === "es" ? url : url + "?lang=es",
-    toggleHref: other === lang ? p : (other === "en" && lang !== "en" ? prefix + p + "?lang=en" : prefix + p + "?lang=es"),
-    toggleLang: other,
-    robots: site.index ? "index, follow" : "noindex, nofollow",
-    jsonld: jsonld(city, s),
-    i18nJson: jsonForScript(i18n),
-    kwJson: jsonForScript(KW),
-    formAction: site.formEndpoint || (prefix + site.thankYouPath),
-    thankYouUrl: prefix + site.thankYouPath,
-    ismaelHidden: s.ismael ? "" : "hidden",
-    capHidden: s.rev_1_cap ? "" : "hidden",
-    gtmHead: g.head,
-    gtmBody: g.body,
-  };
-  // toggleHref: link to same page in the other language
-  page.toggleHref = prefix + p + (other === lang ? "" : `?lang=${other}`);
-  const ctx = Object.assign({}, s, { page, site });
-  // Escape attribute-bound strings that the template drops into attributes.
-  ctx.meta_desc = esc(s.meta_desc);
-  ctx.meta_title = esc(s.meta_title);
-  ctx.hero_img_alt = esc(s.hero_img_alt);
-  ctx.form_name_ph = esc(s.form_name_ph);
-  ctx.form_phone_ph = esc(s.form_phone_ph);
-  ctx.lang_toggle_aria = esc(s.lang_toggle_aria);
-  const html = render(template, ctx);
-  const dir = path.join(OUT, city.slug || "");
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, "index.html"), html);
-  return { path: p, url, lang, city: city.name };
+  const { s, page, ctx } = baseCtx(lang, city, p, city.defaultLang);
+  page.name = city.name;
+  page.slug = city.slug;
+  page.jsonld = jsonld(city, s, page);
+  page.ismaelHidden = s.ismael ? "" : "hidden";
+  page.capHidden = s.rev_1_cap ? "" : "hidden";
+  write(langPath(lang, p), render(T.lander, ctx));
+  built.push({ path: page.path, url: page.canonical, lang, kind: "city", city: city.name, alt: alternates(p, city.defaultLang) });
 }
 
-function buildThankYou() {
+function buildThankYou(lang) {
   const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
-  const s = stringsFor("en", la);
-  const i18n = { en: stringsFor("en", la), es: stringsFor("es", la) };
-  const g = gtm();
-  const utm = "utm_source=lander&utm_medium=thankyou&utm_campaign=city-landers";
-  const link = u => u ? u + (u.includes("?") ? "&" : "?") + utm : "";
-  const page = {
-    i18nJson: jsonForScript(i18n),
-    kwJson: jsonForScript(KW),
-    toggleHref: prefix + site.thankYouPath + "?lang=es",
-    formAction: site.formEndpoint || (prefix + site.thankYouPath),
-    corporateHref: link(site.corporateUrl),
-    reviewsHref: site.googleReviewsUrl || "",
-    reviewsHidden: site.googleReviewsUrl ? "" : "hidden",
-    gtmHead: g.head, gtmBody: g.body,
-  };
-  const ctx = Object.assign({}, s, { page, site });
-  ctx.hero_img_alt = esc(s.hero_img_alt); ctx.ty_q4_ph = esc(s.ty_q4_ph);
-  const html = render(tyTemplate, ctx);
-  const dir = path.join(OUT, site.thankYouPath.replace(/^\/|\/$/g, ""));
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, "index.html"), html);
+  const p = site.thankYouPath;
+  const { page, ctx } = baseCtx(lang, la, p, "en");
+  const link = u => u ? u + (u.includes("?") ? "&" : "?") + "utm_source=lander&utm_medium=thankyou&utm_campaign=city-landers" : "";
+  page.corporateHref = link(site.corporateUrl);
+  page.reviewsHref = site.googleReviewsUrl || "";
+  page.reviewsHidden = site.googleReviewsUrl ? "" : "hidden";
+  write(langPath(lang, p), render(T.thanks, ctx));
 }
 
-
-function buildHub(built) {
+function buildHub(lang) {
   const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
-  const s = stringsFor("en", la);
-  const i18n = { en: stringsFor("en", la), es: stringsFor("es", la) };
-  const g = gtm();
-  const cards = cities.map(c => {
-    const p = prefix + cityPath(c);
-    const isDefault = !!c.isDefault;
-    const name = isDefault ? `<span data-i18n="hub_default">${esc(s.hub_default)}</span>` : esc(c.name);
-    const serve = `<span data-i18n="hub_serve_${c.slug}">${esc(c.serve_en)}</span>`;
-    i18n.en["hub_serve_" + c.slug] = c.serve_en; i18n.es["hub_serve_" + c.slug] = c.serve_es;
-    const en = `<a href="${p}${c.defaultLang === "es" ? "?lang=en" : ""}" hreflang="en" lang="en"><span data-i18n="hub_en">${esc(s.hub_en)}</span></a>`;
-    const es = `<a href="${p}${c.defaultLang === "es" ? "" : "?lang=es"}" hreflang="es" lang="es"><span data-i18n="hub_es">${esc(s.hub_es)}</span></a>`;
-    return `      <li class="city-card${isDefault ? " city-card--default" : ""}${c.defaultLang === "es" ? " city-card--es" : ""}">
-        <h3><a href="${p}">${name}</a></h3>
-        <p>${serve}</p>
+  const { s, page, ctx } = baseCtx(lang, la, "/", "en");
+  page.cityCards = cities.map(c => {
+    const en = `<a href="${prefix}${langPath("en", cityPath(c))}" hreflang="en" lang="en">${esc(s.hub_en)}</a>`;
+    const es = `<a href="${prefix}${langPath("es", cityPath(c))}" hreflang="es" lang="es">${esc(s.hub_es)}</a>`;
+    const first = c.defaultLang === "es" ? es + es.slice(0, 0) + en : en + es;
+    return `      <li class="city-card${c.isDefault ? " city-card--default" : ""}${c.defaultLang === "es" ? " city-card--es" : ""}">
+        <h3><a href="${prefix}${langPath(lang, cityPath(c))}">${c.isDefault ? esc(s.hub_default) : esc(c.name)}</a></h3>
+        <p>${esc(c["serve_" + lang])}</p>
         <div class="city-card__links">${c.defaultLang === "es" ? es + en : en + es}</div>
       </li>`;
   }).join("\n");
-  const page = {
-    canonical: absUrl("/"), robots: site.index ? "index, follow" : "noindex, nofollow",
-    cityCards: cards, i18nJson: jsonForScript(i18n), kwJson: jsonForScript(KW), gtmHead: g.head, gtmBody: g.body,
-  };
-  const ctx = Object.assign({}, s, { page, site });
-  ctx.hub_desc = esc(s.hub_desc); ctx.hero_img_alt = esc(s.hero_img_alt);
-  fs.writeFileSync(path.join(OUT, "index.html"), render(hubTemplate, ctx));
+  write(langPath(lang, "/"), render(T.hub, ctx));
+  built.push({ path: page.path, url: page.canonical, lang, kind: "hub", alt: alternates("/", "en") });
+}
+
+function buildLegal(kind, lang) {
+  const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
+  const p = `/${kind}/`;
+  const { s, page, ctx } = baseCtx(lang, la, p, "en");
+  page.title = s[`${kind}_title`];
+  page.h1 = s[`${kind}_h1`];
+  page.body = fs.readFileSync(path.join(SRC, "legal", `${kind}.${lang}.html`), "utf8").replace(/\{\{privacyHref\}\}/g, page.privacyHref);
+  write(langPath(lang, p), render(T.legal, ctx));
+  built.push({ path: page.path, url: page.canonical, lang, kind, alt: alternates(p, "en") });
 }
 
 function copyDir(from, to) {
@@ -212,16 +233,19 @@ function copyDir(from, to) {
 function main() {
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
-  const built = cities.map(buildCity);
-  buildThankYou();
-  buildHub(built);
+  for (const lang of LANGS) {
+    buildHub(lang);
+    for (const c of cities) buildCity(c, lang);
+    buildThankYou(lang);
+    buildLegal("privacy", lang);
+    buildLegal("terms", lang);
+  }
   copyDir(path.join(SRC, "assets"), path.join(OUT, "assets"));
-  fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\n${site.index ? "Allow" : "Disallow"}: /\nDisallow: ${prefix}${site.thankYouPath}\nSitemap: ${absUrl("/sitemap.xml")}\n`);
-  built.unshift({ path: "/", url: absUrl("/"), lang: "en", city: "Hub" });
-  const sm = built.map(b => `  <url><loc>${b.url}</loc><xhtml:link rel="alternate" hreflang="en" href="${b.lang === "en" ? b.url : b.url + "?lang=en"}"/><xhtml:link rel="alternate" hreflang="es" href="${b.lang === "es" ? b.url : b.url + "?lang=es"}"/></url>`).join("\n");
+  fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\n${site.index ? "Allow" : "Disallow"}: /\nDisallow: ${prefix}${site.thankYouPath}\nDisallow: ${prefix}/es${site.thankYouPath}\nSitemap: ${absUrl("/sitemap.xml")}\n`);
+  const sm = built.map(b => `  <url>\n    <loc>${b.url}</loc>\n    <xhtml:link rel="alternate" hreflang="en" href="${b.alt.en}"/>\n    <xhtml:link rel="alternate" hreflang="es" href="${b.alt.es}"/>\n    <xhtml:link rel="alternate" hreflang="x-default" href="${b.alt.xd}"/>\n  </url>`).join("\n");
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sm}\n</urlset>\n`);
-  fs.writeFileSync(path.join(OUT, "pages.json"), JSON.stringify(built, null, 2));
-  for (const b of built) console.log(`${b.lang.toUpperCase()}  ${b.path.padEnd(18)} ${b.city}`);
-  console.log(`\nBuilt hub + ${built.length - 1} city pages + thank-you -> ${path.relative(ROOT, OUT) || "."}/`);
+  fs.writeFileSync(path.join(OUT, "pages.json"), JSON.stringify(built.map(b => ({ path: b.path, url: b.url, lang: b.lang, kind: b.kind, city: b.city })), null, 2));
+  for (const b of built) console.log(`${b.lang.toUpperCase()}  ${b.path.padEnd(22)} ${b.city || b.kind}`);
+  console.log(`\nBuilt ${built.length} indexable pages + 2 thank-you -> ${path.relative(ROOT, OUT) || "."}/`);
 }
 main();

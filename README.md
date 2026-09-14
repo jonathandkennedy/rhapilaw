@@ -18,29 +18,22 @@ Same system as the Goldberg hub. Not their copy, not their leaks.
 
 ## Pages
 
-| URL | City | Default language |
+Every page exists twice: English at `/<path>/`, Spanish at `/es/<path>/`. Same template, pre-rendered, no runtime language swapping. Each carries a self-canonical plus `hreflang` en / es / x-default, and the sitemap repeats the triplet.
+
+| English | Spanish | What |
 |---|---|---|
-| `/compton/` | Compton | EN |
-| `/huntington-park/` | Huntington Park | **ES** |
-| `/van-nuys/` | Van Nuys | EN |
-| `/pomona/` | Pomona | EN |
-| `/palmdale/` | Palmdale | EN |
-| `/hawthorne/` | Hawthorne | EN |
-| `/downey/` | Downey | EN |
-| `/inglewood/` | Inglewood | EN |
-| `/paramount/` | Paramount | EN |
-| `/baldwin-park/` | Baldwin Park | EN |
-| `/bellflower/` | Bellflower | EN |
-| `/lynwood/` | Lynwood | **ES** |
-| `/norwalk/` | Norwalk | EN |
-| `/pico-rivera/` | Pico Rivera | EN |
-| `/los-angeles/` | Los Angeles (default) | EN |
-| `/` | **Hub**: every city page with English and Spanish links | EN, honours `?lang=es` |
-| `/thank-you/` | post-submit, `noindex`: confirmation, optional qualifying questions, what happens next, who we are, links to the corporate site, reviews | EN, honours `?lang=es` |
+| `/` | `/es/` | Hub: every city with EN and ES links |
+| `/compton/` … `/pico-rivera/` | `/es/compton/` … `/es/pico-rivera/` | 14 city landers |
+| `/los-angeles/` | `/es/los-angeles/` | Catch-all lander |
+| `/privacy/` | `/es/privacy/` | Privacy Policy (CCPA, TCPA/SMS, GA4, Formspree, retention) |
+| `/terms/` | `/es/terms/` | Terms of Use (attorney advertising, no attorney-client relationship, results disclaimer) |
+| `/thank-you/` | `/es/thank-you/` | Post-submit, `noindex` |
 
-Every page carries both languages. `?lang=es` forces Spanish, `?lang=en` forces English, the header toggle flips without reload and rewrites the URL.
+**x-default** points at the English page except for Huntington Park and Lynwood, where it points at `/es/…` (the plan's Spanish-first cities). Spanish ads land on the `/es/` URL directly: `/es/huntington-park/`, `/es/compton/?kw=rear-end`, and so on.
 
-**Spanish ad traffic** for Huntington Park, Lynwood, Compton, Pico Rivera, Baldwin Park, Paramount, Bellflower, Downey, Norwalk and Pomona must land on `?lang=es` (the `spanishAds` flag in `src/cities.json` marks them). Huntington Park and Lynwood are Spanish even without it and are pre-rendered in Spanish, so they never flash English.
+**Old query URLs still work.** `/compton/?lang=es` is a 308 to `/es/compton/` (Vercel redirect in `vercel.json`, with an inline JS fallback for other hosts). The `kw` parameter survives the redirect.
+
+**Footer on every page:** office, hours, SMS opt-out line, Privacy, Terms, hub, the same page in the other language, firm website, Google reviews, and cross-links to all 15 city landers in the page's language.
 
 ## Build
 
@@ -61,8 +54,11 @@ src/
   cities.json        14 cities + LA default: slug, default language, serve/local lines EN+ES
   strings/en.json    English copy (§6)
   strings/es.json    Spanish master copy (§7). Not a translation. Same keys 1:1.
-  template.html      the lander. Every text node has data-i18n="<key>".
+  template.html      the lander
   thankyou.html      the thank-you page
+  hub.html           the hub
+  legal.html         wrapper for privacy / terms
+  legal/             privacy.{en,es}.html, terms.{en,es}.html
   assets/            styles.css, lander.js, logo-white.svg, favicon.svg, img/
 build.js             renders dist/, sitemap.xml, robots.txt, pages.json
 qa.js                the checklist, automated
@@ -70,12 +66,9 @@ qa.js                the checklist, automated
 
 `{City}` in any string becomes the city name at build time. `{serve}` and `{local}` pull the city module lines. Roads stay numbers. City names stay English.
 
-## How the language swap works
+## How language works
 
-1. Build renders each page in its default language, so the HTML is already right with JS off.
-2. An inline script in `<head>` reads `?lang=` before first paint and sets `<html lang data-lang>`. If the request differs from the page's default, `body` is hidden until the swap runs, so there's no flash of the wrong language.
-3. `lander.js` holds both string sets (`window.__RHA_I18N`) and walks `[data-i18n]` / `[data-i18n-attr]`. It also sets the hidden `lang` form field, the toggle's href, and the thank-you redirect.
-4. The Ismael line and Julio caption are empty in English and hidden with `data-hide-empty`.
+Path decides language. `build.js` renders every template once per language; the header toggle and footer link are plain links to the other path. `lander.js` only handles the form, the thank-you questions, the keyword swap, and tracking. The Ismael line and Julio caption exist only on Spanish pages.
 
 ## Form
 
@@ -131,9 +124,11 @@ Run `node qa.js`. It fails the build on any of:
 - tú-register anywhere in the Spanish strings
 - "evaluación", "bufete", "sin cargos hasta ganar", 24/7, translated city names, the Goldberg H1
 - city not at the end of the H1's first line, or a splice mid-word
-- form not posting `lang: "es"` on ES pages; thank-you not respecting `?lang=es`
+- form not posting `lang: "es"` on ES pages; thank-you redirect not on the `/es/` path
+- any page missing its self-canonical or the hreflang en/es/x-default triplet; any internal link carrying `?lang=`
+- footer missing Privacy, Terms, or a cross-link to any city
 - phone missing from TCPA, hero, form, footer, final CTA, thank-you
 - FAQ 5 inside an accordion; Ismael line missing on ES or present on EN
 - reviews not attributed to the real names
 - footer advertising paragraph without "Publicidad de abogados" and Robert Hindin as responsible attorney
-- Huntington Park / Lynwood not pre-rendered in Spanish
+- x-default not pointing at `/es/` for Huntington Park and Lynwood

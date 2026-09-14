@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="{{page.lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{page.title}}</title>
+<meta name="robots" content="{{page.robots}}">
+<link rel="canonical" href="{{page.canonical}}">
+{{page.hreflang}}
+<link rel="icon" href="{{site.pathPrefix}}/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{site.pathPrefix}}/assets/styles.css">
+{{page.gtmHead}}
+</head>
+<body class="legal">
+{{page.gtmBody}}
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="{{page.hubHref}}" aria-label="Robert Hindin &amp; Associates"><img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180"></a>
+    <div class="hdr__right">
+      <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="hdr__num">{{site.phoneDisplay}}</span><span class="hdr__sub">{{call_sub}}</span></a>
+      <a class="lang" href="{{page.toggleHref}}" hreflang="{{page.toggleLang}}" lang="{{page.toggleLang}}" aria-label="{{lang_toggle_aria}}">{{lang_toggle}}</a>
+    </div>
+  </div>
+</header>
+<main class="legal__main">
+  <div class="wrap legal__box">
+    <h1>{{page.h1}}</h1>
+    <p class="legal__date">{{legal_updated}}</p>
+    {{page.body}}
+  </div>
+</main>
+{{page.footer}}
+<script>window.__RHA_S={{page.strJson}};window.__RHA_KW={{page.kwJson}};</script>
+<script src="{{site.pathPrefix}}/assets/lander.js"></script>
+</body>
+</html>
