@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /thank-you/
 Disallow: /es/thank-you/
-Sitemap: https://rhapilaw.com/sitemap.xml
+Sitemap: https://results.rhapilaw.com/sitemap.xml

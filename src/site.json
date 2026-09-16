@@ -12,7 +12,7 @@
   "hours": "Mo-Fr 08:00-17:00",
   "rating": "5.0",
   "reviewCount": "130",
-  "baseUrl": "https://rhapilaw.com",
+  "baseUrl": "https://results.rhapilaw.com",
   "pathPrefix": "",
   "formEndpoint": "https://formspree.io/f/xqpkgbyg",
   "thankYouPath": "/thank-you/",
