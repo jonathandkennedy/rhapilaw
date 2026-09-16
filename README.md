@@ -7,7 +7,7 @@ Same system as the Goldberg hub. Not their copy, not their leaks.
 
 | | |
 |---|---|
-| Phone, everywhere | **(310) 473-0337** |
+| Phone, everywhere | **(310) 564-7911** — the CallRail swap target. The office line (310) 473-0337 does not appear on these pages. |
 | Office | 11400 W Olympic Blvd, Suite 200, Los Angeles, CA 90064 — the only office, no fake suites |
 | Hours | Mon–Fri 8am–5pm. Nothing says 24/7. |
 | Proof | 5.0 on 130+ Google reviews, Super Lawyers Rising Stars 2022–2026, CAALA, plaintiff-only since 1975 |
@@ -99,6 +99,10 @@ Configured in `src/site.json` and loaded on every page (landers, hub, thank-you)
 - `googleAdsId` (`AW-…`): optional, added to the same gtag config when set.
 
 Events fired by the pages, each with `lang`, `city`, `kw`: `lead_submit` (the conversion), `lead_details`, `lead_error`, `phone_click`, `lang_toggle`, `vcard`, `corporate_click`, `reviews_click`. In GA4 → Admin → Events, mark `lead_submit` and `phone_click` as key events.
+
+## Call tracking (CallRail)
+
+Every page shows one number, (310) 564-7911, in text and in every `tel:` link, so CallRail dynamic number insertion has a single swap target. Paste the CallRail swap script URL (`//cdn.callrail.com/companies/…/swap.js`) into `site.json → callrailSwapUrl` and rebuild; it loads at the end of `<body>` on every page. Leave it empty until the CallRail pool is set up.
 
 ## Keyword match (`?kw=`)
 

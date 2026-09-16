@@ -9,7 +9,7 @@ const cities = JSON.parse(fs.readFileSync(path.join(__dirname, "src/cities.json"
 const ES = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/es.json"), "utf8"));
 const EN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/en.json"), "utf8"));
 const KW = JSON.parse(fs.readFileSync(path.join(__dirname, "src/keywords.json"), "utf8"));
-const PHONE = "(310) 473-0337";
+const PHONE = "(310) 564-7911";
 const BASE = site.baseUrl.replace(/\/$/, "");
 let fails = 0, checks = 0;
 function ok(cond, msg) { checks++; if (!cond) { fails++; console.log("  FAIL  " + msg); } }
@@ -69,8 +69,8 @@ function common(label, html, lang, logical, xDefaultLang, indexable) {
   for (const c of cities) ok(html.includes(`href="${lang === "es" ? "/es" : ""}/${c.slug}/"`), `${label}: footer cross-link to ${c.name}`);
   ok(html.includes(`href="${lang === "es" ? "" : "/es"}${logical}"`), `${label}: footer/header link to other language`);
   ok(text.includes("11400 W Olympic Blvd, Suite 200"), `${label}: office address`);
-  ok((text.match(/\(310\) 473-0337/g) || []).length >= 3, `${label}: phone`);
-  ok(!/\b512\b/.test(text), `${label}: 512 number`);
+  ok((text.match(/\(310\) 564-7911/g) || []).length >= 3, `${label}: phone`);
+  ok(!/\b512\b/.test(text) && !/473-0337/.test(text), `${label}: wrong number (512 or office line) on page`);
   ok(!/24\/7/.test(text), `${label}: 24/7`);
   ok(!/\{City\}|\{serve\}|\{local\}|\{year\}|\{\{/.test(html), `${label}: unsubstituted token`);
   ok(!/data-i18n/.test(html), `${label}: runtime i18n hooks leaked into output`);

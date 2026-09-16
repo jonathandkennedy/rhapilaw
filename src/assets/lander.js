@@ -123,7 +123,7 @@
       track("lead_submit", { practice: payload.practice });
       location.href = thanks;
     }
-    function fail() { btn.disabled = false; btn.innerHTML = label; showErr(S.form_err_send || "That didn't go through. Call (310) 473-0337."); track("lead_error"); }
+    function fail() { btn.disabled = false; btn.innerHTML = label; showErr(S.form_err_send || "That didn't go through. Call (310) 564-7911."); track("lead_error"); }
 
     if (!endpoint) { done(); return; }
     var ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
