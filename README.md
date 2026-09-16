@@ -102,7 +102,7 @@ Events fired by the pages, each with `lang`, `city`, `kw`: `lead_submit` (the co
 
 ## Call tracking (CallRail)
 
-Every page shows one number, (310) 564-7911, in text and in every `tel:` link, so CallRail dynamic number insertion has a single swap target. Paste the CallRail swap script URL (`//cdn.callrail.com/companies/…/swap.js`) into `site.json → callrailSwapUrl` and rebuild; it loads at the end of `<body>` on every page. Leave it empty until the CallRail pool is set up.
+Every page shows one number, (310) 564-7911, in text and in every `tel:` link, so CallRail dynamic number insertion has a single swap target. The CallRail swap script (`site.json → callrailSwapUrl`, company 929322410) loads at the end of `<body>` on every page. In CallRail the website-visitor pool's swap target must be 310-564-7911.
 
 ## Keyword match (`?kw=`)
 

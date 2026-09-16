@@ -75,6 +75,7 @@ function common(label, html, lang, logical, xDefaultLang, indexable) {
   ok(!/\{City\}|\{serve\}|\{local\}|\{year\}|\{\{/.test(html), `${label}: unsubstituted token`);
   ok(!/data-i18n/.test(html), `${label}: runtime i18n hooks leaked into output`);
   ok(html.includes("G-K9CNL0LV5B") && html.includes("GTM-N7PDDTKX"), `${label}: analytics tags`);
+  ok(html.includes('src="//cdn.calltrk.com/companies/929322410/22fcab48a6ebb6eff8c0/12/swap.js"'), `${label}: CallRail swap script`);
   if (lang === "es") ok(!TU.test(text.replace(/Kyle, Abby, and Ismael[\s\S]*?recover\./g, "")), `${label}: tú-register on ES page`);
 }
 
