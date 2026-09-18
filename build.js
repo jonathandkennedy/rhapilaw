@@ -65,7 +65,7 @@ function write(p, html) {
 
 function tags() {
   let head = "", body = "";
-  const ids = [site.ga4Id, site.googleAdsId].filter(Boolean);
+  const ids = [].concat(site.ga4Ids || [], [site.ga4Id], [site.googleAdsId]).filter((v, i, a) => v && a.indexOf(v) === i);
   if (ids.length) {
     head += `<script async src="https://www.googletagmanager.com/gtag/js?id=${ids[0]}"></script>`;
     head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${ids.map(i => `gtag('config','${i}');`).join("")}</script>`;

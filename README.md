@@ -94,7 +94,7 @@ After the lead posts, the page stores name/phone/city in `sessionStorage` and re
 
 Configured in `src/site.json` and loaded on every page (landers, hub, thank-you):
 
-- `ga4Id` = `G-K9CNL0LV5B`: the Google tag (gtag.js) loads directly, same as the snippet from the GA4 admin. Pageviews and the events below reach GA4 with no container work.
+- `ga4Ids` = `G-K9CNL0LV5B`, `G-BBKS7FGRKP`: the Google tag (gtag.js) loads once and is configured for both GA4 properties, so each receives pageviews and the events below. Remove one from the list if only one property should get lander data.
 - `gtmId` = `GTM-N7PDDTKX`: the Tag Manager container loads alongside it for tags added later (Google Ads, call tracking). **Do not add a GA4 configuration tag for G-K9CNL0LV5B inside the container**, or pageviews double-count. Page events are on the `dataLayer` as Custom Event triggers.
 - `googleAdsId` (`AW-…`): optional, added to the same gtag config when set.
 
