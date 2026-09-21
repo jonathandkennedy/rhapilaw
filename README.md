@@ -104,6 +104,10 @@ Events fired by the pages, each with `lang`, `city`, `kw`: `lead_submit` (the co
 
 Every page shows one number, (310) 564-7911, in text and in every `tel:` link, so CallRail dynamic number insertion has a single swap target. The CallRail swap script (`site.json → callrailSwapUrl`, company 929322410) loads at the end of `<body>` on every page. In CallRail the website-visitor pool's swap target must be 310-564-7911.
 
+## Click-fraud protection (ClickCease)
+
+`site.json → clickceaseScriptUrl` and `clickceaseNoscriptUrl` render the ClickCease tag and its noscript iframe at the end of `<body>` on every page. The script keeps the `ct_clicktrue` class ClickCease looks for. Blank either value to remove it.
+
 ## Keyword match (`?kw=`)
 
 Page-side dynamic keyword insertion, allowlisted. `?kw=rear-end` (or `utm_term` when it exactly matches a token) swaps only the first sentence of the hero subhead, in whichever language is showing. Tokens live in `src/keywords.json`:

@@ -75,6 +75,10 @@ function tags() {
     body += `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${site.gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
   }
   if (site.callrailSwapUrl) body += `<script async src="${site.callrailSwapUrl}"></script>`;
+  if (site.clickceaseScriptUrl) {
+    body += `<script async src="${site.clickceaseScriptUrl}" class="ct_clicktrue"></script>`;
+    if (site.clickceaseNoscriptUrl) body += `<noscript><iframe src="${site.clickceaseNoscriptUrl}" width="0" height="0" style="display:none"></iframe></noscript>`;
+  }
   return { head, body };
 }
 
