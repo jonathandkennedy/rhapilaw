@@ -69,7 +69,18 @@ Real firm photography only — no stock. `src/assets/img/team/` holds five 480px
 | Set-B award-winning claim | Overlapping row of all five faces |
 | Sitelink mid-article CTA | Three faces beside the call button (not on `/our-team/`) |
 
-**Name check needed.** Robert and Kyle are confirmed against the existing group photo. Abby, Ismael Noriega and Corbin are inferred from the team roster and the client reviews — if any of those three are mislabelled, the files are in `src/assets/img/team/` and the names appear only in `src/sitelinks/our-team.*.html` and the templates. A "Felix" is named in one review and has no photo yet.
+**Roster confirmed** against the firm's own staff page:
+
+| File | Person | Role |
+|---|---|---|
+| `robert-hindin.webp` | Robert Hindin | Founder, licensed in California since 1975 |
+| `kyle-hindin.webp` | Kyle Hindin | Attorney |
+| `abigail-noriega.webp` | Abigail Noriega | Senior Case Manager (clients call her Abby) |
+| `ismael-noriega.webp` | Ismael Noriega | Hispanic Community Specialist |
+| `felix-trauernicht.webp` | Felix Trauernicht | Loss Management Specialist |
+| `jesimiel-trauernicht.webp` | Jesimiel Trauernicht | Records and Invoicing Specialist |
+
+Jesimiel's headshot was cropped from a screenshot and is 302px rather than 480px — swap in the original when it is to hand. Corbin appears in one client review but is not on the current staff page, so his name survives only inside that verbatim quote. `qa.js` asserts all six names and files and fails if Corbin is listed as staff.
 
 ## Built for phone calls
 

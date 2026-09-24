@@ -179,6 +179,16 @@ for (const e of SITELINKS) for (const lang of ["en", "es"]) {
   ok(strip(html).length > 2500, `${label}: body too thin`);
   ok(!/\{totalRecovered\}/.test(html), `${label}: unsubstituted token`);
 }
+{
+  const STAFF = ["Robert Hindin", "Kyle Hindin", "Abigail Noriega", "Ismael Noriega", "Felix Trauernicht", "Jesimiel Trauernicht"];
+  for (const lang of ["en", "es"]) {
+    const html = read((lang === "es" ? "/es" : "") + "/our-team/");
+    for (const n of STAFF) ok(strip(html).includes(n), `our-team ${lang}: ${n}`);
+    for (const s of ["robert-hindin", "kyle-hindin", "abigail-noriega", "ismael-noriega", "felix-trauernicht", "jesimiel-trauernicht"])
+      ok(html.includes(`/assets/img/team/${s}.webp`) && fs.existsSync(path.join(DIST, "assets/img/team", `${s}.webp`)), `our-team ${lang}: headshot ${s}`);
+    ok(!/\bCorbin\b/.test(strip(html)), `our-team ${lang}: Corbin is not current staff`);
+  }
+}
 for (const kind of ["settlements", "reviews"]) {
   for (const lang of ["en", "es"]) {
     const html = read((lang === "es" ? "/es" : "") + `/${kind}/`);
