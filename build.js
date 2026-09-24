@@ -53,14 +53,6 @@ function stringsFor(lang, city) {
   return out;
 }
 
-const OPEN24_KEYS = ["call_sub", "form_note", "hours", "footer_hours", "ty_hours", "ty_body"];
-/** Apply variant-B hour copy so a page never contradicts its own footer. No-op when the flag is off. */
-function withOpen24(s, lang) {
-  if (!site.variantBOpen24) return s;
-  for (const k of OPEN24_KEYS) if (BSTR[lang][k]) s[k] = BSTR[lang][k];
-  return s;
-}
-
 /** Variant B strings: strings/<lang>.json with strings/b.<lang>.json merged over the top. */
 function stringsForB(lang, city) {
   const base = stringsFor(lang, city), b = BSTR[lang];
@@ -217,7 +209,9 @@ function jsonld(city, s, page) {
     image: absUrl("/assets/logo-white.png"),
     address: { "@type": "PostalAddress", streetAddress: site.office.street, addressLocality: site.office.city, addressRegion: site.office.state, postalCode: site.office.zip, addressCountry: "US" },
     areaServed: [{ "@type": "City", name: city.name }, { "@type": "AdministrativeArea", name: "Los Angeles County" }],
-    openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "17:00" }],
+    openingHoursSpecification: [site.open24
+      ? { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "00:00", closes: "23:59" }
+      : { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "17:00" }],
     founder: { "@type": "Person", name: "Robert Hindin" },
     employee: [{ "@type": "Person", name: "Kyle Hindin", jobTitle: "Attorney" }],
     aggregateRating: { "@type": "AggregateRating", ratingValue: site.rating, reviewCount: site.reviewCount, bestRating: "5" },
@@ -255,7 +249,7 @@ function buildThankYou(lang) {
 function buildThankYouB(lang) {
   const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
   const p = "/attorneys/thank-you/";
-  const { page, ctx } = baseCtx(lang, la, p, "en", (l, c) => withOpen24(stringsFor(l, c), l));
+  const { page, ctx } = baseCtx(lang, la, p, "en");
   const link = u => u ? u + (u.includes("?") ? "&" : "?") + "utm_source=lander&utm_medium=thankyou&utm_campaign=variant-b" : "";
   page.corporateHref = link(site.corporateUrl);
   page.reviewsHref = site.googleReviewsUrl || "";
@@ -315,7 +309,7 @@ function buildVariantB(city, lang) {
 function buildSitelink(entry, lang) {
   const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
   const p = `/${entry.slug}/`;
-  const { page, ctx } = baseCtx(lang, la, p, "en", (l, c) => withOpen24(stringsFor(l, c), l));
+  const { page, ctx } = baseCtx(lang, la, p, "en");
   const meta = entry[lang];
   page.title = esc(meta.title);
   page.desc = esc(meta.desc);

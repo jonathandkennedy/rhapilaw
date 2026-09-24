@@ -9,7 +9,7 @@
     "state": "CA",
     "zip": "90064"
   },
-  "hours": "Mo-Fr 08:00-17:00",
+  "hours": "Mo-Su 00:00-23:59",
   "rating": "5.0",
   "reviewCount": "130",
   "baseUrl": "https://results.rhapilaw.com",
@@ -30,5 +30,5 @@
   "clickceaseScriptUrl": "https://ob.belvionetta.com/i/d9d8d867d77945b5d28c989e4d1a4cab.js",
   "clickceaseNoscriptUrl": "https://ob.belvionetta.com/ns/d9d8d867d77945b5d28c989e4d1a4cab.html?ch=",
   "totalRecovered": "$500 million",
-  "variantBOpen24": true
+  "open24": true
 }

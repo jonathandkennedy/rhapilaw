@@ -17,7 +17,7 @@
   "b_case_5_t": "Choques en cadena",
   "b_case_5_b": "Tres, cuatro, cinco carros en la 405 o la 710, y cada aseguradora culpando al de atrás. Estos casos se ganan identificando cada póliza y reconstruyendo el orden de los impactos desde temprano, antes de que cada aseguradora se acomode en su versión.",
   "b_h2_24h": "Abogados de accidentes de auto en {City}, CA abiertos las 24 horas",
-  "b_24h_p1": "Los choques no respetan horario de oficina. Nosotros tampoco. Puede hablar con una persona de verdad sobre su choque en {City} a cualquier hora, cualquier día — noches, fines de semana y días festivos. No una grabadora que promete devolverle la llamada, ni un robot. Una persona que anota lo que pasó y pone a un abogado a trabajar.",
+  "b_24h_p1": "Los choques no respetan horario de oficina. Nosotros tampoco. Puede hablar con una persona de verdad sobre su choque en {City} a cualquier hora, cualquier día — noches, fines de semana y días festivos — en español o en inglés. No una grabadora que promete devolverle la llamada, ni un robot. Una persona que anota lo que pasó y pone a un abogado a trabajar.",
   "b_24h_p2": "Eso importa más de lo que parece. La evidencia que decide estos casos — el video del crucero, las cámaras de las tiendas, el testigo que todavía se acuerda de la luz — dura días, no meses. Al ajustador de la aseguradora muchas veces lo asignan a las pocas horas del choque. Llamar un sábado a las 11 de la noche en vez del lunes en la mañana puede ser la diferencia entre tener ese video o pelear sin él.",
   "b_24h_cta": "Llame ahora — (310) 564-7911",
   "b_h2_why": "Por qué acudir a un abogado de accidentes de auto en {City} después de un choque",
@@ -38,14 +38,8 @@
   "b_h2_schedule": "Agende una consulta gratis con nuestros abogados de accidentes de auto en {City}",
   "b_schedule_p": "Dos casillas y una persona de verdad lo llama. O llame al (310) 564-7911 y sáltese el formulario. Consulta gratis, sin compromiso, y no paga si no ganamos.",
   "b_trust_1": "No paga si no ganamos",
-  "b_trust_2": "Abiertos las 24 horas",
+  "b_trust_2": "Abiertos 24/7 — en inglés y español",
   "b_trust_3": "Más de {totalRecovered} recuperados",
   "b_trust_4": "5.0 en más de 130 reseñas de Google",
-  "call_sub": "Abiertos 24 horas · Consulta gratis",
-  "form_note": "Contesta una persona de verdad, de día o de noche. Lo llamamos enseguida.",
-  "form_h2": "Consulta gratis. Nosotros lo llamamos.",
-  "hours": "Abiertos las 24 horas, incluyendo noches, fines de semana y días festivos. Llame al (310) 564-7911 a cualquier hora.",
-  "footer_hours": "Abiertos las 24 horas — noches, fines de semana y días festivos. Contesta una persona de verdad.",
-  "ty_hours": "Contestamos las 24 horas. Espere su llamada en breve.",
-  "ty_body": "Alguien del equipo lo va a llamar del <a href=\"tel:+13105647911\">(310) 564-7911</a>. Guarde el número. Si no contesta, volvemos a marcar. No le prometemos que el primer ring sea un abogado — le prometemos una persona de verdad, de día o de noche."
+  "form_h2": "Consulta gratis. Nosotros lo llamamos."
 }

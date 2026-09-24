@@ -17,7 +17,7 @@
   "b_case_5_t": "Chain reaction auto accidents",
   "b_case_5_b": "Three, four, five cars on the 405 or the 710, and every insurer blaming the car behind. These cases are won by identifying every policy and reconstructing the order of impacts early, before each carrier settles into its story.",
   "b_h2_24h": "Car accident attorneys in {City}, CA open 24 hours",
-  "b_24h_p1": "Crashes do not keep office hours. Neither do we. You can reach a real person about your {City} crash at any hour, any day — nights, weekends and holidays included. Not a recording that promises a callback, and not a chatbot. A person who takes down what happened and gets a lawyer moving on it.",
+  "b_24h_p1": "Crashes do not keep office hours. Neither do we. You can reach a real person about your {City} crash at any hour, any day — nights, weekends and holidays included — in English or in Spanish. Not a recording that promises a callback, and not a chatbot. A person who takes down what happened and gets a lawyer moving on it.",
   "b_24h_p2": "That matters more than it sounds. The evidence that decides these cases — intersection video, store cameras, a witness who still remembers the light — has a shelf life measured in days. The insurance company's adjuster is often assigned within hours of the crash. Calling at 11pm on a Saturday instead of Monday morning can be the difference between having that footage and arguing without it.",
   "b_24h_cta": "Call now — (310) 564-7911",
   "b_h2_why": "Why turn to a car accident attorney in {City} after a crash",
@@ -38,14 +38,8 @@
   "b_h2_schedule": "Schedule a free consultation with our {City} car accident attorneys",
   "b_schedule_p": "Two fields and a real person calls you back. Or call (310) 564-7911 and skip the form. Free consultation, no obligation, and no fees unless we win.",
   "b_trust_1": "No fees unless we win",
-  "b_trust_2": "Open 24 hours",
+  "b_trust_2": "Open 24/7 — English and Spanish",
   "b_trust_3": "Over {totalRecovered} won",
   "b_trust_4": "5.0 from 130+ Google reviews",
-  "call_sub": "Open 24 hours · Free consultation",
-  "form_note": "A real person answers, day or night. We will call you right back.",
-  "form_h2": "Free consultation. We call you.",
-  "hours": "Open 24 hours, including nights, weekends and holidays. Call (310) 564-7911 any time.",
-  "footer_hours": "Open 24 hours — nights, weekends and holidays included. A real person answers.",
-  "ty_hours": "We answer 24 hours a day. Expect a call back shortly.",
-  "ty_body": "Someone on the team will call you from <a href=\"tel:+13105647911\">(310) 564-7911</a>. Save the number. If you don't pick up, we'll call again. We don't promise the first ring is an attorney — we promise a real person, day or night."
+  "form_h2": "Free consultation. We call you."
 }

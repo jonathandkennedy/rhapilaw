@@ -42,17 +42,20 @@ Every page exists twice: English at `/<path>/`, Spanish at `/es/<path>/`. Pre-re
 
 **Other:** `/` hub (three sections: set A, set B, sitelinks), `/privacy/`, `/terms/`, `/thank-you/` and `/attorneys/thank-you/` (both `noindex`).
 
-## Claims that need firm sign-off
+## Claims on the pages
 
-Three values on set B and the sitelink pages are **not verified by anything in this repo**. Each is a single config value so it can be changed or removed in one place.
+Confirmed by the firm and now stated site-wide:
 
-| Claim | Where | Config |
+| Claim | Where | Source of truth |
 |---|---|---|
+| 24/7 intake, English and Spanish | Header, hours, footer, set B H2, `/24-7-case-review/`, JSON-LD `openingHoursSpecification` | `site.json → open24` |
 | "Over $500 million won" | Set B H3, `/settlements/` | `site.json → totalRecovered` |
-| "Open 24 hours" / "24/7" | Set B H2, `/24-7-case-review/`, hours copy | `site.json → variantBOpen24` |
-| Award-winning | Set B H3 | Backed by Super Lawyers Rising Stars 2022–2026 and CAALA |
+| Award winning | Set B H3 | Super Lawyers Rising Stars 2022–2026, CAALA |
+| Licensed since 1975 | Throughout | Original brief |
 
-Set `variantBOpen24` to `false` and set B reverts to Mon–Fri 8am–5pm everywhere. Set A is untouched by this flag and still says Mon–Fri, so **the two sets currently state different hours** — reconcile before both run.
+Both sets now state the same hours, so nothing on the site contradicts itself. Setting `open24` to `false` reverts the copy and the structured data together; `qa.js` fails the build if any page states Mon–Fri hours while the flag is on.
+
+Note: the firm described the practice as "over 30 years." The pages say **licensed since 1975** and "five decades," which came from the original brief and is the stronger, still-accurate claim. If 1975 is wrong, it is in `strings/*.json` and the legal pages.
 
 ## Tracking the A/B split
 

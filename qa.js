@@ -27,7 +27,8 @@ const TU = /\b(tú|ti|contigo|tuyo|tuya|tuyos|tuyas|tu|tus|te)\b/i;
 console.log("Spanish strings");
 {
   for (const [k, v] of flat(ES)) ok(!TU.test(v.replace(/<[^>]+>/g, " ")), `es.${k} uses tú-register: "${(v.match(TU) || [])[0]}"`);
-  const BAD = [/\bevaluaci[oó]n\b/i, /\bbufete\b/i, /sin cargos hasta ganar/i, /Comptonía/i, /Parque Huntington/i, /24\s*\/\s*7/, /las 24 horas/i];
+  // 24/7 phrasing was banned while the office was Mon–Fri; the firm has since confirmed round-the-clock intake.
+  const BAD = [/\bevaluaci[oó]n\b/i, /\bbufete\b/i, /sin cargos hasta ganar/i, /Comptonía/i, /Parque Huntington/i];
   for (const [k, v] of flat(ES)) for (const re of BAD) ok(!re.test(v), `es.${k} matches banned phrase ${re}`);
   ok((flat(ES).map(([, v]) => v).join(" ").match(/compañía de seguros/gi) || []).length <= 1, `"compañía de seguros" over limit`);
   ok(!/Lesionado en un accidente de auto en/i.test(ES.hero_h1), "hero_h1 is the Goldberg H1");
@@ -36,8 +37,10 @@ console.log("Spanish strings");
   ok(/Robert Hindin/.test(ES.footer_ad) && /Publicidad de abogados/.test(ES.footer_ad), "footer_ad: responsible attorney");
   ok(/Ismael/.test(ES.ismael) && /Ismael/.test(ES.faq_5_a), "Ismael missing");
   ok(/papeles/.test(ES.faq_5_q) && /emergencia/.test(ES.faq_5_q) && /ingl[eé]s/.test(ES.faq_5_q), "FAQ 5 coverage");
-  ok(/8am–5pm/.test(ES.hours) && /8am–5pm/.test(ES.footer_hours), "hours");
-  ok(!/24\/7/.test(JSON.stringify(EN)), "EN copy ships 24/7");
+  for (const [L, S] of [["en", EN], ["es", ES]])
+    for (const k of ["call_sub", "form_note", "hours", "footer_hours", "ty_hours"])
+      ok(!/8am–5pm|Monday–Friday|lunes a viernes|Mon–Fri|Lun–Vie/i.test(S[k]), `${L}.${k} still states Mon–Fri hours while open24 is on`);
+  ok(site.open24 === true, "site.open24 must be set while the copy claims 24/7 intake");
   ok(ES.res_offer === "$85,000" && ES.res_result === "$375,000" && EN.res_offer === "$85,000" && EN.res_result === "$375,000", "results must be the one released case");
   const ek = Object.keys(EN).filter(k => typeof EN[k] === "string"), sk = Object.keys(ES).filter(k => typeof ES[k] === "string");
   ok(ek.every(k => k in ES) && sk.every(k => k in EN), "EN/ES key parity: " + ek.filter(k => !(k in ES)).concat(sk.filter(k => !(k in EN))).join(","));
@@ -92,7 +95,8 @@ function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   ok(text.includes("11400 W Olympic Blvd, Suite 200"), `${label}: office address`);
   ok((text.match(/\(310\) 564-7911/g) || []).length >= 3, `${label}: phone`);
   ok(!/\b512\b/.test(text) && !/473-0337/.test(text), `${label}: wrong number (512 or office line) on page`);
-  if (!allow24) ok(!/24\/7/.test(text) && !/open 24 hours/i.test(text), `${label}: 24-hour claim on the control set`);
+  ok(!/8am.?5pm|Monday.?Friday|lunes a viernes/i.test(text), `${label}: states Mon–Fri hours while the site claims 24/7`);
+  ok(/00:00/.test(html) ? true : !/"opens":"08:00"/.test(html), `${label}: structured data still says 08:00–17:00`);
   ok(!/\{City\}|\{serve\}|\{local\}|\{year\}|\{\{/.test(html), `${label}: unsubstituted token`);
   ok(!/data-i18n/.test(html), `${label}: runtime i18n hooks leaked into output`);
   ok(html.includes("gtag('config','G-K9CNL0LV5B')") && html.includes("gtag('config','G-BBKS7FGRKP')") && html.includes("GTM-N7PDDTKX"), `${label}: analytics tags`);
