@@ -23,7 +23,7 @@
   function track(ev, data) {
     try {
       window.dataLayer = window.dataLayer || [];
-      var o = { event: ev, lang: LANG, city: CITY, kw: KW_TOKEN };
+      var o = { event: ev, lang: LANG, city: CITY, kw: KW_TOKEN, variant: root.getAttribute("data-variant") || "a" };
       if (data) for (var k in data) o[k] = data[k];
       if (typeof window.gtag === "function") { var params = {}; for (var pk in o) if (pk !== "event") params[pk] = o[pk]; window.gtag("event", ev, params); }
       window.dataLayer.push(o);
@@ -61,9 +61,11 @@
     });
   }
 
-  // Lead form
-  var form = document.querySelector("form.lead-form");
-  if (!form) return;
+  // Lead forms. Variant B carries two on one page (hero + bottom), so bind every one.
+  var forms = document.querySelectorAll("form.lead-form");
+  for (var fi = 0; fi < forms.length; fi++) bindLeadForm(forms[fi]);
+
+  function bindLeadForm(form) {
   var errEl = form.querySelector(".form-err");
   var nameIn = form.querySelector('input[name="name"]');
   var phoneIn = form.querySelector('input[name="phone"]');
@@ -109,6 +111,7 @@
       city_slug: form.querySelector('input[name="city_slug"]').value,
       practice: form.querySelector('input[name="practice"]').value,
       page: location.href, source: srcIn ? srcIn.value : "", kw: KW_TOKEN,
+      variant: (form.querySelector('input[name="variant"]') || {}).value || "a",
       submitted_at: new Date().toISOString(),
       tcpa: S.form_tcpa ? S.form_tcpa.replace(/<[^>]+>/g, "") : "",
       _subject: "New lead: " + form.querySelector('input[name="city"]').value + " (" + LANG.toUpperCase() + (KW_TOKEN ? ", " + KW_TOKEN : "") + ") — " + name
@@ -131,4 +134,5 @@
     fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload), signal: ctl ? ctl.signal : undefined })
       .then(function (r) { if (timer) clearTimeout(timer); r.ok ? done() : fail(); }).catch(function () { if (timer) clearTimeout(timer); fail(); });
   });
+  }
 })();

@@ -111,6 +111,153 @@
     "city": "Los Angeles"
   },
   {
+    "path": "/attorneys/compton/",
+    "url": "https://results.rhapilaw.com/attorneys/compton/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Compton"
+  },
+  {
+    "path": "/attorneys/huntington-park/",
+    "url": "https://results.rhapilaw.com/attorneys/huntington-park/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Huntington Park"
+  },
+  {
+    "path": "/attorneys/van-nuys/",
+    "url": "https://results.rhapilaw.com/attorneys/van-nuys/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Van Nuys"
+  },
+  {
+    "path": "/attorneys/pomona/",
+    "url": "https://results.rhapilaw.com/attorneys/pomona/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Pomona"
+  },
+  {
+    "path": "/attorneys/palmdale/",
+    "url": "https://results.rhapilaw.com/attorneys/palmdale/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Palmdale"
+  },
+  {
+    "path": "/attorneys/hawthorne/",
+    "url": "https://results.rhapilaw.com/attorneys/hawthorne/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Hawthorne"
+  },
+  {
+    "path": "/attorneys/downey/",
+    "url": "https://results.rhapilaw.com/attorneys/downey/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Downey"
+  },
+  {
+    "path": "/attorneys/inglewood/",
+    "url": "https://results.rhapilaw.com/attorneys/inglewood/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Inglewood"
+  },
+  {
+    "path": "/attorneys/paramount/",
+    "url": "https://results.rhapilaw.com/attorneys/paramount/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Paramount"
+  },
+  {
+    "path": "/attorneys/baldwin-park/",
+    "url": "https://results.rhapilaw.com/attorneys/baldwin-park/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Baldwin Park"
+  },
+  {
+    "path": "/attorneys/bellflower/",
+    "url": "https://results.rhapilaw.com/attorneys/bellflower/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Bellflower"
+  },
+  {
+    "path": "/attorneys/lynwood/",
+    "url": "https://results.rhapilaw.com/attorneys/lynwood/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Lynwood"
+  },
+  {
+    "path": "/attorneys/norwalk/",
+    "url": "https://results.rhapilaw.com/attorneys/norwalk/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Norwalk"
+  },
+  {
+    "path": "/attorneys/pico-rivera/",
+    "url": "https://results.rhapilaw.com/attorneys/pico-rivera/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Pico Rivera"
+  },
+  {
+    "path": "/attorneys/los-angeles/",
+    "url": "https://results.rhapilaw.com/attorneys/los-angeles/",
+    "lang": "en",
+    "kind": "variant-b",
+    "city": "Los Angeles"
+  },
+  {
+    "path": "/no-fee-unless-we-win/",
+    "url": "https://results.rhapilaw.com/no-fee-unless-we-win/",
+    "lang": "en",
+    "kind": "sitelink",
+    "city": "no-fee-unless-we-win"
+  },
+  {
+    "path": "/reviews/",
+    "url": "https://results.rhapilaw.com/reviews/",
+    "lang": "en",
+    "kind": "sitelink",
+    "city": "reviews"
+  },
+  {
+    "path": "/settlements/",
+    "url": "https://results.rhapilaw.com/settlements/",
+    "lang": "en",
+    "kind": "sitelink",
+    "city": "settlements"
+  },
+  {
+    "path": "/24-7-case-review/",
+    "url": "https://results.rhapilaw.com/24-7-case-review/",
+    "lang": "en",
+    "kind": "sitelink",
+    "city": "24-7-case-review"
+  },
+  {
+    "path": "/maximize-your-compensation/",
+    "url": "https://results.rhapilaw.com/maximize-your-compensation/",
+    "lang": "en",
+    "kind": "sitelink",
+    "city": "maximize-your-compensation"
+  },
+  {
+    "path": "/our-team/",
+    "url": "https://results.rhapilaw.com/our-team/",
+    "lang": "en",
+    "kind": "sitelink",
+    "city": "our-team"
+  },
+  {
     "path": "/privacy/",
     "url": "https://results.rhapilaw.com/privacy/",
     "lang": "en",
@@ -232,6 +379,153 @@
     "lang": "es",
     "kind": "city",
     "city": "Los Angeles"
+  },
+  {
+    "path": "/es/attorneys/compton/",
+    "url": "https://results.rhapilaw.com/es/attorneys/compton/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Compton"
+  },
+  {
+    "path": "/es/attorneys/huntington-park/",
+    "url": "https://results.rhapilaw.com/es/attorneys/huntington-park/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Huntington Park"
+  },
+  {
+    "path": "/es/attorneys/van-nuys/",
+    "url": "https://results.rhapilaw.com/es/attorneys/van-nuys/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Van Nuys"
+  },
+  {
+    "path": "/es/attorneys/pomona/",
+    "url": "https://results.rhapilaw.com/es/attorneys/pomona/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Pomona"
+  },
+  {
+    "path": "/es/attorneys/palmdale/",
+    "url": "https://results.rhapilaw.com/es/attorneys/palmdale/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Palmdale"
+  },
+  {
+    "path": "/es/attorneys/hawthorne/",
+    "url": "https://results.rhapilaw.com/es/attorneys/hawthorne/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Hawthorne"
+  },
+  {
+    "path": "/es/attorneys/downey/",
+    "url": "https://results.rhapilaw.com/es/attorneys/downey/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Downey"
+  },
+  {
+    "path": "/es/attorneys/inglewood/",
+    "url": "https://results.rhapilaw.com/es/attorneys/inglewood/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Inglewood"
+  },
+  {
+    "path": "/es/attorneys/paramount/",
+    "url": "https://results.rhapilaw.com/es/attorneys/paramount/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Paramount"
+  },
+  {
+    "path": "/es/attorneys/baldwin-park/",
+    "url": "https://results.rhapilaw.com/es/attorneys/baldwin-park/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Baldwin Park"
+  },
+  {
+    "path": "/es/attorneys/bellflower/",
+    "url": "https://results.rhapilaw.com/es/attorneys/bellflower/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Bellflower"
+  },
+  {
+    "path": "/es/attorneys/lynwood/",
+    "url": "https://results.rhapilaw.com/es/attorneys/lynwood/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Lynwood"
+  },
+  {
+    "path": "/es/attorneys/norwalk/",
+    "url": "https://results.rhapilaw.com/es/attorneys/norwalk/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Norwalk"
+  },
+  {
+    "path": "/es/attorneys/pico-rivera/",
+    "url": "https://results.rhapilaw.com/es/attorneys/pico-rivera/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Pico Rivera"
+  },
+  {
+    "path": "/es/attorneys/los-angeles/",
+    "url": "https://results.rhapilaw.com/es/attorneys/los-angeles/",
+    "lang": "es",
+    "kind": "variant-b",
+    "city": "Los Angeles"
+  },
+  {
+    "path": "/es/no-fee-unless-we-win/",
+    "url": "https://results.rhapilaw.com/es/no-fee-unless-we-win/",
+    "lang": "es",
+    "kind": "sitelink",
+    "city": "no-fee-unless-we-win"
+  },
+  {
+    "path": "/es/reviews/",
+    "url": "https://results.rhapilaw.com/es/reviews/",
+    "lang": "es",
+    "kind": "sitelink",
+    "city": "reviews"
+  },
+  {
+    "path": "/es/settlements/",
+    "url": "https://results.rhapilaw.com/es/settlements/",
+    "lang": "es",
+    "kind": "sitelink",
+    "city": "settlements"
+  },
+  {
+    "path": "/es/24-7-case-review/",
+    "url": "https://results.rhapilaw.com/es/24-7-case-review/",
+    "lang": "es",
+    "kind": "sitelink",
+    "city": "24-7-case-review"
+  },
+  {
+    "path": "/es/maximize-your-compensation/",
+    "url": "https://results.rhapilaw.com/es/maximize-your-compensation/",
+    "lang": "es",
+    "kind": "sitelink",
+    "city": "maximize-your-compensation"
+  },
+  {
+    "path": "/es/our-team/",
+    "url": "https://results.rhapilaw.com/es/our-team/",
+    "lang": "es",
+    "kind": "sitelink",
+    "city": "our-team"
   },
   {
     "path": "/es/privacy/",

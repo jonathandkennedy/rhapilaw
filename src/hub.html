@@ -41,13 +41,32 @@
     <span data-i18n="stat_1">{{stat_1}}</span><span data-i18n="stat_2">{{stat_2}}</span><span data-i18n="stat_3">{{stat_3}}</span><span data-i18n="stat_4">{{stat_4}}</span>
   </div>
 </section>
-<section class="hub__cities">
+<section class="hub__cities" id="cities">
   <div class="wrap">
-    <h2 data-i18n="hub_grid_h2">{{hub_grid_h2}}</h2>
+    <h2>{{hub_grid_h2}}</h2>
+    <p class="hub__lead">{{hub_sec_a}}</p>
     <ul class="city-grid">
 {{page.cityCards}}
     </ul>
-    <p class="hub__note" data-i18n="hub_not_listed">{{hub_not_listed}}</p>
+    <p class="hub__note">{{hub_not_listed}}</p>
+  </div>
+</section>
+<section class="hub__cities hub__cities--b" id="attorneys">
+  <div class="wrap">
+    <h2>{{hub_grid_h2_b}}</h2>
+    <p class="hub__lead">{{hub_sec_b}}</p>
+    <ul class="city-grid">
+{{page.variantBCards}}
+    </ul>
+  </div>
+</section>
+<section class="hub__cities hub__cities--sl" id="pages">
+  <div class="wrap">
+    <h2>{{hub_grid_h2_sl}}</h2>
+    <p class="hub__lead">{{hub_sec_sl}}</p>
+    <ul class="city-grid city-grid--sl">
+{{page.sitelinkCards}}
+    </ul>
   </div>
 </section>
 <section class="hub__about">

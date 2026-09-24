@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="{{page.lang}}" data-lang="{{page.lang}}" data-city="{{page.name}}" data-city-slug="{{page.slug}}" data-variant="b">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var q=new URLSearchParams(location.search),l=q.get("lang");if(!l)return;var p=location.pathname,es=/^\/es(\/|$)/.test(p);if(l==="es"&&!es){q.delete("lang");location.replace("/es"+p+(q.toString()?"?"+q:"")+location.hash)}else if(l==="en"&&es){q.delete("lang");location.replace(p.replace(/^\/es/,"")+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}})();</script>
+<title>{{meta_title}}</title>
+<meta name="description" content="{{meta_desc}}">
+<meta name="robots" content="{{page.robots}}">
+<link rel="canonical" href="{{page.canonical}}">
+{{page.hreflang}}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{meta_title}}">
+<meta property="og:description" content="{{meta_desc}}">
+<meta property="og:url" content="{{page.canonical}}">
+<meta name="theme-color" content="#0b1f3a">
+<link rel="icon" href="{{site.pathPrefix}}/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{site.pathPrefix}}/assets/styles.css">
+<script type="application/ld+json">{{page.jsonld}}</script>
+{{page.gtmHead}}
+</head>
+<body>
+{{page.gtmBody}}
+<a class="skip" href="#lead">{{skip}}</a>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="{{page.hubHref}}" aria-label="Robert Hindin &amp; Associates"><img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180"></a>
+    <div class="hdr__right">
+      <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="hdr__num">{{site.phoneDisplay}}</span><span class="hdr__sub">{{call_sub}}</span></a>
+      <a class="btn btn--accent hdr__cta" href="#lead">{{header_cta}}</a>
+      <a class="lang" href="{{page.toggleHref}}" hreflang="{{page.toggleLang}}" lang="{{page.toggleLang}}" aria-label="{{lang_toggle_aria}}">{{lang_toggle}}</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">{{eyebrow}}</p>
+      <h1>{{b_h1}}</h1>
+      <p class="lead"><span class="kw">{{hero_kw}}</span> {{b_hero_sub}}</p>
+      <figure class="hero__photo">
+        <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" width="1080" height="1080" loading="eager" fetchpriority="high">
+        <figcaption>{{hero_photo_cap}}</figcaption>
+      </figure>
+      <ul class="checks">
+        <li>{{b_trust_1}}</li>
+        <li>{{b_trust_2}}</li>
+        <li>{{b_trust_3}}</li>
+        <li>{{b_trust_4}}</li>
+      </ul>
+      <p class="ismael" {{page.ismaelHidden}}>{{ismael}}</p>
+      <a class="btn btn--accent btn--wide hero__call" href="tel:{{site.phoneTel}}" data-track="phone_click">{{hero_call}}</a>
+      <p class="cred"><strong>Kyle Hindin</strong> · {{hero_kyle_line}}</p>
+    </div>
+    <div class="hero__side">
+      {{page.formCard}}
+    </div>
+  </div>
+</section>
+
+<section class="stats" aria-label="firm facts">
+  <div class="wrap stats__in"><span>{{stat_1}}</span><span>{{stat_2}}</span><span>{{stat_3}}</span><span>{{stat_4}}</span></div>
+</section>
+
+<section class="local">
+  <div class="wrap">
+    <p class="local__serve">{{local_serve}}</p>
+    <p class="local__proof">{{local_proof}}</p>
+    <p class="local__office"><span>{{local_office_label}}</span> <span>{{local_office}}</span> · <a href="tel:{{site.phoneTel}}" data-track="phone_click">{{site.phoneDisplay}}</a></p>
+  </div>
+</section>
+
+<section class="b-cases">
+  <div class="wrap">
+    <h2>{{b_h2_cases}}</h2>
+    <p class="lead">{{b_cases_intro}}</p>
+    <div class="b-cases__grid">
+      <div class="b-case"><h3>{{b_case_1_t}}</h3><p>{{b_case_1_b}}</p></div>
+      <div class="b-case"><h3>{{b_case_2_t}}</h3><p>{{b_case_2_b}}</p></div>
+      <div class="b-case"><h3>{{b_case_3_t}}</h3><p>{{b_case_3_b}}</p></div>
+      <div class="b-case"><h3>{{b_case_4_t}}</h3><p>{{b_case_4_b}}</p></div>
+      <div class="b-case"><h3>{{b_case_5_t}}</h3><p>{{b_case_5_b}}</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="b-24h">
+  <div class="wrap">
+    <h2>{{b_h2_24h}}</h2>
+    <p class="lead">{{b_24h_p1}}</p>
+    <p>{{b_24h_p2}}</p>
+    <a class="btn btn--accent btn--big" href="tel:{{site.phoneTel}}" data-track="phone_click">{{b_24h_cta}}</a>
+  </div>
+</section>
+
+<section class="b-why">
+  <div class="wrap">
+    <h2>{{b_h2_why}}</h2>
+    <p class="lead">{{b_why_intro}}</p>
+    <div class="b-why__grid">
+      <div class="b-why__item"><h3>{{b_why_1_t}}</h3><p>{{b_why_1_b}}</p></div>
+      <div class="b-why__item"><h3>{{b_why_2_t}}</h3><p>{{b_why_2_b}}</p></div>
+      <div class="b-why__item"><h3>{{b_why_3_t}}</h3><p>{{b_why_3_b}}</p></div>
+      <div class="b-why__item"><h3>{{b_why_4_t}}</h3><p>{{b_why_4_b}}</p></div>
+      <div class="b-why__item"><h3>{{b_why_5_t}}</h3><p>{{b_why_5_b}}</p></div>
+    </div>
+    <div class="b-deadlines">
+      <p><strong>{{b_deadlines_h}}</strong></p>
+      <p>{{b_deadlines_p1}}</p>
+      <p>{{b_deadlines_p2}}</p>
+    </div>
+    <div class="result result--compact">
+      <div class="result__row"><span>{{res_offer_label}}</span><strong class="result__offer">{{res_offer}}</strong></div>
+      <div class="result__row result__row--win"><span>{{res_result_label}}</span><strong class="result__win">{{res_result}}</strong></div>
+    </div>
+    <p class="disc">{{res_disc}}</p>
+  </div>
+</section>
+
+<section class="b-schedule" id="schedule">
+  <div class="wrap b-schedule__grid">
+    <div>
+      <h2>{{b_h2_schedule}}</h2>
+      <p class="lead">{{b_schedule_p}}</p>
+      <ul class="checks">
+        <li>{{stack_1}}</li>
+        <li>{{stack_2}}</li>
+        <li>{{stack_4}}</li>
+        <li>{{stack_5}}</li>
+      </ul>
+      <a class="btn btn--accent btn--big" href="tel:{{site.phoneTel}}" data-track="phone_click">{{final_call}}</a>
+      <p class="hours">{{hours}}</p>
+    </div>
+    <div>{{page.formCardBottom}}</div>
+  </div>
+</section>
+<section class="reviews">
+  <div class="wrap">
+    <h2>{{rev_h2}}</h2>
+    <p class="rev-frame">{{rev_frame}}</p>
+    <div class="rev__grid">
+      <blockquote class="rev" lang="en"><p class="rev__q">{{rev_1_q}}</p><footer><cite>{{rev_1_n}}</cite> · ★★★★★ <span>{{rev_src}}</span></footer></blockquote>
+      <blockquote class="rev" lang="en"><p class="rev__q">{{rev_2_q}}</p><footer><cite>{{rev_2_n}}</cite> · ★★★★★ <span>{{rev_src}}</span></footer></blockquote>
+      <blockquote class="rev" lang="en"><p class="rev__q">{{rev_3_q}}</p><footer><cite>{{rev_3_n}}</cite> · ★★★★★ <span>{{rev_src}}</span></footer></blockquote>
+    </div>
+  </div>
+</section>
+
+</main>
+
+{{page.footer}}
+
+<div class="sticky">
+  <a class="sticky__call" href="tel:{{site.phoneTel}}" data-track="phone_click">{{sticky_call}}</a>
+  <a class="sticky__form" href="#lead">{{sticky_form}}</a>
+</div>
+<script>window.__RHA_S={{page.strJson}};window.__RHA_KW={{page.kwJson}};</script>
+<script src="{{site.pathPrefix}}/assets/lander.js"></script>
+</body>
+</html>

@@ -18,22 +18,45 @@ Same system as the Goldberg hub. Not their copy, not their leaks.
 
 ## Pages
 
-Every page exists twice: English at `/<path>/`, Spanish at `/es/<path>/`. Same template, pre-rendered, no runtime language swapping. Each carries a self-canonical plus `hreflang` en / es / x-default, and the sitemap repeats the triplet.
+Every page exists twice: English at `/<path>/`, Spanish at `/es/<path>/`. Pre-rendered, no runtime language swapping. Each carries a self-canonical plus `hreflang` en / es / x-default, and the sitemap repeats the triplet. 78 indexable pages.
 
-| English | Spanish | What |
+**Set A — control** (`/compton/` … `/los-angeles/`, 15 pages × 2 languages). Empathy-led H1, single offer, one screen to the form. Hours: Mon–Fri 8am–5pm.
+
+**Set B — test** (`/attorneys/compton/` … `/attorneys/los-angeles/`, 15 × 2). Same cities, client-specified heading structure, in this fixed order:
+
+| Level | Heading |
+|---|---|
+| H1 | {City} car accident attorneys |
+| H2 | Types of cases our {City} car accident attorneys represent |
+| H3 ×5 | Red light · Drunk drivers · Rear-end · Ride share · Chain reaction |
+| H2 | Car accident attorneys in {City}, CA open 24 hours |
+| H2 | Why turn to a car accident attorney in {City} after a crash |
+| H3 ×5 | No fees unless we win · Over $500 million won · We fight to get you paid while you recover · Award winning … {City} and all of Los Angeles County · Free car accident consultations |
+| H2 | Schedule a free consultation with our {City} car accident attorneys |
+
+`qa.js` asserts that exact sequence on all 30 set-B pages and fails the build on any drift. Client reviews sit below the last specified H2 so the outline is uninterrupted. Set B carries two lead forms (hero and bottom) and its own thank-you page at `/attorneys/thank-you/` so the hours copy never contradicts itself.
+
+**Sitelink / campaign pages** (× 2 languages), built for Google Ads sitelink extensions:
+
+`/no-fee-unless-we-win/` · `/reviews/` · `/settlements/` · `/24-7-case-review/` · `/maximize-your-compensation/` · `/our-team/`
+
+**Other:** `/` hub (three sections: set A, set B, sitelinks), `/privacy/`, `/terms/`, `/thank-you/` and `/attorneys/thank-you/` (both `noindex`).
+
+## Claims that need firm sign-off
+
+Three values on set B and the sitelink pages are **not verified by anything in this repo**. Each is a single config value so it can be changed or removed in one place.
+
+| Claim | Where | Config |
 |---|---|---|
-| `/` | `/es/` | Hub: every city with EN and ES links |
-| `/compton/` … `/pico-rivera/` | `/es/compton/` … `/es/pico-rivera/` | 14 city landers |
-| `/los-angeles/` | `/es/los-angeles/` | Catch-all lander |
-| `/privacy/` | `/es/privacy/` | Privacy Policy (CCPA, TCPA/SMS, GA4, Formspree, retention) |
-| `/terms/` | `/es/terms/` | Terms of Use (attorney advertising, no attorney-client relationship, results disclaimer) |
-| `/thank-you/` | `/es/thank-you/` | Post-submit, `noindex` |
+| "Over $500 million won" | Set B H3, `/settlements/` | `site.json → totalRecovered` |
+| "Open 24 hours" / "24/7" | Set B H2, `/24-7-case-review/`, hours copy | `site.json → variantBOpen24` |
+| Award-winning | Set B H3 | Backed by Super Lawyers Rising Stars 2022–2026 and CAALA |
 
-**x-default** points at the English page except for Huntington Park and Lynwood, where it points at `/es/…` (the plan's Spanish-first cities). Spanish ads land on the `/es/` URL directly: `/es/huntington-park/`, `/es/compton/?kw=rear-end`, and so on.
+Set `variantBOpen24` to `false` and set B reverts to Mon–Fri 8am–5pm everywhere. Set A is untouched by this flag and still says Mon–Fri, so **the two sets currently state different hours** — reconcile before both run.
 
-**Old query URLs still work.** `/compton/?lang=es` is a 308 to `/es/compton/` (Vercel redirect in `vercel.json`, with an inline JS fallback for other hosts). The `kw` parameter survives the redirect.
+## Tracking the A/B split
 
-**Footer on every page:** office, hours, SMS opt-out line, Privacy, Terms, hub, the same page in the other language, firm website, Google reviews, and cross-links to all 15 city landers in the page's language.
+Every set-B page carries `data-variant="b"` on `<html>`, a hidden `variant` field on both forms, and `variant` on every `dataLayer` / GA4 event. In GA4, compare by that parameter or by page path (`/attorneys/` = B).
 
 ## Build
 

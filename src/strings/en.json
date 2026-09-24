@@ -205,5 +205,10 @@
   "ty_body": "Someone on the team will call you from <a href=\"tel:+13105647911\">(310) 564-7911</a>. Save the number. If you don't pick up, we'll call again. We don't promise the first ring is an attorney — we promise a real person, today.",
   "ty_hours": "We answer Monday–Friday, 8am–5pm. If you wrote at night, we call first thing.",
   "ty_save": "Save the number",
-  "ty_back": "Back"
+  "ty_back": "Back",
+  "hub_grid_h2_b": "Car accident attorneys by city — test set B",
+  "hub_grid_h2_sl": "Campaign pages and ad sitelinks",
+  "hub_sec_a": "The original set. Empathy-led headline, single offer, one screen to the form.",
+  "hub_sec_b": "The same 14 cities with the attorney-led heading structure: types of cases, open 24 hours, why turn to an attorney, and a second form at the bottom. Run these against set A on the same keywords.",
+  "hub_sec_sl": "Standalone pages built to be used as Google Ads sitelink extensions, and to answer the questions that stop a click from converting."
 }

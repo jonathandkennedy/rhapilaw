@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="{{page.lang}}" data-lang="{{page.lang}}" data-city="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var q=new URLSearchParams(location.search),l=q.get("lang");if(!l)return;var p=location.pathname,es=/^\/es(\/|$)/.test(p);if(l==="es"&&!es){q.delete("lang");location.replace("/es"+p+(q.toString()?"?"+q:"")+location.hash)}else if(l==="en"&&es){q.delete("lang");location.replace(p.replace(/^\/es/,"")+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}})();</script>
+<title>{{page.title}}</title>
+<meta name="description" content="{{page.desc}}">
+<meta name="robots" content="{{page.robots}}">
+<link rel="canonical" href="{{page.canonical}}">
+{{page.hreflang}}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{page.title}}">
+<meta property="og:description" content="{{page.desc}}">
+<meta property="og:url" content="{{page.canonical}}">
+<link rel="icon" href="{{site.pathPrefix}}/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{site.pathPrefix}}/assets/styles.css">
+<script type="application/ld+json">{{page.jsonld}}</script>
+{{page.gtmHead}}
+</head>
+<body class="sl">
+{{page.gtmBody}}
+<a class="skip" href="#lead">{{skip}}</a>
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="{{page.hubHref}}" aria-label="Robert Hindin &amp; Associates"><img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180"></a>
+    <div class="hdr__right">
+      <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="hdr__num">{{site.phoneDisplay}}</span><span class="hdr__sub">{{call_sub}}</span></a>
+      <a class="btn btn--accent hdr__cta" href="#lead">{{header_cta}}</a>
+      <a class="lang" href="{{page.toggleHref}}" hreflang="{{page.toggleLang}}" lang="{{page.toggleLang}}" aria-label="{{lang_toggle_aria}}">{{lang_toggle}}</a>
+    </div>
+  </div>
+</header>
+<main>
+<section class="sl__hero">
+  <div class="wrap sl__grid">
+    <div class="sl__body">
+      <p class="eyebrow">{{page.eyebrow}}</p>
+      <h1>{{page.h1}}</h1>
+      {{page.body}}
+    </div>
+    <div class="sl__side">{{page.formCard}}</div>
+  </div>
+</section>
+<section class="stats" aria-label="firm facts">
+  <div class="wrap stats__in"><span>{{stat_1}}</span><span>{{stat_2}}</span><span>{{stat_3}}</span><span>{{stat_4}}</span></div>
+</section>
+<section class="final">
+  <div class="wrap">
+    <h2>{{final_h2}}</h2>
+    <p class="final__p">{{final_p}}</p>
+    <div class="final__btns"><a class="btn btn--accent btn--big" href="tel:{{site.phoneTel}}" data-track="phone_click">{{final_call}}</a><a class="btn btn--ghost" href="#lead">{{final_form}}</a></div>
+    <p class="hours">{{hours}}</p>
+  </div>
+</section>
+</main>
+{{page.footer}}
+<div class="sticky">
+  <a class="sticky__call" href="tel:{{site.phoneTel}}" data-track="phone_click">{{sticky_call}}</a>
+  <a class="sticky__form" href="#lead">{{sticky_form}}</a>
+</div>
+<script>window.__RHA_S={{page.strJson}};window.__RHA_KW={{page.kwJson}};</script>
+<script src="{{site.pathPrefix}}/assets/lander.js"></script>
+</body>
+</html>

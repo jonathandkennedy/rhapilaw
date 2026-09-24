@@ -19,12 +19,19 @@ const STR = {
   es: JSON.parse(fs.readFileSync(path.join(SRC, "strings/es.json"), "utf8")),
 };
 const KW = JSON.parse(fs.readFileSync(path.join(SRC, "keywords.json"), "utf8"));
+const SITELINKS = JSON.parse(fs.readFileSync(path.join(SRC, "sitelinks.json"), "utf8"));
+const BSTR = {
+  en: JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.en.json"), "utf8")),
+  es: JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.es.json"), "utf8")),
+};
 delete KW._note;
 const T = {
   lander: fs.readFileSync(path.join(SRC, "template.html"), "utf8"),
   thanks: fs.readFileSync(path.join(SRC, "thankyou.html"), "utf8"),
   hub: fs.readFileSync(path.join(SRC, "hub.html"), "utf8"),
   legal: fs.readFileSync(path.join(SRC, "legal.html"), "utf8"),
+  variantB: fs.readFileSync(path.join(SRC, "variant-b.html"), "utf8"),
+  sitelink: fs.readFileSync(path.join(SRC, "sitelink.html"), "utf8"),
 };
 const YEAR = String(new Date().getFullYear());
 const prefix = (site.pathPrefix || "").replace(/\/$/, "");
@@ -41,9 +48,55 @@ function stringsFor(lang, city) {
   const out = {}, s = STR[lang];
   for (const k of Object.keys(s)) {
     if (typeof s[k] !== "string") continue;
-    out[k] = s[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR);
+    out[k] = s[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR).replace(/\{totalRecovered\}/g, site.totalRecovered || "");
   }
   return out;
+}
+
+const OPEN24_KEYS = ["call_sub", "form_note", "hours", "footer_hours", "ty_hours", "ty_body"];
+/** Apply variant-B hour copy so a page never contradicts its own footer. No-op when the flag is off. */
+function withOpen24(s, lang) {
+  if (!site.variantBOpen24) return s;
+  for (const k of OPEN24_KEYS) if (BSTR[lang][k]) s[k] = BSTR[lang][k];
+  return s;
+}
+
+/** Variant B strings: strings/<lang>.json with strings/b.<lang>.json merged over the top. */
+function stringsForB(lang, city) {
+  const base = stringsFor(lang, city), b = BSTR[lang];
+  for (const k of Object.keys(b)) {
+    if (k[0] === "_" || typeof b[k] !== "string") continue;
+    base[k] = b[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR).replace(/\{totalRecovered\}/g, site.totalRecovered || "");
+  }
+  return base;
+}
+
+/** The lead-capture card, rendered wherever a page needs one. id must be unique per page. */
+function formCard(s, page, id) {
+  return `<div class="card form-card" id="${id}">
+        <p class="form-card__h">${s.form_h2}</p>
+        <p class="form-card__sub">${s.form_sub}</p>
+        <p class="chip">${s.form_chip}</p>
+        <form class="lead-form" method="post" action="${page.formAction}" data-endpoint="${site.formEndpoint}" data-thankyou="${page.thankYouUrl}" novalidate>
+          <input type="hidden" name="lang" value="${page.lang}">
+          <input type="hidden" name="city" value="${page.name || ""}">
+          <input type="hidden" name="city_slug" value="${page.slug || ""}">
+          <input type="hidden" name="practice" value="car">
+          <input type="hidden" name="variant" value="${page.variant || "a"}">
+          <input type="hidden" name="page" value="${page.canonical}">
+          <input type="hidden" name="source" value="">
+          <input type="hidden" name="kw" value="">
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <label class="field"><span>${s.form_name}</span><input type="text" name="name" autocomplete="name" required minlength="2" placeholder="${esc(s.form_name_ph)}"></label>
+          <label class="field"><span>${s.form_phone}</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="${esc(s.form_phone_ph)}"></label>
+          <p class="form-err" role="alert" hidden></p>
+          <p class="tcpa">${s.form_tcpa}</p>
+          <button type="submit" class="btn btn--accent btn--wide">${s.form_submit}</button>
+          <p class="form-note">${s.form_note}</p>
+        </form>
+        <p class="orcall">${s.form_orcall}</p>
+        <p class="trust">${s.form_trust}</p>
+      </div>`;
 }
 
 function render(tpl, ctx) {
@@ -123,8 +176,8 @@ function footer(lang, s, p) {
 </footer>`;
 }
 
-function baseCtx(lang, city, p, xDefaultLang) {
-  const s = stringsFor(lang, city);
+function baseCtx(lang, city, p, xDefaultLang, resolver) {
+  const s = (resolver || stringsFor)(lang, city);
   const alt = alternates(p, xDefaultLang);
   const g = tags();
   const other = lang === "es" ? "en" : "es";
@@ -199,19 +252,35 @@ function buildThankYou(lang) {
   write(langPath(lang, p), render(T.thanks, ctx));
 }
 
+function buildThankYouB(lang) {
+  const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
+  const p = "/attorneys/thank-you/";
+  const { page, ctx } = baseCtx(lang, la, p, "en", (l, c) => withOpen24(stringsFor(l, c), l));
+  const link = u => u ? u + (u.includes("?") ? "&" : "?") + "utm_source=lander&utm_medium=thankyou&utm_campaign=variant-b" : "";
+  page.corporateHref = link(site.corporateUrl);
+  page.reviewsHref = site.googleReviewsUrl || "";
+  page.reviewsHidden = site.googleReviewsUrl ? "" : "hidden";
+  write(langPath(lang, p), render(T.thanks, ctx));
+}
+
 function buildHub(lang) {
   const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
   const { s, page, ctx } = baseCtx(lang, la, "/", "en");
-  page.cityCards = cities.map(c => {
-    const en = `<a href="${prefix}${langPath("en", cityPath(c))}" hreflang="en" lang="en">${esc(s.hub_en)}</a>`;
-    const es = `<a href="${prefix}${langPath("es", cityPath(c))}" hreflang="es" lang="es">${esc(s.hub_es)}</a>`;
-    const first = c.defaultLang === "es" ? es + es.slice(0, 0) + en : en + es;
-    return `      <li class="city-card${c.isDefault ? " city-card--default" : ""}${c.defaultLang === "es" ? " city-card--es" : ""}">
-        <h3><a href="${prefix}${langPath(lang, cityPath(c))}">${c.isDefault ? esc(s.hub_default) : esc(c.name)}</a></h3>
-        <p>${esc(c["serve_" + lang])}</p>
-        <div class="city-card__links">${c.defaultLang === "es" ? es + en : en + es}</div>
+  const card = (href, name, blurb, cls, en, es) => `      <li class="city-card${cls}">
+        <h3><a href="${href}">${name}</a></h3>
+        <p>${blurb}</p>
+        <div class="city-card__links">${en}${es}</div>
       </li>`;
-  }).join("\n");
+  const pair = (logical, esFirst) => {
+    const en = `<a href="${prefix}${langPath("en", logical)}" hreflang="en" lang="en">${esc(s.hub_en)}</a>`;
+    const es = `<a href="${prefix}${langPath("es", logical)}" hreflang="es" lang="es">${esc(s.hub_es)}</a>`;
+    return esFirst ? es + en : en + es;
+  };
+  page.cityCards = cities.map(c => card(prefix + langPath(lang, cityPath(c)), c.isDefault ? esc(s.hub_default) : esc(c.name), esc(c["serve_" + lang]),
+    (c.isDefault ? " city-card--default" : "") + (c.defaultLang === "es" ? " city-card--es" : ""), ...[pair(cityPath(c), c.defaultLang === "es"), ""])).join("\n");
+  page.variantBCards = cities.map(c => card(prefix + langPath(lang, `/attorneys/${c.slug}/`), c.isDefault ? esc(s.hub_default) : esc(c.name), esc(c["serve_" + lang]),
+    (c.isDefault ? " city-card--default" : "") + (c.defaultLang === "es" ? " city-card--es" : ""), ...[pair(`/attorneys/${c.slug}/`, c.defaultLang === "es"), ""])).join("\n");
+  page.sitelinkCards = SITELINKS.map(e => card(prefix + langPath(lang, `/${e.slug}/`), esc(e[lang].h1), esc(e[lang].desc), " city-card--sitelink", ...[pair(`/${e.slug}/`, false), ""])).join("\n");
   write(langPath(lang, "/"), render(T.hub, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "hub", alt: alternates("/", "en") });
 }
@@ -225,6 +294,40 @@ function buildLegal(kind, lang) {
   page.body = fs.readFileSync(path.join(SRC, "legal", `${kind}.${lang}.html`), "utf8").replace(/\{\{privacyHref\}\}/g, page.privacyHref);
   write(langPath(lang, p), render(T.legal, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind, alt: alternates(p, "en") });
+}
+
+function buildVariantB(city, lang) {
+  const p = `/attorneys/${city.slug}/`;
+  const { page, ctx } = baseCtx(lang, city, p, city.defaultLang, stringsForB);
+  const s = ctx;
+  page.name = city.name;
+  page.slug = city.slug;
+  page.variant = "b";
+  page.jsonld = jsonld(city, s, page);
+  page.ismaelHidden = s.ismael ? "" : "hidden";
+  page.thankYouUrl = prefix + langPath(lang, "/attorneys/thank-you/");
+  page.formCard = formCard(s, page, "lead");
+  page.formCardBottom = formCard(s, page, "lead-bottom");
+  write(langPath(lang, p), render(T.variantB, ctx));
+  built.push({ path: page.path, url: page.canonical, lang, kind: "variant-b", city: city.name, alt: alternates(p, city.defaultLang) });
+}
+
+function buildSitelink(entry, lang) {
+  const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
+  const p = `/${entry.slug}/`;
+  const { page, ctx } = baseCtx(lang, la, p, "en", (l, c) => withOpen24(stringsFor(l, c), l));
+  const meta = entry[lang];
+  page.title = esc(meta.title);
+  page.desc = esc(meta.desc);
+  page.eyebrow = esc(meta.eyebrow);
+  page.h1 = esc(meta.h1);
+  page.slug = entry.slug;
+  page.variant = "sitelink";
+  page.body = fs.readFileSync(path.join(SRC, "sitelinks", `${entry.slug}.${lang}.html`), "utf8").replace(/\{totalRecovered\}/g, site.totalRecovered || "");
+  page.formCard = formCard(ctx, page, "lead");
+  page.jsonld = jsonld(la, ctx, page);
+  write(langPath(lang, p), render(T.sitelink, ctx));
+  built.push({ path: page.path, url: page.canonical, lang, kind: "sitelink", city: entry.slug, alt: alternates(p, "en") });
 }
 
 function copyDir(from, to) {
@@ -241,6 +344,9 @@ function main() {
   for (const lang of LANGS) {
     buildHub(lang);
     for (const c of cities) buildCity(c, lang);
+    for (const c of cities) buildVariantB(c, lang);
+    for (const e of SITELINKS) buildSitelink(e, lang);
+    buildThankYouB(lang);
     buildThankYou(lang);
     buildLegal("privacy", lang);
     buildLegal("terms", lang);
@@ -251,6 +357,6 @@ function main() {
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sm}\n</urlset>\n`);
   fs.writeFileSync(path.join(OUT, "pages.json"), JSON.stringify(built.map(b => ({ path: b.path, url: b.url, lang: b.lang, kind: b.kind, city: b.city })), null, 2));
   for (const b of built) console.log(`${b.lang.toUpperCase()}  ${b.path.padEnd(22)} ${b.city || b.kind}`);
-  console.log(`\nBuilt ${built.length} indexable pages + 2 thank-you -> ${path.relative(ROOT, OUT) || "."}/`);
+  console.log(`\nBuilt ${built.length} indexable pages + 4 thank-you -> ${path.relative(ROOT, OUT) || "."}/`);
 }
 main();

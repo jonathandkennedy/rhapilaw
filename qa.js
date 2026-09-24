@@ -9,6 +9,12 @@ const cities = JSON.parse(fs.readFileSync(path.join(__dirname, "src/cities.json"
 const ES = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/es.json"), "utf8"));
 const EN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/en.json"), "utf8"));
 const KW = JSON.parse(fs.readFileSync(path.join(__dirname, "src/keywords.json"), "utf8"));
+const SITELINKS = JSON.parse(fs.readFileSync(path.join(__dirname, "src/sitelinks.json"), "utf8"));
+const BEN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.en.json"), "utf8"));
+const BES = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.es.json"), "utf8"));
+function headings(html) {
+  return [...html.matchAll(/<(h[123])[^>]*>([\s\S]*?)<\/\1>/g)].map(m => m[1] + " " + m[2].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim());
+}
 const PHONE = "(310) 564-7911";
 const BASE = site.baseUrl.replace(/\/$/, "");
 let fails = 0, checks = 0;
@@ -39,6 +45,21 @@ console.log("Spanish strings");
     const txt = fs.readFileSync(path.join(__dirname, "src/legal", f), "utf8").replace(/<[^>]+>/g, " ");
     ok(!TU.test(txt), `legal/${f} uses tú-register: "${(txt.match(TU) || [])[0]}"`);
   }
+  for (const e of SITELINKS) {
+    const txt = fs.readFileSync(path.join(__dirname, "src/sitelinks", `${e.slug}.es.html`), "utf8").replace(/<[^>]+>/g, " ");
+    ok(!TU.test(txt), `sitelinks/${e.slug}.es.html uses tú-register: "${(txt.match(TU) || [])[0]}"`);
+  }
+  for (const [k, v] of Object.entries(BES)) {
+    if (k[0] === "_" || typeof v !== "string") continue;
+    ok(!TU.test(v.replace(/<[^>]+>/g, " ")), `b.es.${k} uses tú-register`);
+  }
+  for (const [S, B, L] of [[EN, BEN, "en"], [ES, BES, "es"]]) {
+    const first = S.hero_kw.replace(/[.!?]$/, "").toLowerCase();
+    ok(!B.b_hero_sub.toLowerCase().startsWith(first), `b.${L}.b_hero_sub repeats the hero_kw sentence that precedes it`);
+    ok(!S.hero_sub.toLowerCase().startsWith(first), `${L}.hero_sub repeats the hero_kw sentence that precedes it`);
+  }
+  const bek = Object.keys(BEN).filter(k => k[0] !== "_"), bsk = Object.keys(BES).filter(k => k[0] !== "_");
+  ok(bek.every(k => k in BES) && bsk.every(k => k in BEN), "variant B EN/ES key parity");
 }
 
 console.log("Keyword allowlist");
@@ -55,7 +76,7 @@ const spanishDefault = cities.filter(c => c.defaultLang === "es").map(c => c.nam
 ok(spanishDefault.length === 2 && spanishDefault.includes("Huntington Park") && spanishDefault.includes("Lynwood"), "Spanish-default cities: " + spanishDefault.join(", "));
 
 /** Checks shared by every page: canonical self, hreflang triplet, footer, no ?lang in internal links, phone, no 24/7. */
-function common(label, html, lang, logical, xDefaultLang, indexable) {
+function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   const text = strip(html);
   const en = `${BASE}${logical}`, es = `${BASE}/es${logical}`, self = lang === "es" ? es : en, xd = xDefaultLang === "es" ? es : en;
   ok(html.includes(`<html lang="${lang}"`), `${label}: html lang`);
@@ -71,7 +92,7 @@ function common(label, html, lang, logical, xDefaultLang, indexable) {
   ok(text.includes("11400 W Olympic Blvd, Suite 200"), `${label}: office address`);
   ok((text.match(/\(310\) 564-7911/g) || []).length >= 3, `${label}: phone`);
   ok(!/\b512\b/.test(text) && !/473-0337/.test(text), `${label}: wrong number (512 or office line) on page`);
-  ok(!/24\/7/.test(text), `${label}: 24/7`);
+  if (!allow24) ok(!/24\/7/.test(text) && !/open 24 hours/i.test(text), `${label}: 24-hour claim on the control set`);
   ok(!/\{City\}|\{serve\}|\{local\}|\{year\}|\{\{/.test(html), `${label}: unsubstituted token`);
   ok(!/data-i18n/.test(html), `${label}: runtime i18n hooks leaked into output`);
   ok(html.includes("gtag('config','G-K9CNL0LV5B')") && html.includes("gtag('config','G-BBKS7FGRKP')") && html.includes("GTM-N7PDDTKX"), `${label}: analytics tags`);
@@ -85,7 +106,7 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   const label = (lang === "es" ? "/es" : "") + logical;
   const html = read((lang === "es" ? "/es" : "") + logical);
   const text = strip(html);
-  common(label, html, lang, logical, c.defaultLang, true);
+  common(label, html, lang, logical, c.defaultLang, true, false);
   ok(html.includes(`<input type="hidden" name="lang" value="${lang}">`), `${label}: form lang`);
   ok(html.includes(`data-thankyou="${lang === "es" ? "/es" : ""}/thank-you/"`), `${label}: thank-you redirect in page language`);
   ok(!/Google Guaranteed/i.test(text), `${label}: fake badge`);
@@ -105,20 +126,75 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   }
 }
 
+console.log("Variant B (test set)");
+for (const c of cities) for (const lang of ["en", "es"]) {
+  const logical = `/attorneys/${c.slug}/`;
+  const label = (lang === "es" ? "/es" : "") + logical;
+  const html = read((lang === "es" ? "/es" : "") + logical);
+  const B = lang === "es" ? BES : BEN;
+  common(label, html, lang, logical, c.defaultLang, true, true);
+  const sub = v => v.replace(/\{City\}/g, c.name).replace(/\{totalRecovered\}/g, site.totalRecovered).replace(/&amp;/g, "&");
+  const want = [
+    "h1 " + sub(B.b_h1),
+    "h2 " + sub(B.b_h2_cases),
+    "h3 " + sub(B.b_case_1_t), "h3 " + sub(B.b_case_2_t), "h3 " + sub(B.b_case_3_t), "h3 " + sub(B.b_case_4_t), "h3 " + sub(B.b_case_5_t),
+    "h2 " + sub(B.b_h2_24h),
+    "h2 " + sub(B.b_h2_why),
+    "h3 " + sub(B.b_why_1_t), "h3 " + sub(B.b_why_2_t), "h3 " + sub(B.b_why_3_t), "h3 " + sub(B.b_why_4_t), "h3 " + sub(B.b_why_5_t),
+    "h2 " + sub(B.b_h2_schedule),
+  ];
+  const got = headings(html);
+  for (let i = 0; i < want.length; i++) ok(got[i] === want[i], `${label}: heading ${i + 1} must be "${want[i]}" — got "${got[i]}"`);
+  ok((html.match(/class="lead-form"/g) || []).length === 2, `${label}: two lead forms (hero + schedule)`);
+  ok((html.match(/id="lead"/g) || []).length === 1 && html.includes('id="lead-bottom"'), `${label}: unique form ids`);
+  ok((html.match(/<h1/g) || []).length === 1, `${label}: exactly one H1`);
+  ok(html.includes(`data-thankyou="${lang === "es" ? "/es" : ""}/attorneys/thank-you/"`), `${label}: variant B thank-you`);
+  ok(html.includes('<input type="hidden" name="variant" value="b">'), `${label}: variant flag on the lead`);
+  ok(html.includes('data-variant="b"'), `${label}: variant attribute for analytics`);
+  ok(html.includes(site.totalRecovered), `${label}: recovered total`);
+  ok(!/\bTravis\b|\bAustin\b|\bTexas\b|, TX\b/.test(strip(html)), `${label}: Texas copy leaked in`);
+}
+
+console.log("Sitelink pages");
+for (const e of SITELINKS) for (const lang of ["en", "es"]) {
+  const logical = `/${e.slug}/`;
+  const label = (lang === "es" ? "/es" : "") + logical;
+  const html = read((lang === "es" ? "/es" : "") + logical);
+  common(label, html, lang, logical, "en", true, true);
+  ok(html.includes(`<h1>${e[lang].h1.replace(/&/g, "&amp;")}</h1>`) || html.includes(`<h1>${e[lang].h1}</h1>`), `${label}: H1`);
+  ok((html.match(/<h1/g) || []).length === 1, `${label}: exactly one H1`);
+  ok(/class="lead-form"/.test(html), `${label}: lead form`);
+  ok(strip(html).length > 2500, `${label}: body too thin`);
+  ok(!/\{totalRecovered\}/.test(html), `${label}: unsubstituted token`);
+}
+for (const kind of ["settlements", "reviews"]) {
+  for (const lang of ["en", "es"]) {
+    const html = read((lang === "es" ? "/es" : "") + `/${kind}/`);
+    ok(/result|guarantee|garantizan/i.test(strip(html)), `${kind} ${lang}: prior-results disclaimer`);
+  }
+}
+for (const lang of ["en", "es"]) {
+  const html = read((lang === "es" ? "/es" : "") + "/reviews/");
+  for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(strip(html).includes(n), `reviews ${lang}: real reviewer ${n}`);
+}
+
 for (const lang of ["en", "es"]) {
   const pre = lang === "es" ? "/es" : "";
   const hub = read(pre + "/");
-  common(pre + "/", hub, lang, "/", "en", true);
+  common(pre + "/", hub, lang, "/", "en", true, true);
   ok(/class="city-grid"/.test(hub) && !/<form/.test(hub), "hub: grid, no form");
+  ok(hub.includes('id="cities"') && hub.includes('id="attorneys"') && hub.includes('id="pages"'), `${pre}/ hub: three sections`);
+  for (const c of cities) ok(hub.includes(`href="/attorneys/${c.slug}/"`) && hub.includes(`href="/es/attorneys/${c.slug}/"`), `${pre}/ hub: variant B links to ${c.name}`);
+  for (const e of SITELINKS) ok(hub.includes(`href="/${e.slug}/"`) && hub.includes(`href="/es/${e.slug}/"`), `${pre}/ hub: sitelink ${e.slug}`);
   for (const c of cities) ok(hub.includes(`href="/${c.slug}/"`) && hub.includes(`href="/es/${c.slug}/"`), `${pre}/ hub: EN+ES links to ${c.name}`);
   const ty = read(pre + "/thank-you/");
-  common(pre + "/thank-you/", ty, lang, "/thank-you/", "en", false);
+  common(pre + "/thank-you/", ty, lang, "/thank-you/", "en", false, false);
   ok(/class="qual-form"/.test(ty) && ty.includes(`<input type="hidden" name="lang" value="${lang}">`), `${pre}/thank-you/: qualifying form`);
   ok(/href="https:\/\/www\.rhapilaw\.com\?utm_source=lander[^"]*" target="_blank" rel="noopener"/.test(ty), `${pre}/thank-you/: corporate link`);
   ok(ty.includes('href="/assets/rha.vcf"') && fs.existsSync(path.join(DIST, "assets/rha.vcf")), `${pre}/thank-you/: vCard`);
   for (const kind of ["privacy", "terms"]) {
     const html = read(`${pre}/${kind}/`), text = strip(html);
-    common(`${pre}/${kind}/`, html, lang, `/${kind}/`, "en", true);
+    common(`${pre}/${kind}/`, html, lang, `/${kind}/`, "en", true, true);
     ok(text.length > 4000, `${pre}/${kind}/: body too short (${text.length})`);
     ok(/STOP/.test(text) && /Formspree/.test(text) && /G-K9CNL0LV5B/.test(text.replace(/\s/g, "")) || kind === "terms", `${pre}/${kind}/: privacy specifics`);
     ok(/Robert Hindin/.test(text) && text.includes("11400 W Olympic Blvd"), `${pre}/${kind}/: responsible attorney + address`);
@@ -129,7 +205,8 @@ for (const lang of ["en", "es"]) {
 {
   const sm = fs.readFileSync(path.join(DIST, "sitemap.xml"), "utf8");
   const locs = (sm.match(/<loc>[^<]+<\/loc>/g) || []).length;
-  ok(locs === (cities.length + 3) * 2, `sitemap: expected ${(cities.length + 3) * 2} urls, got ${locs}`);
+  const expect = (cities.length * 2 + SITELINKS.length + 3) * 2;
+  ok(locs === expect, `sitemap: expected ${expect} urls, got ${locs}`);
   ok(!/thank-you/.test(sm), "sitemap: thank-you must not be listed");
   ok((sm.match(/hreflang="x-default"/g) || []).length === locs, "sitemap: x-default on every url");
   ok(!/\?lang=/.test(sm), "sitemap: no query variants");
