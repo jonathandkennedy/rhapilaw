@@ -253,6 +253,28 @@ section{padding:48px 0}
 .b-schedule__grid{display:grid;gap:28px}
 .b-schedule .hours{margin:14px 0 0;max-width:none;opacity:1;color:var(--muted);font-size:.9rem}
 
+/* rating hero */
+.rating-hero{display:flex;align-items:center;gap:18px;background:var(--gold-soft);border:1px solid #f1dc8a;border-radius:var(--radius);padding:18px 22px;margin:0 0 20px}
+.rating-hero__score{font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--ink);margin:0;line-height:1}
+.rating-hero__stars{color:#e8a500;font-size:1.3rem;letter-spacing:2px;margin:0 0 2px}
+.rating-hero__count{margin:0;font-weight:700;color:var(--ink)}
+
+/* team headshots */
+.team{display:grid;gap:22px;margin:24px 0 30px}
+.person{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:start}
+.person img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--line);background:var(--soft)}
+.person__txt h2{margin:0 0 2px;font-size:1.2rem}
+.person__role{margin:0 0 8px;font-size:.85rem;font-weight:700;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.05em}
+.person__txt p{margin:0}
+.who__card img{width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid var(--line);margin-bottom:12px}
+.who__duo{display:flex;gap:8px;margin-bottom:12px}
+.who__duo img{margin:0}
+
+.facerow{display:flex;gap:-6px;margin:0 0 12px}
+.facerow img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 1px 3px rgba(11,31,58,.2)}
+.facerow img+img{margin-left:-14px}
+.facerow--cta img{width:58px;height:58px}
+
 /* sitelink pages */
 .sl__hero{background:var(--white);padding:32px 0 44px}
 .sl__grid{display:grid;gap:26px;grid-template-areas:"head" "side" "body"}
@@ -361,6 +383,8 @@ section{padding:48px 0}
   .sl__grid{grid-template-columns:minmax(0,1.5fr) 400px;align-items:start;gap:40px;grid-template-areas:"head side" "body side"}
   .sl__side{position:sticky;top:84px}
   .sl__related ul{grid-template-columns:1fr 1fr}
+  .person{grid-template-columns:132px 1fr;gap:22px}
+  .person img{width:132px;height:132px}
   .ty__grid{grid-template-columns:1fr 1fr;align-items:start;gap:40px}
   .ty__btns{flex-direction:row}
   .ty__about-grid{grid-template-columns:300px 1fr;align-items:start;gap:40px}

@@ -346,6 +346,8 @@ function buildSitelink(entry, lang) {
   page.formCard = formCard(ctx, page, "lead");
   page.callBtn = callBtn(ctx, "btn--big", meta.cta_btn);
   page.callBtnMid = callBtn(ctx, "btn--big");
+  page.midImg = entry.slug === "our-team" ? "" :
+    `<div class="facerow facerow--cta"><img src="${prefix}/assets/img/team/kyle-hindin.webp" alt="Kyle Hindin" width="480" height="480" loading="lazy" decoding="async"><img src="${prefix}/assets/img/team/abby.webp" alt="Abby" width="480" height="480" loading="lazy" decoding="async"><img src="${prefix}/assets/img/team/ismael-noriega.webp" alt="Ismael Noriega" width="480" height="480" loading="lazy" decoding="async"></div>`;
   page.callBand = callBand(ctx, "red");
   page.related = SITELINKS.filter(o => o.slug !== entry.slug).map(o =>
     `<li><a href="${prefix}${langPath(lang, `/${o.slug}/`)}">${esc(o[lang].h1)}</a></li>`).join("");

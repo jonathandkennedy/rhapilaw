@@ -114,6 +114,7 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   ok(html.includes(`<input type="hidden" name="lang" value="${lang}">`), `${label}: form lang`);
   ok(html.includes(`data-thankyou="${lang === "es" ? "/es" : ""}/thank-you/"`), `${label}: thank-you redirect in page language`);
   ok(!/Google Guaranteed/i.test(text), `${label}: fake badge`);
+  ok(!/130\+/.test(text), `${label}: stale 130+ review count`);
   ok(html.includes('id="faq-5"') && !/<details/.test(html), `${label}: FAQ not an accordion`);
   for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(text.includes(n), `${label}: review ${n}`);
   ok(html.includes('window.__RHA_KW=') && html.includes('<input type="hidden" name="kw" value="">') && html.includes('class="kw"'), `${label}: keyword swap wired`);
@@ -184,9 +185,12 @@ for (const kind of ["settlements", "reviews"]) {
     ok(/result|guarantee|garantizan/i.test(strip(html)), `${kind} ${lang}: prior-results disclaimer`);
   }
 }
+const REVIEWERS = ["Hans Helmudt", "Karina Sodre", "Julio Barberena", "Geovanny Moreno", "Matt Benson", "Kathleen Francis", "Rob Cruize", "Chelsea Israelsky", "Matt Fenster"];
 for (const lang of ["en", "es"]) {
   const html = read((lang === "es" ? "/es" : "") + "/reviews/");
-  for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(strip(html).includes(n), `reviews ${lang}: real reviewer ${n}`);
+  for (const n of REVIEWERS) ok(strip(html).includes(n), `reviews ${lang}: real reviewer ${n}`);
+  ok(strip(html).includes("144"), `reviews ${lang}: review count`);
+  ok(!/130\+/.test(strip(html)), `reviews ${lang}: stale 130+ count`);
 }
 
 for (const lang of ["en", "es"]) {

@@ -52,10 +52,24 @@ Confirmed by the firm and now stated site-wide:
 | "Over $500 million won" | Set B H3, `/settlements/` | `site.json → totalRecovered` |
 | Award winning | Set B H3 | Super Lawyers Rising Stars 2022–2026, CAALA |
 | Licensed since 1975 | Throughout | Original brief |
+| 5.0 from 144 Google reviews | Throughout | The firm's Google Business Profile |
 
 Both sets now state the same hours, so nothing on the site contradicts itself. Setting `open24` to `false` reverts the copy and the structured data together; `qa.js` fails the build if any page states Mon–Fri hours while the flag is on.
 
 Note: the firm described the practice as "over 30 years." The pages say **licensed since 1975** and "five decades," which came from the original brief and is the stronger, still-accurate claim. If 1975 is wrong, it is in `strings/*.json` and the legal pages.
+
+## Photos
+
+Real firm photography only — no stock. `src/assets/img/team/` holds five 480px square WebP headshots (80 KB for all five), all lazy-loaded below the fold so the text hero stays the largest contentful paint.
+
+| Where | What |
+|---|---|
+| `/our-team/` | All five headshots, one per person, with role and bio |
+| City + set-B "who handles your case" | Kyle, Robert, and an Abby + Ismael pair |
+| Set-B award-winning claim | Overlapping row of all five faces |
+| Sitelink mid-article CTA | Three faces beside the call button (not on `/our-team/`) |
+
+**Name check needed.** Robert and Kyle are confirmed against the existing group photo. Abby, Ismael Noriega and Corbin are inferred from the team roster and the client reviews — if any of those three are mislabelled, the files are in `src/assets/img/team/` and the names appear only in `src/sitelinks/our-team.*.html` and the templates. A "Felix" is named in one review and has no photo yet.
 
 ## Built for phone calls
 
