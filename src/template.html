@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){try{var q=new URLSearchParams(location.search),l=q.get("lang");if(!l)return;var p=location.pathname,es=/^\/es(\/|$)/.test(p);if(l==="es"&&!es){q.delete("lang");location.replace("/es"+p+(q.toString()?"?"+q:"")+location.hash)}else if(l==="en"&&es){q.delete("lang");location.replace(p.replace(/^\/es/,"")+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}})();</script>
-<title data-i18n="meta_title">{{meta_title}}</title>
-<meta name="description" content="{{meta_desc}}" data-i18n-attr="content:meta_desc">
+<title>{{meta_title}}</title>
+<meta name="description" content="{{meta_desc}}">
 <meta name="robots" content="{{page.robots}}">
 <link rel="canonical" href="{{page.canonical}}">
 {{page.hreflang}}
 <meta property="og:type" content="website">
-<meta property="og:title" content="{{meta_title}}" data-i18n-attr="content:meta_title">
-<meta property="og:description" content="{{meta_desc}}" data-i18n-attr="content:meta_desc">
+<meta property="og:title" content="{{meta_title}}">
+<meta property="og:description" content="{{meta_desc}}">
 <meta property="og:url" content="{{page.canonical}}">
 <meta name="theme-color" content="#0b1f3a">
 <link rel="icon" href="{{site.pathPrefix}}/assets/favicon.svg" type="image/svg+xml">
@@ -21,7 +21,7 @@
 </head>
 <body>
 {{page.gtmBody}}
-<a class="skip" href="#lead" data-i18n="skip">{{skip}}</a>
+<a class="skip" href="#lead">{{skip}}</a>
 
 <header class="hdr">
   <div class="wrap hdr__in">
@@ -29,11 +29,8 @@
       <img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180">
     </a>
     <div class="hdr__right">
-      <a class="hdr__call" href="tel:{{site.phoneTel}}" data-track="phone_click">
-        <span class="hdr__num">{{site.phoneDisplay}}</span>
-        <span class="hdr__sub" data-i18n="call_sub">{{call_sub}}</span>
-      </a>
-      <a class="btn btn--accent hdr__cta" href="#lead" data-i18n="header_cta">{{header_cta}}</a>
+      <a class="btn btn--call hdr__callbtn" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="btn__ico" aria-hidden="true">&#9742;</span><span class="btn__lab">{{header_call_lab}}</span><span class="btn__num">{{site.phoneDisplay}}</span></a>
+      <a class="hdr__formlink" href="#lead">{{header_cta}}</a>
       <a class="lang" href="{{page.toggleHref}}" hreflang="{{page.toggleLang}}" lang="{{page.toggleLang}}" aria-label="{{lang_toggle_aria}}">{{lang_toggle}}</a>
     </div>
   </div>
@@ -43,184 +40,160 @@
 <section class="hero">
   <div class="wrap hero__grid">
     <div class="hero__copy">
-      <p class="eyebrow" data-i18n="eyebrow">{{eyebrow}}</p>
-      <h1 data-i18n="hero_h1">{{hero_h1}}</h1>
-      <p class="lead"><span class="kw" data-i18n="hero_kw">{{hero_kw}}</span> <span data-i18n="hero_sub">{{hero_sub}}</span></p>
+      <p class="eyebrow">{{eyebrow}}</p>
+      <h1>{{hero_h1}}</h1>
+      <p class="lead"><span class="kw">{{hero_kw}}</span> <span>{{hero_sub}}</span></p>
       <figure class="hero__photo">
-        <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" data-i18n-attr="alt:hero_img_alt" width="1080" height="1080" loading="eager" fetchpriority="high">
-        <figcaption data-i18n="hero_photo_cap">{{hero_photo_cap}}</figcaption>
+        <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" width="1080" height="1080" loading="eager" fetchpriority="high">
+        <figcaption>{{hero_photo_cap}}</figcaption>
       </figure>
       <ul class="checks">
-        <li data-i18n="hero_b1">{{hero_b1}}</li>
-        <li data-i18n="hero_b2">{{hero_b2}}</li>
-        <li data-i18n="hero_b3">{{hero_b3}}</li>
+        <li>{{hero_b1}}</li>
+        <li>{{hero_b2}}</li>
+        <li>{{hero_b3}}</li>
       </ul>
-      <p class="ismael" data-i18n="ismael" data-hide-empty {{page.ismaelHidden}}>{{ismael}}</p>
-      <a class="btn btn--accent btn--wide hero__call" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="hero_call">{{hero_call}}</a>
+      <p class="ismael" {{page.ismaelHidden}}>{{ismael}}</p>
+      <div class="hero__cta">{{page.callBtn}}<a class="hero__formlink" href="#lead">{{sl_form_link}}</a></div>
       <ul class="benefits" aria-label="benefits">
-        <li data-i18n="benefit_1">{{benefit_1}}</li>
-        <li data-i18n="benefit_2">{{benefit_2}}</li>
-        <li data-i18n="benefit_3">{{benefit_3}}</li>
+        <li>{{benefit_1}}</li>
+        <li>{{benefit_2}}</li>
+        <li>{{benefit_3}}</li>
       </ul>
-      <p class="cred"><strong>Kyle Hindin</strong> · <span data-i18n="hero_kyle_line">{{hero_kyle_line}}</span></p>
+      <p class="cred"><strong>Kyle Hindin</strong> · <span>{{hero_kyle_line}}</span></p>
     </div>
 
 
     <div class="hero__side">
-      <div class="card form-card" id="lead">
-        <h2 data-i18n="form_h2">{{form_h2}}</h2>
-        <p class="form-card__sub" data-i18n="form_sub">{{form_sub}}</p>
-        <p class="chip" data-i18n="form_chip">{{form_chip}}</p>
-        <form class="lead-form" method="post" action="{{page.formAction}}" data-endpoint="{{site.formEndpoint}}" data-thankyou="{{page.thankYouUrl}}" novalidate>
-          <input type="hidden" name="lang" value="{{page.lang}}">
-          <input type="hidden" name="city" value="{{page.name}}">
-          <input type="hidden" name="city_slug" value="{{page.slug}}">
-          <input type="hidden" name="practice" value="car">
-          <input type="hidden" name="page" value="{{page.canonical}}">
-          <input type="hidden" name="source" value="">
-          <input type="hidden" name="kw" value="">
-          <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-          <label class="field">
-            <span data-i18n="form_name">{{form_name}}</span>
-            <input type="text" name="name" autocomplete="name" required minlength="2" placeholder="{{form_name_ph}}" data-i18n-attr="placeholder:form_name_ph">
-          </label>
-          <label class="field">
-            <span data-i18n="form_phone">{{form_phone}}</span>
-            <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="{{form_phone_ph}}" data-i18n-attr="placeholder:form_phone_ph">
-          </label>
-          <p class="form-err" role="alert" hidden></p>
-          <p class="tcpa" data-i18n="form_tcpa">{{form_tcpa}}</p>
-          <button type="submit" class="btn btn--accent btn--wide" data-i18n="form_submit">{{form_submit}}</button>
-          <p class="form-note" data-i18n="form_note">{{form_note}}</p>
-        </form>
-        <p class="orcall" data-i18n="form_orcall">{{form_orcall}}</p>
-        <p class="trust" data-i18n="form_trust">{{form_trust}}</p>
-      </div>
+      {{page.formCard}}
     </div>
   </div>
 </section>
 
 <section class="stats" aria-label="firm facts">
   <div class="wrap stats__in">
-    <span data-i18n="stat_1">{{stat_1}}</span>
-    <span data-i18n="stat_2">{{stat_2}}</span>
-    <span data-i18n="stat_3">{{stat_3}}</span>
-    <span data-i18n="stat_4">{{stat_4}}</span>
+    <span>{{stat_1}}</span>
+    <span>{{stat_2}}</span>
+    <span>{{stat_3}}</span>
+    <span>{{stat_4}}</span>
   </div>
 </section>
 
 <section class="local">
   <div class="wrap">
-    <p class="local__serve" data-i18n="local_serve">{{local_serve}}</p>
-    <p class="local__proof" data-i18n="local_proof">{{local_proof}}</p>
-    <p class="local__office"><span data-i18n="local_office_label">{{local_office_label}}</span> <span data-i18n="local_office">{{local_office}}</span> · <a href="tel:{{site.phoneTel}}" data-track="phone_click">{{site.phoneDisplay}}</a></p>
+    <p class="local__serve">{{local_serve}}</p>
+    <p class="local__proof">{{local_proof}}</p>
+    <p class="local__office"><span>{{local_office_label}}</span> <span>{{local_office}}</span> · <a href="tel:{{site.phoneTel}}" data-track="phone_click">{{site.phoneDisplay}}</a></p>
   </div>
 </section>
 
 <section class="offer">
   <div class="wrap offer__grid">
     <div>
-      <h2 data-i18n="offer_h2">{{offer_h2}}</h2>
-      <p data-i18n="offer_p1">{{offer_p1}}</p>
-      <p data-i18n="offer_p2">{{offer_p2}}</p>
-      <p class="strong" data-i18n="offer_p3">{{offer_p3}}</p>
+      <h2>{{offer_h2}}</h2>
+      <p>{{offer_p1}}</p>
+      <p>{{offer_p2}}</p>
+      <p class="strong">{{offer_p3}}</p>
       <div class="mech">
-        <h3 data-i18n="mech_h3">{{mech_h3}}</h3>
-        <p data-i18n="mech_p">{{mech_p}}</p>
+        <h3>{{mech_h3}}</h3>
+        <p>{{mech_p}}</p>
       </div>
     </div>
     <div class="card stack">
-      <h3 data-i18n="stack_h3">{{stack_h3}}</h3>
+      <h3>{{stack_h3}}</h3>
       <ul class="checks">
-        <li data-i18n="stack_1">{{stack_1}}</li>
-        <li data-i18n="stack_2">{{stack_2}}</li>
-        <li data-i18n="stack_3">{{stack_3}}</li>
-        <li data-i18n="stack_4">{{stack_4}}</li>
-        <li data-i18n="stack_5">{{stack_5}}</li>
-        <li data-i18n="stack_6">{{stack_6}}</li>
+        <li>{{stack_1}}</li>
+        <li>{{stack_2}}</li>
+        <li>{{stack_3}}</li>
+        <li>{{stack_4}}</li>
+        <li>{{stack_5}}</li>
+        <li>{{stack_6}}</li>
       </ul>
-      <a class="btn btn--accent btn--wide" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="hero_call">{{hero_call}}</a>
+      <a class="btn btn--accent btn--wide" href="tel:{{site.phoneTel}}" data-track="phone_click">{{hero_call}}</a>
     </div>
   </div>
 </section>
 
+{{page.callBand}}
+
 <section class="ins">
   <div class="wrap">
-    <h2 data-i18n="ins_h2">{{ins_h2}}</h2>
-    <p class="lead" data-i18n="ins_p1">{{ins_p1}}</p>
+    <h2>{{ins_h2}}</h2>
+    <p class="lead">{{ins_p1}}</p>
     <ul class="plain">
-      <li data-i18n="ins_l1">{{ins_l1}}</li>
-      <li data-i18n="ins_l2">{{ins_l2}}</li>
-      <li data-i18n="ins_l3">{{ins_l3}}</li>
-      <li data-i18n="ins_l4">{{ins_l4}}</li>
+      <li>{{ins_l1}}</li>
+      <li>{{ins_l2}}</li>
+      <li>{{ins_l3}}</li>
+      <li>{{ins_l4}}</li>
     </ul>
-    <p data-i18n="ins_p3">{{ins_p3}}</p>
+    <p>{{ins_p3}}</p>
     <div class="tactics">
-      <div class="tactic"><h3 data-i18n="tactic_1_t">{{tactic_1_t}}</h3><p data-i18n="tactic_1_b">{{tactic_1_b}}</p></div>
-      <div class="tactic"><h3 data-i18n="tactic_2_t">{{tactic_2_t}}</h3><p data-i18n="tactic_2_b">{{tactic_2_b}}</p></div>
-      <div class="tactic"><h3 data-i18n="tactic_3_t">{{tactic_3_t}}</h3><p data-i18n="tactic_3_b">{{tactic_3_b}}</p></div>
-      <div class="tactic"><h3 data-i18n="tactic_4_t">{{tactic_4_t}}</h3><p data-i18n="tactic_4_b">{{tactic_4_b}}</p></div>
+      <div class="tactic"><h3>{{tactic_1_t}}</h3><p>{{tactic_1_b}}</p></div>
+      <div class="tactic"><h3>{{tactic_2_t}}</h3><p>{{tactic_2_b}}</p></div>
+      <div class="tactic"><h3>{{tactic_3_t}}</h3><p>{{tactic_3_b}}</p></div>
+      <div class="tactic"><h3>{{tactic_4_t}}</h3><p>{{tactic_4_b}}</p></div>
     </div>
   </div>
 </section>
 
 <section class="time">
   <div class="wrap">
-    <h2 data-i18n="time_h2">{{time_h2}}</h2>
-    <p data-i18n="time_p1">{{time_p1}}</p>
-    <p class="strong" data-i18n="time_p2">{{time_p2}}</p>
+    <h2>{{time_h2}}</h2>
+    <p>{{time_p1}}</p>
+    <p class="strong">{{time_p2}}</p>
     <ul class="plain">
-      <li data-i18n="time_l1">{{time_l1}}</li>
-      <li data-i18n="time_l2">{{time_l2}}</li>
-      <li data-i18n="time_l3">{{time_l3}}</li>
-      <li data-i18n="time_l4">{{time_l4}}</li>
+      <li>{{time_l1}}</li>
+      <li>{{time_l2}}</li>
+      <li>{{time_l3}}</li>
+      <li>{{time_l4}}</li>
     </ul>
-    <p data-i18n="time_p3">{{time_p3}}</p>
-    <a class="btn btn--accent" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="time_cta">{{time_cta}}</a>
+    <p>{{time_p3}}</p>
+    <a class="btn btn--accent" href="tel:{{site.phoneTel}}" data-track="phone_click">{{time_cta}}</a>
   </div>
 </section>
 
+{{page.callBand}}
+
 <section class="results">
   <div class="wrap">
-    <h2 data-i18n="res_h2">{{res_h2}}</h2>
+    <h2>{{res_h2}}</h2>
     <p class="res__sub">{{res_sub}}</p>
     <div class="result">
-      <div class="result__row"><span data-i18n="res_offer_label">{{res_offer_label}}</span><strong class="result__offer" data-i18n="res_offer">{{res_offer}}</strong></div>
-      <div class="result__row result__row--win"><span data-i18n="res_result_label">{{res_result_label}}</span><strong class="result__win" data-i18n="res_result">{{res_result}}</strong></div>
+      <div class="result__row"><span>{{res_offer_label}}</span><strong class="result__offer">{{res_offer}}</strong></div>
+      <div class="result__row result__row--win"><span>{{res_result_label}}</span><strong class="result__win">{{res_result}}</strong></div>
     </div>
-    <p class="disc" data-i18n="res_disc">{{res_disc}}</p>
+    <p class="disc">{{res_disc}}</p>
   </div>
 </section>
 
 <section class="who">
   <div class="wrap">
-    <h2 data-i18n="who_h2">{{who_h2}}</h2>
+    <h2>{{who_h2}}</h2>
     <div class="who__grid">
-      <div class="who__card"><h3 data-i18n="who_kyle_n">{{who_kyle_n}}</h3><p data-i18n="who_kyle">{{who_kyle}}</p></div>
-      <div class="who__card"><h3 data-i18n="who_robert_n">{{who_robert_n}}</h3><p data-i18n="who_robert">{{who_robert}}</p></div>
-      <div class="who__card"><h3 data-i18n="who_team_n">{{who_team_n}}</h3><p data-i18n="who_team">{{who_team}}</p></div>
+      <div class="who__card"><h3>{{who_kyle_n}}</h3><p>{{who_kyle}}</p></div>
+      <div class="who__card"><h3>{{who_robert_n}}</h3><p>{{who_robert}}</p></div>
+      <div class="who__card"><h3>{{who_team_n}}</h3><p>{{who_team}}</p></div>
     </div>
-    <p class="badges" data-i18n="who_badges">{{who_badges}}</p>
+    <p class="badges">{{who_badges}}</p>
   </div>
 </section>
 
 <section class="reviews">
   <div class="wrap">
-    <h2 data-i18n="rev_h2">{{rev_h2}}</h2>
-    <p class="rev-frame" data-i18n="rev_frame">{{rev_frame}}</p>
+    <h2>{{rev_h2}}</h2>
+    <p class="rev-frame">{{rev_frame}}</p>
     <div class="rev__grid">
       <blockquote class="rev" lang="en">
-        <p class="rev__q" data-i18n="rev_1_q">{{rev_1_q}}</p>
-        <footer><cite data-i18n="rev_1_n">{{rev_1_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer>
-        <p class="rev__cap" data-i18n="rev_1_cap" data-hide-empty {{page.capHidden}}>{{rev_1_cap}}</p>
+        <p class="rev__q">{{rev_1_q}}</p>
+        <footer><cite>{{rev_1_n}}</cite> · ★★★★★ <span>{{rev_src}}</span></footer>
+        <p class="rev__cap" {{page.capHidden}}>{{rev_1_cap}}</p>
       </blockquote>
       <blockquote class="rev" lang="en">
-        <p class="rev__q" data-i18n="rev_2_q">{{rev_2_q}}</p>
-        <footer><cite data-i18n="rev_2_n">{{rev_2_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer>
+        <p class="rev__q">{{rev_2_q}}</p>
+        <footer><cite>{{rev_2_n}}</cite> · ★★★★★ <span>{{rev_src}}</span></footer>
       </blockquote>
       <blockquote class="rev" lang="en">
-        <p class="rev__q" data-i18n="rev_3_q">{{rev_3_q}}</p>
-        <footer><cite data-i18n="rev_3_n">{{rev_3_n}}</cite> · ★★★★★ <span data-i18n="rev_src">{{rev_src}}</span></footer>
+        <p class="rev__q">{{rev_3_q}}</p>
+        <footer><cite>{{rev_3_n}}</cite> · ★★★★★ <span>{{rev_src}}</span></footer>
       </blockquote>
     </div>
   </div>
@@ -228,45 +201,45 @@
 
 <section class="faq">
   <div class="wrap">
-    <h2 data-i18n="faq_h2">{{faq_h2}}</h2>
+    <h2>{{faq_h2}}</h2>
     <dl class="faq__list">
-      <div class="faq__item"><dt data-i18n="faq_1_q">{{faq_1_q}}</dt><dd data-i18n="faq_1_a">{{faq_1_a}}</dd></div>
-      <div class="faq__item"><dt data-i18n="faq_2_q">{{faq_2_q}}</dt><dd data-i18n="faq_2_a">{{faq_2_a}}</dd></div>
-      <div class="faq__item"><dt data-i18n="faq_3_q">{{faq_3_q}}</dt><dd data-i18n="faq_3_a">{{faq_3_a}}</dd></div>
-      <div class="faq__item"><dt data-i18n="faq_4_q">{{faq_4_q}}</dt><dd data-i18n="faq_4_a">{{faq_4_a}}</dd></div>
-      <div class="faq__item faq__item--key" id="faq-5"><dt data-i18n="faq_5_q">{{faq_5_q}}</dt><dd data-i18n="faq_5_a">{{faq_5_a}}</dd></div>
+      <div class="faq__item"><dt>{{faq_1_q}}</dt><dd>{{faq_1_a}}</dd></div>
+      <div class="faq__item"><dt>{{faq_2_q}}</dt><dd>{{faq_2_a}}</dd></div>
+      <div class="faq__item"><dt>{{faq_3_q}}</dt><dd>{{faq_3_a}}</dd></div>
+      <div class="faq__item"><dt>{{faq_4_q}}</dt><dd>{{faq_4_a}}</dd></div>
+      <div class="faq__item faq__item--key" id="faq-5"><dt>{{faq_5_q}}</dt><dd>{{faq_5_a}}</dd></div>
     </dl>
   </div>
 </section>
 
 <section class="steps">
   <div class="wrap">
-    <h2 data-i18n="steps_h2">{{steps_h2}}</h2>
+    <h2>{{steps_h2}}</h2>
     <ol class="steps__list">
-      <li><h3 data-i18n="step_1_t">{{step_1_t}}</h3><p data-i18n="step_1_b">{{step_1_b}}</p></li>
-      <li><h3 data-i18n="step_2_t">{{step_2_t}}</h3><p data-i18n="step_2_b">{{step_2_b}}</p></li>
-      <li><h3 data-i18n="step_3_t">{{step_3_t}}</h3><p data-i18n="step_3_b">{{step_3_b}}</p></li>
+      <li><h3>{{step_1_t}}</h3><p>{{step_1_b}}</p></li>
+      <li><h3>{{step_2_t}}</h3><p>{{step_2_b}}</p></li>
+      <li><h3>{{step_3_t}}</h3><p>{{step_3_b}}</p></li>
     </ol>
   </div>
 </section>
 
 <section class="final">
   <div class="wrap">
-    <h2 data-i18n="final_h2">{{final_h2}}</h2>
-    <p class="final__p" data-i18n="final_p">{{final_p}}</p>
+    <h2>{{final_h2}}</h2>
+    <p class="final__p">{{final_p}}</p>
     <div class="final__btns">
-      <a class="btn btn--accent btn--big" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="final_call">{{final_call}}</a>
-      <a class="btn btn--ghost" href="#lead" data-i18n="final_form">{{final_form}}</a>
+      <a class="btn btn--accent btn--big" href="tel:{{site.phoneTel}}" data-track="phone_click">{{final_call}}</a>
+      <a class="btn btn--ghost" href="#lead">{{final_form}}</a>
     </div>
     <ul class="checks checks--light final__stack">
-      <li data-i18n="stack_1">{{stack_1}}</li>
-      <li data-i18n="stack_2">{{stack_2}}</li>
-      <li data-i18n="stack_3">{{stack_3}}</li>
-      <li data-i18n="stack_4">{{stack_4}}</li>
-      <li data-i18n="stack_5">{{stack_5}}</li>
-      <li data-i18n="stack_6">{{stack_6}}</li>
+      <li>{{stack_1}}</li>
+      <li>{{stack_2}}</li>
+      <li>{{stack_3}}</li>
+      <li>{{stack_4}}</li>
+      <li>{{stack_5}}</li>
+      <li>{{stack_6}}</li>
     </ul>
-    <p class="hours" data-i18n="hours">{{hours}}</p>
+    <p class="hours">{{hours}}</p>
   </div>
 </section>
 </main>
@@ -274,8 +247,8 @@
 {{page.footer}}
 
 <div class="sticky" aria-hidden="false">
-  <a class="sticky__call" href="tel:{{site.phoneTel}}" data-track="phone_click" data-i18n="sticky_call">{{sticky_call}}</a>
-  <a class="sticky__form" href="#lead" data-i18n="sticky_form">{{sticky_form}}</a>
+  <a class="sticky__call" href="tel:{{site.phoneTel}}" data-track="phone_click">{{sticky_call}}</a>
+  <a class="sticky__form" href="#lead">{{sticky_form}}</a>
 </div>
 
 <script>window.__RHA_S={{page.strJson}};window.__RHA_KW={{page.kwJson}};</script>

@@ -57,6 +57,19 @@ Both sets now state the same hours, so nothing on the site contradicts itself. S
 
 Note: the firm described the practice as "over 30 years." The pages say **licensed since 1975** and "five decades," which came from the original brief and is the stronger, still-accurate claim. If 1975 is wrong, it is in `strings/*.json` and the legal pages.
 
+## Built for phone calls
+
+Calls are the primary conversion on every one of the 78 pages; the form is the fallback for people who won't call.
+
+- **Header:** the phone number is a red button labelled "Call 24/7", on every page. The form link is demoted to a text link beside it.
+- **Hero:** a large call button with the number spelled out, above the fold at every breakpoint, with "leave your number and we call you" as the secondary path.
+- **Form card:** the call button sits *above* the fields, with an "or leave your number" divider under it.
+- **Call bands:** full-width red bands with a single call button, twice inside every city and set-B page.
+- **Mobile sticky bar:** call takes two thirds of the width, the form one third.
+- **Sitelink pages:** trust chips and a call button above the fold, the form directly beneath the hero rather than below the article, an intent-matched mid-article CTA, and cross-links to the other five pages.
+
+`qa.js` enforces this: every page needs the header call button, at least four `tel:` links, and a call link appearing before the first form in DOM order. City and set-B pages need at least two call bands.
+
 ## Tracking the A/B split
 
 Every set-B page carries `data-variant="b"` on `<html>`, a hidden `variant` field on both forms, and `variant` on every `dataLayer` / GA4 event. In GA4, compare by that parameter or by page path (`/attorneys/` = B).

@@ -1,44 +1,140 @@
 [
-  { "slug": "no-fee-unless-we-win",
-    "en": { "eyebrow": "How we get paid", "h1": "No fee unless we win",
+  {
+    "slug": "no-fee-unless-we-win",
+    "en": {
+      "eyebrow": "How we get paid",
+      "h1": "No fee unless we win",
       "title": "No Fee Unless We Win | Robert Hindin & Associates",
-      "desc": "No retainer, no hourly bill, nothing out of pocket. The firm fronts every case cost and is paid only if we recover money for you. Free consultation, (310) 564-7911." },
-    "es": { "eyebrow": "Cómo cobramos", "h1": "No paga si no ganamos",
+      "desc": "No retainer, no hourly bill, nothing out of pocket. The firm fronts every case cost and is paid only if we recover money for you. Free consultation, (310) 564-7911.",
+      "sub": "No retainer. No hourly bill. Nothing out of your pocket — ever. We front every case cost and you pay us only if we win money for you.",
+      "cta_h": "Find out what your case is worth — free",
+      "cta_p": "The consultation costs nothing and there is no fee unless we win. A few minutes on the phone and you will know exactly where you stand.",
+      "cta_btn": "Get my free case review"
+    },
+    "es": {
+      "eyebrow": "Cómo cobramos",
+      "h1": "No paga si no ganamos",
       "title": "No paga si no ganamos | Robert Hindin & Associates",
-      "desc": "Sin anticipo, sin cobro por hora, nada de su bolsillo. La firma pone todos los costos y cobra solo si recuperamos dinero para usted. Consulta gratis, (310) 564-7911." } },
-  { "slug": "reviews",
-    "en": { "eyebrow": "In their words", "h1": "Client reviews",
+      "desc": "Sin anticipo, sin cobro por hora, nada de su bolsillo. La firma pone todos los costos y cobra solo si recuperamos dinero para usted. Consulta gratis, (310) 564-7911.",
+      "sub": "Sin anticipo. Sin cobro por hora. Nada de su bolsillo — nunca. La firma pone todos los costos y usted paga solo si ganamos dinero para usted.",
+      "cta_h": "Sepa cuánto vale su caso — gratis",
+      "cta_p": "La consulta no cuesta nada y no paga honorarios si no ganamos. Unos minutos por teléfono y va a saber exactamente dónde está parado.",
+      "cta_btn": "Quiero mi consulta gratis"
+    }
+  },
+  {
+    "slug": "reviews",
+    "en": {
+      "eyebrow": "In their words",
+      "h1": "Client reviews",
       "title": "Client Reviews | 5.0 on Google | Robert Hindin & Associates",
-      "desc": "5.0 from 130+ Google reviews. Real reviews from real clients of Robert Hindin & Associates, quoted as written. Free consultation, (310) 564-7911." },
-    "es": { "eyebrow": "En sus palabras", "h1": "Reseñas de clientes",
+      "desc": "5.0 from 130+ Google reviews. Real reviews from real clients of Robert Hindin & Associates, quoted as written. Free consultation, (310) 564-7911.",
+      "sub": "5.0 from more than 130 clients on Google. Read what they actually said — in their words, not ours — and then decide.",
+      "cta_h": "Get the same treatment they described",
+      "cta_p": "Free consultation, 24 hours a day, in English or Spanish. A real person answers and no fee unless we win.",
+      "cta_btn": "Talk to our team now"
+    },
+    "es": {
+      "eyebrow": "En sus palabras",
+      "h1": "Reseñas de clientes",
       "title": "Reseñas de clientes | 5.0 en Google | Robert Hindin & Associates",
-      "desc": "5.0 en más de 130 reseñas de Google. Reseñas reales de clientes de Robert Hindin & Associates. Consulta gratis, (310) 564-7911." } },
-  { "slug": "settlements",
-    "en": { "eyebrow": "Results", "h1": "Recent settlements and verdicts",
+      "desc": "5.0 en más de 130 reseñas de Google. Reseñas reales de clientes de Robert Hindin & Associates. Consulta gratis, (310) 564-7911.",
+      "sub": "5.0 en más de 130 reseñas de Google. Lea lo que dijeron ellos — en sus palabras, no en las nuestras — y luego decida.",
+      "cta_h": "Reciba el mismo trato que ellos describen",
+      "cta_p": "Consulta gratis, las 24 horas, en inglés o español. Contesta una persona de verdad y no paga si no ganamos.",
+      "cta_btn": "Hablar con el equipo ahora"
+    }
+  },
+  {
+    "slug": "settlements",
+    "en": {
+      "eyebrow": "Results",
+      "h1": "Recent settlements and verdicts",
       "title": "Recent Settlements & Verdicts | Robert Hindin & Associates",
-      "desc": "What the insurance company offered, and what we recovered. Over $500 million won for injured people since 1975. Prior results do not guarantee a similar outcome." },
-    "es": { "eyebrow": "Resultados", "h1": "Acuerdos y veredictos recientes",
+      "desc": "What the insurance company offered, and what we recovered. Over $500 million won for injured people since 1975. Prior results do not guarantee a similar outcome.",
+      "sub": "Over $500 million recovered for injured people. See what the insurance company offered first — and what we got instead.",
+      "cta_h": "Find out what your crash is actually worth",
+      "cta_p": "The first offer is almost never the real number. A free case review tells you the difference, with no obligation to hire anyone.",
+      "cta_btn": "Get my case evaluated free"
+    },
+    "es": {
+      "eyebrow": "Resultados",
+      "h1": "Acuerdos y veredictos recientes",
       "title": "Acuerdos y veredictos recientes | Robert Hindin & Associates",
-      "desc": "Lo que ofreció la aseguradora y lo que recuperamos. Más de $500 millones para personas lesionadas desde 1975. Los resultados anteriores no garantizan un resultado similar." } },
-  { "slug": "24-7-case-review",
-    "en": { "eyebrow": "Any hour, any day", "h1": "24/7 case review",
+      "desc": "Lo que ofreció la aseguradora y lo que recuperamos. Más de $500 millones para personas lesionadas desde 1975. Los resultados anteriores no garantizan un resultado similar.",
+      "sub": "Más de $500 millones recuperados para personas lesionadas. Vea lo que ofreció primero la aseguradora — y lo que logramos nosotros.",
+      "cta_h": "Sepa cuánto vale de verdad su choque",
+      "cta_p": "La primera oferta casi nunca es el número real. Una consulta gratis le dice la diferencia, sin ningún compromiso.",
+      "cta_btn": "Quiero que evalúen mi caso"
+    }
+  },
+  {
+    "slug": "24-7-case-review",
+    "en": {
+      "eyebrow": "Any hour, any day",
+      "h1": "24/7 case review",
       "title": "24/7 Free Case Review | Robert Hindin & Associates",
-      "desc": "A real person answers 24 hours a day, including nights, weekends and holidays. Free case review, no obligation, no fee unless we win. Call (310) 564-7911." },
-    "es": { "eyebrow": "A cualquier hora", "h1": "Consulta de su caso 24/7",
+      "desc": "A real person answers 24 hours a day, including nights, weekends and holidays. Free case review, no obligation, no fee unless we win. Call (310) 564-7911.",
+      "sub": "A real person answers at any hour, in English or Spanish. Not a recording that promises a callback. Not a chatbot.",
+      "cta_h": "Call now — someone is answering",
+      "cta_p": "Nights, weekends and holidays. Free case review, no obligation, and no fee unless we win.",
+      "cta_btn": "Call (310) 564-7911 now"
+    },
+    "es": {
+      "eyebrow": "A cualquier hora",
+      "h1": "Consulta de su caso 24/7",
       "title": "Consulta gratis 24/7 | Robert Hindin & Associates",
-      "desc": "Contesta una persona de verdad las 24 horas, incluyendo noches, fines de semana y días festivos. Consulta gratis, sin compromiso. Llame al (310) 564-7911." } },
-  { "slug": "maximize-your-compensation",
-    "en": { "eyebrow": "What your claim is worth", "h1": "Maximize your compensation",
+      "desc": "Contesta una persona de verdad las 24 horas, incluyendo noches, fines de semana y días festivos. Consulta gratis, sin compromiso. Llame al (310) 564-7911.",
+      "sub": "Contesta una persona de verdad a cualquier hora, en inglés o en español. No una grabadora que promete devolverle la llamada. No un robot.",
+      "cta_h": "Llame ahora — hay alguien contestando",
+      "cta_p": "Noches, fines de semana y días festivos. Consulta gratis, sin compromiso, y no paga si no ganamos.",
+      "cta_btn": "Llamar al (310) 564-7911"
+    }
+  },
+  {
+    "slug": "maximize-your-compensation",
+    "en": {
+      "eyebrow": "What your claim is worth",
+      "h1": "Maximize your compensation",
       "title": "Maximize Your Compensation | Robert Hindin & Associates",
-      "desc": "The first offer is sized for someone without a lawyer. What California lets you recover, what the adjuster leaves out, and how the number moves. Free consultation." },
-    "es": { "eyebrow": "Cuánto vale su reclamo", "h1": "Obtenga la máxima compensación",
+      "desc": "The first offer is sized for someone without a lawyer. What California lets you recover, what the adjuster leaves out, and how the number moves. Free consultation.",
+      "sub": "The first offer is sized for someone without a lawyer. Here is everything California lets you recover — and the five places money gets left behind.",
+      "cta_h": "Don't leave money on the table",
+      "cta_p": "Before you accept any offer, get a free second opinion. If the check is fair, we will tell you so.",
+      "cta_btn": "Get my free second opinion"
+    },
+    "es": {
+      "eyebrow": "Cuánto vale su reclamo",
+      "h1": "Obtenga la máxima compensación",
       "title": "Obtenga la máxima compensación | Robert Hindin & Associates",
-      "desc": "La primera oferta está hecha para quien no tiene abogado. Qué permite cobrar California, qué omite el ajustador y cómo se mueve el número. Consulta gratis." } },
-  { "slug": "our-team",
-    "en": { "eyebrow": "Who handles your case", "h1": "Meet your dedicated personal injury team",
+      "desc": "La primera oferta está hecha para quien no tiene abogado. Qué permite cobrar California, qué omite el ajustador y cómo se mueve el número. Consulta gratis.",
+      "sub": "La primera oferta está calculada para quien no tiene abogado. Esto es todo lo que California permite cobrar — y los cinco lugares donde se queda el dinero.",
+      "cta_h": "No deje dinero sobre la mesa",
+      "cta_p": "Antes de aceptar cualquier oferta, pida una segunda opinión gratis. Si el cheque es justo, se lo decimos.",
+      "cta_btn": "Quiero una segunda opinión"
+    }
+  },
+  {
+    "slug": "our-team",
+    "en": {
+      "eyebrow": "Who handles your case",
+      "h1": "Meet your dedicated personal injury team",
       "title": "Meet Your Personal Injury Team | Robert Hindin & Associates",
-      "desc": "Robert Hindin, Kyle Hindin, Abby and Ismael. The people clients name in their reviews. One real office in West Los Angeles. Free consultation, (310) 564-7911." },
-    "es": { "eyebrow": "Quién lleva su caso", "h1": "Conozca a su equipo de lesiones personales",
+      "desc": "Robert Hindin, Kyle Hindin, Abby and Ismael. The people clients name in their reviews. One real office in West Los Angeles. Free consultation, (310) 564-7911.",
+      "sub": "Not a case runner and not a call center. These are the people who will actually handle your file, named by clients in their own reviews.",
+      "cta_h": "Talk to the team today",
+      "cta_p": "Free consultation, 24 hours a day. Kyle handles these cases personally, and there is no fee unless we win.",
+      "cta_btn": "Speak with our team"
+    },
+    "es": {
+      "eyebrow": "Quién lleva su caso",
+      "h1": "Conozca a su equipo de lesiones personales",
       "title": "Conozca a su equipo | Robert Hindin & Associates",
-      "desc": "Robert Hindin, Kyle Hindin, Abby e Ismael. Las personas que los clientes nombran en sus reseñas. Una oficina real en West Los Angeles. Consulta gratis." } }
+      "desc": "Robert Hindin, Kyle Hindin, Abby e Ismael. Las personas que los clientes nombran en sus reseñas. Una oficina real en West Los Angeles. Consulta gratis.",
+      "sub": "No es un corredor de casos ni un call center. Estas son las personas que de verdad van a llevar su expediente, nombradas por los clientes en sus reseñas.",
+      "cta_h": "Hable hoy con el equipo",
+      "cta_p": "Consulta gratis, las 24 horas. Kyle lleva estos casos en persona, y no paga honorarios si no ganamos.",
+      "cta_btn": "Hablar con el equipo"
+    }
+  }
 ]

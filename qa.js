@@ -117,6 +117,8 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   ok(html.includes('id="faq-5"') && !/<details/.test(html), `${label}: FAQ not an accordion`);
   for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(text.includes(n), `${label}: review ${n}`);
   ok(html.includes('window.__RHA_KW=') && html.includes('<input type="hidden" name="kw" value="">') && html.includes('class="kw"'), `${label}: keyword swap wired`);
+  ok((html.match(/class="callband/g) || []).length >= 2, `${label}: needs at least two mid-page call bands`);
+  ok(html.includes('class="hero__cta"'), `${label}: hero call CTA`);
   ok(html.includes('"@type":"LegalService"') && html.includes(`"inLanguage":"${lang}"`), `${label}: JSON-LD`);
   if (lang === "es") {
     if (!c.isDefault) ok(text.includes(`para su choque en ${c.name}.`), `${label}: ES H1 city splice`);
@@ -156,6 +158,8 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   ok(html.includes('<input type="hidden" name="variant" value="b">'), `${label}: variant flag on the lead`);
   ok(html.includes('data-variant="b"'), `${label}: variant attribute for analytics`);
   ok(html.includes(site.totalRecovered), `${label}: recovered total`);
+  ok((html.match(/class="callband/g) || []).length >= 2, `${label}: needs at least two mid-page call bands`);
+  ok(html.includes('class="hero__cta"'), `${label}: hero call CTA`);
   ok(!/\bTravis\b|\bAustin\b|\bTexas\b|, TX\b/.test(strip(html)), `${label}: Texas copy leaked in`);
 }
 
@@ -168,6 +172,9 @@ for (const e of SITELINKS) for (const lang of ["en", "es"]) {
   ok(html.includes(`<h1>${e[lang].h1.replace(/&/g, "&amp;")}</h1>`) || html.includes(`<h1>${e[lang].h1}</h1>`), `${label}: H1`);
   ok((html.match(/<h1/g) || []).length === 1, `${label}: exactly one H1`);
   ok(/class="lead-form"/.test(html), `${label}: lead form`);
+  ok(html.includes('class="sl__trust"') && html.includes('class="sl__midcta"') && html.includes('class="sl__related"'), `${label}: trust row, mid CTA and related links`);
+  ok(html.indexOf('class="sl__side"') < html.indexOf('class="sl__body"'), `${label}: form must precede the article in DOM order (mobile)`);
+  ok(html.includes('class="callband'), `${label}: closing call band`);
   ok(strip(html).length > 2500, `${label}: body too thin`);
   ok(!/\{totalRecovered\}/.test(html), `${label}: unsubstituted token`);
 }

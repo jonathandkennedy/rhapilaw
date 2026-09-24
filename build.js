@@ -63,12 +63,29 @@ function stringsForB(lang, city) {
   return base;
 }
 
+/** Primary call-to-action: the phone call. Used in every hero, band and card. */
+function callBtn(s, cls, label) {
+  return `<a class="btn btn--call ${cls || ""}" href="tel:${site.phoneTel}" data-track="phone_click"><span class="btn__ico" aria-hidden="true">\u260E</span><span class="btn__lab">${label || s.cta_call}</span><span class="btn__num">${site.phoneDisplay}</span></a>`;
+}
+
+/** Full-width band whose only job is to get the phone ringing. */
+function callBand(s, tone) {
+  return `<section class="callband callband--${tone || "navy"}">
+  <div class="wrap callband__in">
+    <div><p class="callband__h">${s.band_h}</p><p class="callband__p">${s.band_p}</p></div>
+    ${callBtn(s, "btn--big")}
+  </div>
+</section>`;
+}
+
 /** The lead-capture card, rendered wherever a page needs one. id must be unique per page. */
 function formCard(s, page, id) {
   return `<div class="card form-card" id="${id}">
         <p class="form-card__h">${s.form_h2}</p>
         <p class="form-card__sub">${s.form_sub}</p>
         <p class="chip">${s.form_chip}</p>
+        ${callBtn(s, "btn--wide btn--card")}
+        <p class="form-card__or"><span>${s.form_or}</span></p>
         <form class="lead-form" method="post" action="${page.formAction}" data-endpoint="${site.formEndpoint}" data-thankyou="${page.thankYouUrl}" novalidate>
           <input type="hidden" name="lang" value="${page.lang}">
           <input type="hidden" name="city" value="${page.name || ""}">
@@ -86,7 +103,6 @@ function formCard(s, page, id) {
           <button type="submit" class="btn btn--accent btn--wide">${s.form_submit}</button>
           <p class="form-note">${s.form_note}</p>
         </form>
-        <p class="orcall">${s.form_orcall}</p>
         <p class="trust">${s.form_trust}</p>
       </div>`;
 }
@@ -231,6 +247,9 @@ function buildCity(city, lang) {
   page.jsonld = jsonld(city, s, page);
   page.ismaelHidden = s.ismael ? "" : "hidden";
   page.capHidden = s.rev_1_cap ? "" : "hidden";
+  page.callBand = callBand(s, "red");
+  page.callBtn = callBtn(s, "btn--big");
+  page.formCard = formCard(s, page, "lead");
   write(langPath(lang, p), render(T.lander, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "city", city: city.name, alt: alternates(p, city.defaultLang) });
 }
@@ -302,6 +321,8 @@ function buildVariantB(city, lang) {
   page.thankYouUrl = prefix + langPath(lang, "/attorneys/thank-you/");
   page.formCard = formCard(s, page, "lead");
   page.formCardBottom = formCard(s, page, "lead-bottom");
+  page.callBand = callBand(s, "red");
+  page.callBtn = callBtn(s, "btn--big");
   write(langPath(lang, p), render(T.variantB, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "variant-b", city: city.name, alt: alternates(p, city.defaultLang) });
 }
@@ -317,8 +338,17 @@ function buildSitelink(entry, lang) {
   page.h1 = esc(meta.h1);
   page.slug = entry.slug;
   page.variant = "sitelink";
+  page.sub = esc(meta.sub);
+  page.ctaH = esc(meta.cta_h);
+  page.ctaP = esc(meta.cta_p);
+  page.ctaBtn = esc(meta.cta_btn);
   page.body = fs.readFileSync(path.join(SRC, "sitelinks", `${entry.slug}.${lang}.html`), "utf8").replace(/\{totalRecovered\}/g, site.totalRecovered || "");
   page.formCard = formCard(ctx, page, "lead");
+  page.callBtn = callBtn(ctx, "btn--big", meta.cta_btn);
+  page.callBtnMid = callBtn(ctx, "btn--big");
+  page.callBand = callBand(ctx, "red");
+  page.related = SITELINKS.filter(o => o.slug !== entry.slug).map(o =>
+    `<li><a href="${prefix}${langPath(lang, `/${o.slug}/`)}">${esc(o[lang].h1)}</a></li>`).join("");
   page.jsonld = jsonld(la, ctx, page);
   write(langPath(lang, p), render(T.sitelink, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "sitelink", city: entry.slug, alt: alternates(p, "en") });
