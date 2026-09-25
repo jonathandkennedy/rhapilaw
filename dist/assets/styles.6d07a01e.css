@@ -3,7 +3,7 @@
   --navy:#0b1f3a; --navy-2:#122a4d; --ink:#14213d; --body:#2b3445; --muted:#5c6577;
   --white:#fff; --soft:#f7f3ec; --line:#e4ded3;
   --accent:#d9451f; --accent-dark:#b93815; --gold:#c9a227; --gold-soft:#fff7d6; --win:#1f7a4d;
-  --radius:12px; --shadow:0 6px 24px rgba(11,31,58,.10);
+  --card:#15181d; --radius:12px; --shadow:0 6px 24px rgba(11,31,58,.10);
   --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --font-display:Georgia,"Iowan Old Style","Times New Roman",serif;
 }
@@ -253,15 +253,29 @@ section{padding:48px 0}
 .b-schedule__grid{display:grid;gap:28px}
 .b-schedule .hours{margin:14px 0 0;max-width:none;opacity:1;color:var(--muted);font-size:.9rem}
 
-/* rating hero */
-.rating-hero{display:flex;align-items:center;gap:18px;background:var(--gold-soft);border:1px solid #f1dc8a;border-radius:var(--radius);padding:18px 22px;margin:0 0 20px}
-.rating-hero__score{font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--ink);margin:0;line-height:1}
-.rating-hero__stars{color:#e8a500;font-size:1.3rem;letter-spacing:2px;margin:0 0 2px}
-.rating-hero__count{margin:0;font-weight:700;color:var(--ink)}
+/* google rating card */
+.ratecard{display:flex;align-items:center;gap:22px;background:var(--card);color:#fff;border-radius:16px;padding:22px 26px;margin:0 0 26px;flex-wrap:wrap}
+.ratecard__score{text-align:center;flex:none}
+.ratecard__num{font-family:var(--font-display);font-size:3.2rem;font-weight:700;line-height:1;margin:0;color:#fff}
+.ratecard__stars{color:#f0b429;font-size:1.05rem;letter-spacing:3px;margin:4px 0 0}
+.ratecard__txt{border-left:1px solid rgba(255,255,255,.18);padding-left:22px}
+.ratecard__count{font-size:1.15rem;font-weight:800;margin:0 0 3px;color:#fff}
+.ratecard__sub{margin:0;font-size:.92rem;color:rgba(255,255,255,.72)}
+
+/* review cards */
+.revlist{display:grid;gap:14px;margin:0 0 30px}
+.revcard{margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.revcard__head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.revcard__av{flex:none;width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;font-family:var(--font-display)}
+.revcard__who cite{display:block;font-style:normal;font-weight:800;color:var(--ink);font-size:1rem;line-height:1.2}
+.revcard__meta{margin:2px 0 0;font-size:.82rem;color:var(--muted)}
+.revcard__stars{color:#f0b429;letter-spacing:1px}
+.revcard__q{margin:0;color:var(--body);line-height:1.6}
 
 /* team headshots */
 .team{display:grid;gap:22px;margin:24px 0 30px}
-.person{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:start}
+.person{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:start;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.person:last-child{border-bottom:0;padding-bottom:0}
 .person img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--line);background:var(--soft)}
 .person__txt h2{margin:0 0 2px;font-size:1.2rem}
 .person__role{margin:0 0 8px;font-size:.85rem;font-weight:700;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.05em}
@@ -276,20 +290,28 @@ section{padding:48px 0}
 .facerow--cta img{width:58px;height:58px}
 
 /* sitelink pages */
-.sl__hero{background:var(--white);padding:32px 0 44px}
+.sl__hero{background:var(--soft);padding:34px 0 48px}
 .sl__grid{display:grid;gap:26px;grid-template-areas:"head" "side" "body"}
 .sl__head{grid-area:head}
 .sl__side{grid-area:side}
 .sl__body{grid-area:body}
 .sl__trust{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-wrap:wrap;gap:8px}
-.sl__trust li{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:.84rem;font-weight:700;color:var(--ink)}
-.sl__midcta{background:var(--soft);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:var(--radius);padding:24px;margin:30px 0}
-.sl__midcta-h{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:6px}
-.sl__related{border-top:1px solid var(--line);padding-top:20px;margin-top:8px}
+.sl__trust li{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:.84rem;font-weight:700;color:var(--ink);box-shadow:0 1px 2px rgba(11,31,58,.04)}
+.sl__midcta{background:var(--card);color:rgba(255,255,255,.85);border-radius:16px;padding:28px;margin:32px 0}
+.sl__midcta-h{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:#fff;margin:0 0 8px;line-height:1.2}
+.sl__midcta p{margin-bottom:16px}
+.sl__midcta .btn--call{background:#fff;color:var(--accent-dark);box-shadow:none}
+.sl__midcta .btn--call:hover{background:#fff7f4}
+.sl__midcta .facerow{margin-bottom:14px}
+.sl__midcta .facerow img{border-color:var(--card)}
+.sl__related{border-top:1px solid var(--line);padding-top:22px;margin-top:4px}
 .sl__related-h{font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:.07em;font-size:.78rem;margin-bottom:10px}
 .sl__related ul{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:7px}
 .sl__related a{font-weight:700;color:var(--accent-dark)}
-.sl__body h2{font-size:1.35rem;margin-top:1.5em}
+.sl__body{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 30px}
+.sl__body h2{font-size:1.4rem;margin-top:1.6em}
+.sl__body>p:first-child{margin-top:0}
+.sl__body .result{margin:20px 0}
 .sl__body .result{margin:18px 0}
 .rev--page{margin:0 0 14px;border-left:4px solid var(--gold)}
 .city-card--sitelink{border-left:4px solid var(--accent)}
@@ -380,7 +402,9 @@ section{padding:48px 0}
   .b-cases__grid{grid-template-columns:repeat(2,1fr)}
   .b-why__grid{grid-template-columns:repeat(2,1fr)}
   .b-schedule__grid{grid-template-columns:1.1fr .9fr;align-items:start}
-  .sl__grid{grid-template-columns:minmax(0,1.5fr) 400px;align-items:start;gap:40px;grid-template-areas:"head side" "body side"}
+  .sl__grid{grid-template-columns:minmax(0,1.5fr) 400px;align-items:start;gap:36px;grid-template-areas:"head side" "body side"}
+  .ratecard{gap:28px}
+  .sl__body{padding:34px 38px}
   .sl__side{position:sticky;top:84px}
   .sl__related ul{grid-template-columns:1fr 1fr}
   .person{grid-template-columns:132px 1fr;gap:22px}

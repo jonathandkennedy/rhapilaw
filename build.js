@@ -5,6 +5,7 @@
  */
 "use strict";
 const fs = require("fs");
+const crypto = require("crypto");
 const path = require("path");
 
 const ROOT = __dirname;
@@ -19,6 +20,7 @@ const STR = {
   es: JSON.parse(fs.readFileSync(path.join(SRC, "strings/es.json"), "utf8")),
 };
 const KW = JSON.parse(fs.readFileSync(path.join(SRC, "keywords.json"), "utf8"));
+const REVIEWS = JSON.parse(fs.readFileSync(path.join(SRC, "reviews.json"), "utf8"));
 const SITELINKS = JSON.parse(fs.readFileSync(path.join(SRC, "sitelinks.json"), "utf8"));
 const BSTR = {
   en: JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.en.json"), "utf8")),
@@ -61,6 +63,21 @@ function stringsForB(lang, city) {
     base[k] = b[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR).replace(/\{totalRecovered\}/g, site.totalRecovered || "");
   }
   return base;
+}
+
+/** Real Google reviews, rendered as review cards. Quotes are verbatim in English in both languages. */
+function reviewCards() {
+  return `<div class="revlist">` + REVIEWS.map(r => `
+  <blockquote class="revcard" lang="en">
+    <div class="revcard__head">
+      <span class="revcard__av" aria-hidden="true">${esc(r.name[0])}</span>
+      <div class="revcard__who">
+        <cite>${esc(r.name)}</cite>
+        <p class="revcard__meta"><span class="revcard__stars" aria-label="5 out of 5">★★★★★</span> Google${r.badge ? ` · ${esc(r.badge)}` : ""}</p>
+      </div>
+    </div>
+    <p class="revcard__q">${r.quote}</p>
+  </blockquote>`).join("") + `\n</div>`;
 }
 
 /** Primary call-to-action: the phone call. Used in every hero, band and card. */
@@ -342,7 +359,7 @@ function buildSitelink(entry, lang) {
   page.ctaH = esc(meta.cta_h);
   page.ctaP = esc(meta.cta_p);
   page.ctaBtn = esc(meta.cta_btn);
-  page.body = fs.readFileSync(path.join(SRC, "sitelinks", `${entry.slug}.${lang}.html`), "utf8").replace(/\{totalRecovered\}/g, site.totalRecovered || "");
+  page.body = fs.readFileSync(path.join(SRC, "sitelinks", `${entry.slug}.${lang}.html`), "utf8").replace(/\{totalRecovered\}/g, site.totalRecovered || "").replace(/\{reviewCards\}/g, reviewCards()).replace(/\{reviewCount\}/g, site.reviewCount);
   page.formCard = formCard(ctx, page, "lead");
   page.callBtn = callBtn(ctx, "btn--big", meta.cta_btn);
   page.callBtnMid = callBtn(ctx, "btn--big");
@@ -364,6 +381,34 @@ function copyDir(from, to) {
   }
 }
 
+/** Content-hash styles.css and lander.js and rewrite every reference.
+ *  Without this the long /assets/ cache header serves stale CSS to returning visitors. */
+function fingerprintAssets() {
+  const map = {};
+  for (const name of ["styles.css", "lander.js"]) {
+    const file = path.join(OUT, "assets", name);
+    const buf = fs.readFileSync(file);
+    const hash = crypto.createHash("sha256").update(buf).digest("hex").slice(0, 8);
+    const dot = name.lastIndexOf(".");
+    const hashed = `${name.slice(0, dot)}.${hash}${name.slice(dot)}`;
+    fs.renameSync(file, path.join(OUT, "assets", hashed));
+    map[`/assets/${name}`] = `/assets/${hashed}`;
+  }
+  const walk = dir => {
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, ent.name);
+      if (ent.isDirectory()) walk(p);
+      else if (ent.name.endsWith(".html")) {
+        let html = fs.readFileSync(p, "utf8"), changed = false;
+        for (const [from, to] of Object.entries(map)) if (html.includes(from)) { html = html.split(from).join(to); changed = true; }
+        if (changed) fs.writeFileSync(p, html);
+      }
+    }
+  };
+  walk(OUT);
+  console.log("fingerprinted:", Object.values(map).map(v => v.replace("/assets/", "")).join(", "));
+}
+
 function main() {
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
@@ -378,6 +423,7 @@ function main() {
     buildLegal("terms", lang);
   }
   copyDir(path.join(SRC, "assets"), path.join(OUT, "assets"));
+  fingerprintAssets();
   fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\n${site.index ? "Allow" : "Disallow"}: /\nDisallow: ${prefix}${site.thankYouPath}\nDisallow: ${prefix}/es${site.thankYouPath}\nSitemap: ${absUrl("/sitemap.xml")}\n`);
   const sm = built.map(b => `  <url>\n    <loc>${b.url}</loc>\n    <xhtml:link rel="alternate" hreflang="en" href="${b.alt.en}"/>\n    <xhtml:link rel="alternate" hreflang="es" href="${b.alt.es}"/>\n    <xhtml:link rel="alternate" hreflang="x-default" href="${b.alt.xd}"/>\n  </url>`).join("\n");
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sm}\n</urlset>\n`);

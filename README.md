@@ -58,6 +58,10 @@ Both sets now state the same hours, so nothing on the site contradicts itself. S
 
 Note: the firm described the practice as "over 30 years." The pages say **licensed since 1975** and "five decades," which came from the original brief and is the stronger, still-accurate claim. If 1975 is wrong, it is in `strings/*.json` and the legal pages.
 
+## Asset caching
+
+`/assets/` carries a seven-day cache header, so `styles.css` and `lander.js` are **content-hashed at build time** (`styles.9a696a27.css`) and every HTML reference is rewritten to match. Without this a CSS change is invisible to returning visitors for a week — which is exactly what happened once. `qa.js` fails the build if any page links an unhashed stylesheet or script.
+
 ## Photos
 
 Real firm photography only — no stock. `src/assets/img/team/` holds five 480px square WebP headshots (80 KB for all five), all lazy-loaded below the fold so the text hero stays the largest contentful paint.

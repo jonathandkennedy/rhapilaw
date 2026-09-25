@@ -199,6 +199,8 @@ const REVIEWERS = ["Hans Helmudt", "Karina Sodre", "Julio Barberena", "Geovanny 
 for (const lang of ["en", "es"]) {
   const html = read((lang === "es" ? "/es" : "") + "/reviews/");
   for (const n of REVIEWERS) ok(strip(html).includes(n), `reviews ${lang}: real reviewer ${n}`);
+  ok((html.match(/class="revcard"/g) || []).length === REVIEWERS.length, `reviews ${lang}: one card per review`);
+  ok(html.includes('class="ratecard"'), `reviews ${lang}: rating card`);
   ok(strip(html).includes("144"), `reviews ${lang}: review count`);
   ok(!/130\+/.test(strip(html)), `reviews ${lang}: stale 130+ count`);
 }
