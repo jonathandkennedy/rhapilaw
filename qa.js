@@ -109,15 +109,16 @@ function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   ok(!/\/assets\/(styles\.css|lander\.js)"/.test(html), `${label}: unhashed asset reference`);
   // --- third-party script inventory: each loads at most once ---
   const cnt = re => (html.match(re) || []).length;
-  ok(cnt(/googletagmanager\.com\/gtm\.js/g) === 1, `${label}: GTM must load exactly once`);
-  ok(cnt(/googletagmanager\.com\/gtag\/js/g) <= 1, `${label}: gtag.js loaded more than once`);
+  ok(cnt(/googletagmanager\.com\/gtm\.js/g) === 0, `${label}: GTM must not load on the landers`);
+  ok(cnt(/googletagmanager\.com\/gtag\/js/g) === 1, `${label}: the Google tag must load exactly once`);
+  ok(cnt(/gtag\('config'/g) === 1 && html.includes(`gtag('config','${site.googleTagId}')`), `${label}: exactly one config call, on the Google tag id`);
+  for (const id of site.blockedTagIds) ok(!html.includes(id), `${label}: blocked main-site tag ${id} is on the page`);
+  ok(!/belvionetta|clickcease/i.test(html), `${label}: ClickCease was removed and must not return`);
+  ok(html.includes("navigator.globalPrivacyControl"), `${label}: Global Privacy Control must switch off ad personalization`);
   ok(cnt(/calltrk\.com\/companies/g) <= 1, `${label}: CallRail loaded more than once`);
-  ok(cnt(/belvionetta\.com\/i\//g) <= 1, `${label}: ClickCease loaded more than once`);
-  if (site.ga4ViaGtmOnly) ok(cnt(/googletagmanager\.com\/gtag\/js/g) === 0 && cnt(/gtag\('config'/g) === 0, `${label}: ga4ViaGtmOnly is on but gtag.js still loads`);
   ok(html.includes('rel="preconnect" href="https://www.googletagmanager.com"'), `${label}: GTM preconnect`);
-  ok(html.includes("GTM-N7PDDTKX") && (site.ga4ViaGtmOnly || (html.includes("gtag('config','G-K9CNL0LV5B')") && html.includes("gtag('config','G-BBKS7FGRKP')"))), `${label}: analytics tags`);
+  ok(html.includes(`gtag/js?id=${site.googleTagId}`), `${label}: analytics tag`);
   ok(html.includes('src="//cdn.calltrk.com/companies/929322410/22fcab48a6ebb6eff8c0/12/swap.js"'), `${label}: CallRail swap script`);
-  ok(html.includes('class="ct_clicktrue"') && html.includes("ob.belvionetta.com/i/") && html.includes("ob.belvionetta.com/ns/"), `${label}: ClickCease script + noscript`);
   if (lang === "es") ok(!TU.test(text.replace(/Kyle, Abby, and Ismael[\s\S]*?recover\./g, "")), `${label}: tú-register on ES page`);
 }
 
@@ -239,7 +240,7 @@ for (const lang of ["en", "es"]) {
     const html = read(`${pre}/${kind}/`), text = strip(html);
     common(`${pre}/${kind}/`, html, lang, `/${kind}/`, "en", true, true);
     ok(text.length > 4000, `${pre}/${kind}/: body too short (${text.length})`);
-    ok(/STOP/.test(text) && /Formspree/.test(text) && /G-K9CNL0LV5B/.test(text.replace(/\s/g, "")) || kind === "terms", `${pre}/${kind}/: privacy specifics`);
+    ok(/STOP/.test(text) && /Formspree/.test(text) && /GT-WVG5SWDZ/.test(text) && /G-BBKS7FGRKP/.test(text) && /AW-18388471482/.test(text) && !/G-K9CNL0LV5B|ClickCease/.test(text) || kind === "terms", `${pre}/${kind}/: privacy specifics`);
     ok(/Robert Hindin/.test(text) && text.includes("11400 W Olympic Blvd"), `${pre}/${kind}/: responsible attorney + address`);
     if (kind === "terms") ok(html.includes(`href="${pre}/privacy/"`), `${pre}/terms/: links privacy`);
   }

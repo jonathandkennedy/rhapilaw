@@ -142,19 +142,17 @@ function write(p, html) {
 }
 
 function tags() {
-  // Two modes.
-  //  ga4ViaGtmOnly=false (current): gtag.js configures the GA4 ids directly AND GTM loads. Two Google scripts.
-  //  ga4ViaGtmOnly=true  (target):  GTM only. GA4 and all page events must be configured inside the container.
-  // The live container already fires G-K9CNL0LV5B, so in the current mode that property is configured twice.
+  // One Google tag (site.googleTagId) routes to GA4 G-BBKS7FGRKP and Google Ads AW-18388471482.
+  // Load it once and configure it once: configuring its destinations as well would double-send page_view.
   let head = "", body = "";
-  // Connection warm-up for the scripts that must run early (GTM, and CallRail so the number swaps before it is read).
   head += `<link rel="preconnect" href="https://www.googletagmanager.com">`;
   if (site.callrailSwapUrl) head += `<link rel="preconnect" href="https://cdn.calltrk.com">`;
   if (site.clickceaseScriptUrl) head += `<link rel="dns-prefetch" href="https://ob.belvionetta.com">`;
-  const ids = site.ga4ViaGtmOnly ? [] : [].concat(site.ga4Ids || [], [site.ga4Id], [site.googleAdsId]).filter((v, i, a) => v && a.indexOf(v) === i);
-  if (ids.length) {
-    head += `<script async src="https://www.googletagmanager.com/gtag/js?id=${ids[0]}"></script>`;
-    head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${ids.map(i => `gtag('config','${i}');`).join("")}</script>`;
+  if (site.googleTagId) {
+    const id = site.googleTagId;
+    head += `<script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>`;
+    // Global Privacy Control is honored: ad personalization (remarketing) is switched off for visitors who send it.
+    head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());if(navigator.globalPrivacyControl){gtag('set','allow_ad_personalization_signals',false);}gtag('config','${id}');</script>`;
   }
   if (site.gtmId) {
     head += `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.gtmId}');</script>`;
