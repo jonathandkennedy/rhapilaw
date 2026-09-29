@@ -142,8 +142,16 @@ function write(p, html) {
 }
 
 function tags() {
+  // Two modes.
+  //  ga4ViaGtmOnly=false (current): gtag.js configures the GA4 ids directly AND GTM loads. Two Google scripts.
+  //  ga4ViaGtmOnly=true  (target):  GTM only. GA4 and all page events must be configured inside the container.
+  // The live container already fires G-K9CNL0LV5B, so in the current mode that property is configured twice.
   let head = "", body = "";
-  const ids = [].concat(site.ga4Ids || [], [site.ga4Id], [site.googleAdsId]).filter((v, i, a) => v && a.indexOf(v) === i);
+  // Connection warm-up for the scripts that must run early (GTM, and CallRail so the number swaps before it is read).
+  head += `<link rel="preconnect" href="https://www.googletagmanager.com">`;
+  if (site.callrailSwapUrl) head += `<link rel="preconnect" href="https://cdn.calltrk.com">`;
+  if (site.clickceaseScriptUrl) head += `<link rel="dns-prefetch" href="https://ob.belvionetta.com">`;
+  const ids = site.ga4ViaGtmOnly ? [] : [].concat(site.ga4Ids || [], [site.ga4Id], [site.googleAdsId]).filter((v, i, a) => v && a.indexOf(v) === i);
   if (ids.length) {
     head += `<script async src="https://www.googletagmanager.com/gtag/js?id=${ids[0]}"></script>`;
     head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${ids.map(i => `gtag('config','${i}');`).join("")}</script>`;
@@ -322,6 +330,7 @@ function buildLegal(kind, lang) {
   page.title = s[`${kind}_title`];
   page.h1 = s[`${kind}_h1`];
   page.body = fs.readFileSync(path.join(SRC, "legal", `${kind}.${lang}.html`), "utf8").replace(/\{\{privacyHref\}\}/g, page.privacyHref);
+  page.callBand = callBand(ctx, "navy");
   write(langPath(lang, p), render(T.legal, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind, alt: alternates(p, "en") });
 }

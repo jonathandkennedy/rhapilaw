@@ -99,7 +99,23 @@ function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   ok(/00:00/.test(html) ? true : !/"opens":"08:00"/.test(html), `${label}: structured data still says 08:00–17:00`);
   ok(!/\{City\}|\{serve\}|\{local\}|\{year\}|\{\{/.test(html), `${label}: unsubstituted token`);
   ok(!/data-i18n/.test(html), `${label}: runtime i18n hooks leaked into output`);
-  ok(html.includes("gtag('config','G-K9CNL0LV5B')") && html.includes("gtag('config','G-BBKS7FGRKP')") && html.includes("GTM-N7PDDTKX"), `${label}: analytics tags`);
+  // --- call-first layout (reported added on 24 Sep; actually added here) ---
+  ok(html.includes("hdr__callbtn"), `${label}: header call button (calls are the primary conversion)`);
+  ok((html.match(/href="tel:/g) || []).length >= 4, `${label}: fewer than 4 click-to-call links`);
+  ok(!html.includes("lead-form") || html.indexOf('href="tel:') < html.indexOf('class="lead-form"'), `${label}: a call link must come before the first form`);
+  // --- cache-busted assets (reported added on 25 Sep; actually added here) ---
+  ok(/href="\/assets\/styles\.[a-f0-9]{8}\.css"/.test(html), `${label}: stylesheet must be content-hashed (long cache header)`);
+  ok(/src="\/assets\/lander\.[a-f0-9]{8}\.js"/.test(html), `${label}: script must be content-hashed`);
+  ok(!/\/assets\/(styles\.css|lander\.js)"/.test(html), `${label}: unhashed asset reference`);
+  // --- third-party script inventory: each loads at most once ---
+  const cnt = re => (html.match(re) || []).length;
+  ok(cnt(/googletagmanager\.com\/gtm\.js/g) === 1, `${label}: GTM must load exactly once`);
+  ok(cnt(/googletagmanager\.com\/gtag\/js/g) <= 1, `${label}: gtag.js loaded more than once`);
+  ok(cnt(/calltrk\.com\/companies/g) <= 1, `${label}: CallRail loaded more than once`);
+  ok(cnt(/belvionetta\.com\/i\//g) <= 1, `${label}: ClickCease loaded more than once`);
+  if (site.ga4ViaGtmOnly) ok(cnt(/googletagmanager\.com\/gtag\/js/g) === 0 && cnt(/gtag\('config'/g) === 0, `${label}: ga4ViaGtmOnly is on but gtag.js still loads`);
+  ok(html.includes('rel="preconnect" href="https://www.googletagmanager.com"'), `${label}: GTM preconnect`);
+  ok(html.includes("GTM-N7PDDTKX") && (site.ga4ViaGtmOnly || (html.includes("gtag('config','G-K9CNL0LV5B')") && html.includes("gtag('config','G-BBKS7FGRKP')"))), `${label}: analytics tags`);
   ok(html.includes('src="//cdn.calltrk.com/companies/929322410/22fcab48a6ebb6eff8c0/12/swap.js"'), `${label}: CallRail swap script`);
   ok(html.includes('class="ct_clicktrue"') && html.includes("ob.belvionetta.com/i/") && html.includes("ob.belvionetta.com/ns/"), `${label}: ClickCease script + noscript`);
   if (lang === "es") ok(!TU.test(text.replace(/Kyle, Abby, and Ismael[\s\S]*?recover\./g, "")), `${label}: tú-register on ES page`);

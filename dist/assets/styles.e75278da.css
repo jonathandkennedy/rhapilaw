@@ -182,7 +182,7 @@ section{padding:48px 0}
 .ftr__copy{opacity:.6}
 
 /* legal pages */
-.legal{padding-bottom:0}
+.legal{padding-bottom:64px}
 .legal__main{background:var(--white);padding:40px 0 56px}
 .legal__box{max-width:800px}
 .legal__box h2{font-size:1.25rem;margin-top:1.6em}
@@ -343,7 +343,7 @@ section{padding:48px 0}
 .hub__about{background:var(--white)}
 
 /* thank-you */
-.ty{padding-bottom:0}
+.ty{padding-bottom:64px}
 .ty__hero{background:var(--white);padding:40px 0 48px;border-bottom:1px solid var(--line)}
 .ty__grid{display:grid;gap:28px}
 .ty__box .lead a{color:var(--accent-dark);font-weight:800}
@@ -375,6 +375,7 @@ section{padding:48px 0}
 
 @media (min-width:760px){
   body{padding-bottom:0}
+  .legal,.ty{padding-bottom:0}
   .sticky{display:none}
   .hdr__formlink{display:inline}
   .hdr__callbtn .btn__lab{display:inline}
