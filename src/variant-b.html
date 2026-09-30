@@ -41,6 +41,7 @@
     <div class="hero__copy">
       <p class="eyebrow">{{eyebrow}}</p>
       <h1>{{b_h1}}</h1>
+      {{page.heroTagline}}
       <p class="lead"><span class="kw">{{hero_kw}}</span> {{b_hero_sub}}</p>
       <figure class="hero__photo">
         <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" width="1080" height="1080" loading="eager" fetchpriority="high">
@@ -73,6 +74,8 @@
     <p class="local__office"><span>{{local_office_label}}</span> <span>{{local_office}}</span> · <a href="tel:{{site.phoneTel}}" data-track="phone_click">{{site.phoneDisplay}}</a></p>
   </div>
 </section>
+
+{{page.extraSections}}
 
 <section class="b-cases">
   <div class="wrap">

@@ -1,0 +1,28 @@
+{
+  "_note": "Per-city overrides for set B, merged over strings/b.<lang>.json. Built from the Google Ads keyword review of 30 Sep 2026. Only los-angeles/en is overridden.",
+  "los-angeles": {
+    "en": {
+      "meta_title": "Los Angeles Car Accident Lawyers & Attorneys | Free Consultation | Robert Hindin & Associates",
+      "meta_desc": "Los Angeles car accident lawyers for auto accidents, rideshare and drunk driver crashes. No fees unless we win. Free consultation 24/7. Call (310) 564-7911.",
+      "b_h1": "Los Angeles Car Accident Lawyers",
+      "b_hero_tagline": "Car crash lawyers for Los Angeles drivers and passengers",
+      "areaServed": ["Beverly Hills", "Woodland Hills", "Long Beach"],
+      "b_sections": [
+        {
+          "h": "Auto accident and car wreck lawyers in Los Angeles",
+          "p": [
+            "Whether you call it an auto accident, a car wreck, or a fender bender that turned out to be worse than it looked, the insurance playbook is the same. The adjuster calls fast, asks for a recorded statement, and puts a number on the table before anyone knows how badly you are hurt.",
+            "Our Los Angeles car accident lawyers take over the whole claim: preserving the evidence from the car wreck, getting you to a doctor, and negotiating with every insurer involved. If your auto accident happened on the 405, the 10, the 101 or a surface street, the clock that matters is measured in days, because that is how long most camera footage survives."
+          ]
+        },
+        {
+          "h": "Serving Beverly Hills, Woodland Hills, Long Beach and all of LA County",
+          "p": [
+            "Our office is on Olympic Boulevard in West Los Angeles, a short drive from Beverly Hills and Century City. We represent people hurt in crashes across Los Angeles County, from Woodland Hills and the rest of the San Fernando Valley along the 101, to Long Beach and the 405 and 710 corridor to the south.",
+            "You do not need to come to the office to get started. The free case review happens by phone, at any hour, in English or Spanish."
+          ]
+        }
+      ]
+    }
+  }
+}

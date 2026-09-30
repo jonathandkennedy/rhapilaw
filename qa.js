@@ -11,6 +11,7 @@ const EN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/en.json"
 const KW = JSON.parse(fs.readFileSync(path.join(__dirname, "src/keywords.json"), "utf8"));
 const SITELINKS = JSON.parse(fs.readFileSync(path.join(__dirname, "src/sitelinks.json"), "utf8"));
 const BEN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.en.json"), "utf8"));
+const BOVR = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.overrides.json"), "utf8"));
 const BES = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.es.json"), "utf8"));
 function headings(html) {
   return [...html.matchAll(/<(h[123])[^>]*>([\s\S]*?)<\/\1>/g)].map(m => m[1] + " " + m[2].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim());
@@ -160,8 +161,11 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   const B = lang === "es" ? BES : BEN;
   common(label, html, lang, logical, c.defaultLang, true, true);
   const sub = v => v.replace(/\{City\}/g, c.name).replace(/\{totalRecovered\}/g, site.totalRecovered).replace(/&amp;/g, "&");
+  const O = (BOVR[c.slug] || {})[lang] || {};
+  const extra = (O.b_sections || []).map(s => "h2 " + s.h);
   const want = [
-    "h1 " + sub(B.b_h1),
+    "h1 " + sub(O.b_h1 || B.b_h1),
+    ...extra,
     "h2 " + sub(B.b_h2_cases),
     "h3 " + sub(B.b_case_1_t), "h3 " + sub(B.b_case_2_t), "h3 " + sub(B.b_case_3_t), "h3 " + sub(B.b_case_4_t), "h3 " + sub(B.b_case_5_t),
     "h2 " + sub(B.b_h2_24h),
@@ -172,6 +176,14 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   const got = headings(html);
   for (let i = 0; i < want.length; i++) ok(got[i] === want[i], `${label}: heading ${i + 1} must be "${want[i]}" — got "${got[i]}"`);
   ok((html.match(/class="lead-form"/g) || []).length === 2, `${label}: two lead forms (hero + schedule)`);
+  if (O.meta_title) ok(html.includes(`<title>${O.meta_title.replace(/&/g, "&amp;")}</title>`), `${label}: override title`);
+  if (O.meta_desc) ok(html.includes(`<meta name="description" content="${O.meta_desc.replace(/&/g, "&amp;")}"`), `${label}: override meta description`);
+  if (O.b_hero_tagline) ok(html.includes(`<p class="hero__tagline">${O.b_hero_tagline}</p>`), `${label}: hero tagline`);
+  for (const n of (O.areaServed || [])) ok(html.includes(`{"@type":"City","name":"${n}"}`) && strip(html).includes(n), `${label}: serves ${n} (page copy and JSON-LD)`);
+  if (c.slug === "los-angeles" && lang === "en") {
+    const low = strip(html).toLowerCase();
+    for (const [k, n] of [["lawyer", 5], ["auto accident", 3], ["car wreck", 2], ["car crash", 2]]) ok(low.split(k).length - 1 >= n, `${label}: "${k}" should appear at least ${n}x (keyword review, 30 Sep)`);
+  }
   ok((html.match(/id="lead"/g) || []).length === 1 && html.includes('id="lead-bottom"'), `${label}: unique form ids`);
   ok((html.match(/<h1/g) || []).length === 1, `${label}: exactly one H1`);
   ok(html.includes(`data-thankyou="${lang === "es" ? "/es" : ""}/attorneys/thank-you/"`), `${label}: variant B thank-you`);

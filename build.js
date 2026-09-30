@@ -21,6 +21,7 @@ const STR = {
 };
 const KW = JSON.parse(fs.readFileSync(path.join(SRC, "keywords.json"), "utf8"));
 const REVIEWS = JSON.parse(fs.readFileSync(path.join(SRC, "reviews.json"), "utf8"));
+const BOVR = JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.overrides.json"), "utf8"));
 const SITELINKS = JSON.parse(fs.readFileSync(path.join(SRC, "sitelinks.json"), "utf8"));
 const BSTR = {
   en: JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.en.json"), "utf8")),
@@ -62,6 +63,9 @@ function stringsForB(lang, city) {
     if (k[0] === "_" || typeof b[k] !== "string") continue;
     base[k] = b[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR).replace(/\{totalRecovered\}/g, site.totalRecovered || "");
   }
+  const o = (BOVR[city.slug] || {})[lang] || {};
+  for (const k of Object.keys(o)) if (typeof o[k] === "string") base[k] = o[k];
+  if (base.b_hero_tagline == null) base.b_hero_tagline = "";
   return base;
 }
 
@@ -346,6 +350,15 @@ function buildVariantB(city, lang) {
   page.jsonld = jsonld(city, s, page);
   page.ismaelHidden = s.ismael ? "" : "hidden";
   page.thankYouUrl = prefix + langPath(lang, "/attorneys/thank-you/");
+  const ovr = (BOVR[city.slug] || {})[lang] || {};
+  page.heroTagline = s.b_hero_tagline ? `<p class="hero__tagline">${s.b_hero_tagline}</p>` : "";
+  page.extraSections = (ovr.b_sections || []).map((sec, i) => `<section class="b-extra${i % 2 ? " b-extra--alt" : ""}">
+  <div class="wrap">
+    <h2>${sec.h}</h2>
+    ${sec.p.map(x => `<p${sec.p.indexOf(x) === 0 ? ' class="lead"' : ""}>${x}</p>`).join("\n    ")}
+  </div>
+</section>`).join("\n");
+  if (ovr.areaServed) page.jsonld = page.jsonld.replace('{"@type":"AdministrativeArea"', ovr.areaServed.map(n => `{"@type":"City","name":"${n}"}`).join(",") + ',{"@type":"AdministrativeArea"');
   page.formCard = formCard(s, page, "lead");
   page.formCardBottom = formCard(s, page, "lead-bottom");
   page.callBand = callBand(s, "red");
