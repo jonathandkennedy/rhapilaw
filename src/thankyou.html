@@ -40,7 +40,7 @@
     <div class="card qual">
       <h2>{{ty_q_h2}}</h2>
       <p class="qual__sub">{{ty_q_sub}}</p>
-      <form class="qual-form" method="post" action="{{page.formAction}}" data-endpoint="{{site.formEndpoint}}" novalidate>
+      <form class="qual-form" data-clarity-mask="True" method="post" action="{{page.formAction}}" data-endpoint="{{site.formEndpoint}}" novalidate>
         <input type="hidden" name="lang" value="{{page.lang}}">
         <input type="hidden" name="type" value="lead_details">
         <input type="hidden" name="name" value="">

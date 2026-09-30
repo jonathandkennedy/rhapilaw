@@ -103,7 +103,7 @@ function formCard(s, page, id) {
         <p class="chip">${s.form_chip}</p>
         ${callBtn(s, "btn--wide btn--card")}
         <p class="form-card__or"><span>${s.form_or}</span></p>
-        <form class="lead-form" method="post" action="${page.formAction}" data-endpoint="${site.formEndpoint}" data-thankyou="${page.thankYouUrl}" novalidate>
+        <form class="lead-form" data-clarity-mask="True" method="post" action="${page.formAction}" data-endpoint="${site.formEndpoint}" data-thankyou="${page.thankYouUrl}" novalidate>
           <input type="hidden" name="lang" value="${page.lang}">
           <input type="hidden" name="city" value="${page.name || ""}">
           <input type="hidden" name="city_slug" value="${page.slug || ""}">
@@ -153,6 +153,9 @@ function tags() {
     head += `<script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>`;
     // Global Privacy Control is honored: ad personalization (remarketing) is switched off for visitors who send it.
     head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());if(navigator.globalPrivacyControl){gtag('set','allow_ad_personalization_signals',false);}gtag('config','${id}');</script>`;
+  }
+  if (site.clarityId) {
+    head += `<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${site.clarityId}");</script>`;
   }
   if (site.gtmId) {
     head += `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.gtmId}');</script>`;

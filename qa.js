@@ -114,6 +114,8 @@ function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   ok(cnt(/gtag\('config'/g) === 1 && html.includes(`gtag('config','${site.googleTagId}')`), `${label}: exactly one config call, on the Google tag id`);
   for (const id of site.blockedTagIds) ok(!html.includes(id), `${label}: blocked main-site tag ${id} is on the page`);
   ok(!/belvionetta|clickcease/i.test(html), `${label}: ClickCease was removed and must not return`);
+  ok((html.match(/clarity\.ms\/tag\//g) || []).length === 1 && html.includes(`"${site.clarityId}"`), `${label}: Microsoft Clarity must load exactly once`);
+  ok((html.match(/<form /g) || []).length === (html.match(/<form [^>]*data-clarity-mask="True"/g) || []).length, `${label}: every form must be masked from Clarity recordings`);
   ok(html.includes("navigator.globalPrivacyControl"), `${label}: Global Privacy Control must switch off ad personalization`);
   ok(cnt(/calltrk\.com\/companies/g) <= 1, `${label}: CallRail loaded more than once`);
   ok(html.includes('rel="preconnect" href="https://www.googletagmanager.com"'), `${label}: GTM preconnect`);
@@ -240,7 +242,7 @@ for (const lang of ["en", "es"]) {
     const html = read(`${pre}/${kind}/`), text = strip(html);
     common(`${pre}/${kind}/`, html, lang, `/${kind}/`, "en", true, true);
     ok(text.length > 4000, `${pre}/${kind}/: body too short (${text.length})`);
-    ok(/STOP/.test(text) && /Formspree/.test(text) && /GT-WVG5SWDZ/.test(text) && /G-BBKS7FGRKP/.test(text) && /AW-18388471482/.test(text) && !/G-K9CNL0LV5B|ClickCease/.test(text) || kind === "terms", `${pre}/${kind}/: privacy specifics`);
+    ok(/STOP/.test(text) && /Formspree/.test(text) && /GT-WVG5SWDZ/.test(text) && /G-BBKS7FGRKP/.test(text) && /AW-18388471482/.test(text) && !/G-K9CNL0LV5B|ClickCease/.test(text) && (kind === "terms" || /Microsoft Clarity/.test(text)) || kind === "terms", `${pre}/${kind}/: privacy specifics`);
     ok(/Robert Hindin/.test(text) && text.includes("11400 W Olympic Blvd"), `${pre}/${kind}/: responsible attorney + address`);
     if (kind === "terms") ok(html.includes(`href="${pre}/privacy/"`), `${pre}/terms/: links privacy`);
   }

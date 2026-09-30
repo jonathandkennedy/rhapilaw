@@ -184,6 +184,7 @@ Page events, each with `lang`, `city`, `kw`, `variant`: `lead_submit`, `lead_det
 | Script | Loads | Why |
 |---|---|---|
 | Google tag `GT-WVG5SWDZ` | head, async | GA4 and Google Ads |
+| Microsoft Clarity `yql9v07dy8` | head, async | Session recordings and heatmaps. Every form carries `data-clarity-mask="True"`, so names, phone numbers and the "what happened" box are never recorded |
 | CallRail swap | end of body, async | Swaps the tracking number |
 
 `preconnect` is set for googletagmanager.com and cdn.calltrk.com. Neither script blocks HTML parsing.
