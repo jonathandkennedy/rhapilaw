@@ -294,6 +294,9 @@ section{padding:48px 0}
 .b-extra{background:var(--white);border-bottom:1px solid var(--line)}
 .b-extra--alt{background:var(--soft)}
 .b-extra p{max-width:820px}
+.b-extra__list{max-width:820px;margin-top:6px}
+.b-extra__list li{font-weight:400;color:var(--body);margin-bottom:12px}
+.b-extra__list li strong{color:var(--ink)}
 
 /* sitelink pages */
 .sl__hero{background:var(--soft);padding:34px 0 48px}

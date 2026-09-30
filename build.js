@@ -351,11 +351,13 @@ function buildVariantB(city, lang) {
   page.ismaelHidden = s.ismael ? "" : "hidden";
   page.thankYouUrl = prefix + langPath(lang, "/attorneys/thank-you/");
   const ovr = (BOVR[city.slug] || {})[lang] || {};
+  page.trustMore = (ovr.b_trust_more || []).map(x => `<li>${x}</li>`).join("");
   page.heroTagline = s.b_hero_tagline ? `<p class="hero__tagline">${s.b_hero_tagline}</p>` : "";
   page.extraSections = (ovr.b_sections || []).map((sec, i) => `<section class="b-extra${i % 2 ? " b-extra--alt" : ""}">
   <div class="wrap">
     <h2>${sec.h}</h2>
     ${sec.p.map(x => `<p${sec.p.indexOf(x) === 0 ? ' class="lead"' : ""}>${x}</p>`).join("\n    ")}
+    ${sec.li ? `<ul class="checks b-extra__list">${sec.li.map(x => `<li>${x}</li>`).join("")}</ul>` : ""}
   </div>
 </section>`).join("\n");
   if (ovr.areaServed) page.jsonld = page.jsonld.replace('{"@type":"AdministrativeArea"', ovr.areaServed.map(n => `{"@type":"City","name":"${n}"}`).join(",") + ',{"@type":"AdministrativeArea"');

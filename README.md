@@ -42,6 +42,21 @@ Every page exists twice: English at `/<path>/`, Spanish at `/es/<path>/`. Pre-re
 
 **Other:** `/` hub (three sections: set A, set B, sitelinks), `/privacy/`, `/terms/`, `/thank-you/` and `/attorneys/thank-you/` (both `noindex`).
 
+## Per-city overrides (set B)
+
+`src/strings/b.overrides.json` changes individual set-B pages without touching the other cities: title, meta description, H1, hero tagline, extra hero bullets, extra H2 sections (placed before the attorney's specified headings, whose order QA still enforces) and extra `areaServed` entries. English only so far.
+
+| Page | From | What changed |
+|---|---|---|
+| `/attorneys/los-angeles/` | Ads keyword review, 30 Sep | "Lawyers" in title and H1; auto accident / car wreck section; Beverly Hills, Woodland Hills, Long Beach section and schema; car-crash tagline; new meta description |
+| `/attorneys/van-nuys/` | Ads keyword review, 30 Sep | "Lawyers" in title and H1; "near you" section; local section; hero bullets matching the ad (next-day doctor, rental car); Van Nuys case copy; new meta description |
+
+**Firm to confirm on `/attorneys/van-nuys/`** before scaling spend:
+- The firm meets clients at home, in the hospital, or by video.
+- Next-day doctor appointments and the rental-car offer, as worded (both mirror the live ad).
+- Local facts, checked against official sites on 30 Sep 2026: LAPD Valley Traffic Division at 7870 Nollan Place, Panorama City; LAPD reports via LexisNexis BuyCrash or by mail, which LAPD says can take two months or more; Van Nuys Courthouse West at 14400 Erwin Street Mall handling general civil. The CHP office is deliberately not named.
+- The Van Nuys ad still says "130+ Google Reviews"; the profile shows 144.
+
 ## Claims on the pages
 
 Confirmed by the firm and now stated site-wide:

@@ -180,6 +180,14 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   if (O.meta_desc) ok(html.includes(`<meta name="description" content="${O.meta_desc.replace(/&/g, "&amp;")}"`), `${label}: override meta description`);
   if (O.b_hero_tagline) ok(html.includes(`<p class="hero__tagline">${O.b_hero_tagline}</p>`), `${label}: hero tagline`);
   for (const n of (O.areaServed || [])) ok(html.includes(`{"@type":"City","name":"${n}"}`) && strip(html).includes(n), `${label}: serves ${n} (page copy and JSON-LD)`);
+  for (const x of (O.b_trust_more || [])) ok(html.includes(`<li>${x}</li>`), `${label}: hero bullet "${x}"`);
+  for (const sec of (O.b_sections || [])) for (const x of (sec.li || [])) ok(html.includes(`<li>${x}</li>`), `${label}: section item "${x.replace(/<[^>]+>/g, "").slice(0, 40)}…"`);
+  if (c.slug === "van-nuys" && lang === "en") {
+    const low = strip(html).toLowerCase();
+    for (const [k, n] of [["car accident lawyer", 4], ["near you", 2], ["next-day doctor", 2], ["rental car", 2]]) ok(low.split(k).length - 1 >= n, `${label}: "${k}" should appear at least ${n}x (keyword review, 30 Sep)`);
+    for (const n of ["Sherman Oaks", "North Hollywood", "Panorama City", "Encino", "Reseda", "Lake Balboa", "Sepulveda", "Van Nuys Boulevard", "405/101"]) ok(strip(html).includes(n), `${label}: local detail "${n}"`);
+    ok(!/Los Angeles, CA open 24 hours/.test(strip(html)) && /Van Nuys, CA open 24 hours/.test(strip(html)), `${label}: headings must be about Van Nuys`);
+  }
   if (c.slug === "los-angeles" && lang === "en") {
     const low = strip(html).toLowerCase();
     for (const [k, n] of [["lawyer", 5], ["auto accident", 3], ["car wreck", 2], ["car crash", 2]]) ok(low.split(k).length - 1 >= n, `${label}: "${k}" should appear at least ${n}x (keyword review, 30 Sep)`);

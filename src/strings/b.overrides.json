@@ -1,12 +1,16 @@
 {
-  "_note": "Per-city overrides for set B, merged over strings/b.<lang>.json. Built from the Google Ads keyword review of 30 Sep 2026. Only los-angeles/en is overridden.",
+  "_note": "Per-city overrides for set B, merged over strings/b.<lang>.json. From the Google Ads keyword reviews of 30 Sep 2026. Only English pages are overridden.",
   "los-angeles": {
     "en": {
       "meta_title": "Los Angeles Car Accident Lawyers & Attorneys | Free Consultation | Robert Hindin & Associates",
       "meta_desc": "Los Angeles car accident lawyers for auto accidents, rideshare and drunk driver crashes. No fees unless we win. Free consultation 24/7. Call (310) 564-7911.",
       "b_h1": "Los Angeles Car Accident Lawyers",
       "b_hero_tagline": "Car crash lawyers for Los Angeles drivers and passengers",
-      "areaServed": ["Beverly Hills", "Woodland Hills", "Long Beach"],
+      "areaServed": [
+        "Beverly Hills",
+        "Woodland Hills",
+        "Long Beach"
+      ],
       "b_sections": [
         {
           "h": "Auto accident and car wreck lawyers in Los Angeles",
@@ -20,6 +24,44 @@
           "p": [
             "Our office is on Olympic Boulevard in West Los Angeles, a short drive from Beverly Hills and Century City. We represent people hurt in crashes across Los Angeles County, from Woodland Hills and the rest of the San Fernando Valley along the 101, to Long Beach and the 405 and 710 corridor to the south.",
             "You do not need to come to the office to get started. The free case review happens by phone, at any hour, in English or Spanish."
+          ]
+        }
+      ]
+    }
+  },
+  "van-nuys": {
+    "en": {
+      "meta_title": "Van Nuys Car Accident Lawyers | Free Consultation 24/7 | Robert Hindin & Associates",
+      "meta_desc": "Van Nuys car accident lawyers. Hurt on the 405, the 101 or Van Nuys Blvd? No fees unless we win. Free consultation 24/7. Call (310) 564-7911.",
+      "b_h1": "Van Nuys Car Accident Lawyers",
+      "b_trust_more": [
+        "Next-day doctor appointment",
+        "Ask about a rental car"
+      ],
+      "b_cases_intro": "Every crash is different. What they have in common is an adjuster deciding what your injury is worth before you have said a word. These are the Van Nuys cases we handle most, from red-light crashes on Van Nuys Boulevard to chain-reaction wrecks near the 405/101 interchange.",
+      "b_case_5_b": "Three, four, five cars on the 405 or the 101, and every insurer blaming the car behind. These cases are won by identifying every policy and reconstructing the order of impacts early, before each carrier settles into its story.",
+      "b_sections": [
+        {
+          "h": "A car accident lawyer near you in Van Nuys",
+          "p": [
+            "Searching for a car accident lawyer near you usually means you are hurt, your car is out of commission, and getting across town to an office is the last thing you can manage. You should not have to. Our office is in West Los Angeles, just over the Sepulveda Pass on the 405, but we come to you."
+          ],
+          "li": [
+            "<strong>At home, in the hospital, or by video.</strong> We meet wherever is easiest while you recover.",
+            "<strong>Any hour, in English or Spanish.</strong> A real person answers around the clock. Leave your number and we call you back.",
+            "<strong>Next-day doctor appointment.</strong> We work to get you seen by a doctor the day after you call, with nothing to pay up front.",
+            "<strong>Ask about a rental car.</strong> If your car is in the shop or totaled, ask us about a rental while the property damage claim is sorted out."
+          ]
+        },
+        {
+          "h": "What to know after a car crash in Van Nuys",
+          "p": [
+            "Most of the crashes we see here happen on a handful of roads: Van Nuys Boulevard, Sepulveda Boulevard, Sherman Way, and the 405/101 interchange just south in Sherman Oaks. What happens next depends partly on where yours happened."
+          ],
+          "li": [
+            "<strong>Getting the police report.</strong> Crashes on Van Nuys streets are generally handled by the LAPD Valley Traffic Division, 7870 Nollan Place in Panorama City. LAPD collision reports can be ordered online through LexisNexis BuyCrash or by mail, and LAPD says they can take two months or more. Crashes on the 405 or the 101 are usually handled by the California Highway Patrol, which issues its own report. We request it for you.",
+            "<strong>The courthouse.</strong> Van Nuys Courthouse West, at 14400 Erwin Street Mall, is the Valley's civil courthouse. Most cases settle without a lawsuit. If yours has to be filed, we handle the filing and every appearance, wherever the court assigns it.",
+            "<strong>Neighborhoods we serve.</strong> Van Nuys, Sherman Oaks, North Hollywood, Panorama City, Encino, Reseda, Lake Balboa and the rest of the San Fernando Valley."
           ]
         }
       ]
