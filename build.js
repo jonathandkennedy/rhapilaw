@@ -448,6 +448,8 @@ function main() {
     buildLegal("terms", lang);
   }
   copyDir(path.join(SRC, "assets"), path.join(OUT, "assets"));
+  // Files that must sit at the site root byte-for-byte (search engine verification).
+  for (const f of fs.readdirSync(path.join(SRC, "root"))) fs.copyFileSync(path.join(SRC, "root", f), path.join(OUT, f));
   fingerprintAssets();
   fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\n${site.index ? "Allow" : "Disallow"}: /\nDisallow: ${prefix}${site.thankYouPath}\nDisallow: ${prefix}/es${site.thankYouPath}\nSitemap: ${absUrl("/sitemap.xml")}\n`);
   const sm = built.map(b => `  <url>\n    <loc>${b.url}</loc>\n    <xhtml:link rel="alternate" hreflang="en" href="${b.alt.en}"/>\n    <xhtml:link rel="alternate" hreflang="es" href="${b.alt.es}"/>\n    <xhtml:link rel="alternate" hreflang="x-default" href="${b.alt.xd}"/>\n  </url>`).join("\n");

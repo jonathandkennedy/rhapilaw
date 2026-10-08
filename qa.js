@@ -280,5 +280,11 @@ for (const lang of ["en", "es"]) {
   ok(Array.isArray(v.redirects) && v.redirects.length === 2, "vercel.json: ?lang redirects");
 }
 
+{
+  const v = "google7f4eb01d83939e39.html";
+  const want = fs.readFileSync(path.join(__dirname, "src/root", v));
+  ok(fs.existsSync(path.join(DIST, v)) && Buffer.compare(fs.readFileSync(path.join(DIST, v)), want) === 0, `Search Console verification file /${v} must be at the site root, unchanged`);
+  ok(!fs.readFileSync(path.join(DIST, "sitemap.xml"), "utf8").includes(v), "verification file must not be in the sitemap");
+}
 console.log(`\n${checks} checks, ${fails} failures`);
 process.exit(fails ? 1 : 0);
