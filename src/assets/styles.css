@@ -289,6 +289,11 @@ section{padding:48px 0}
 .facerow img+img{margin-left:-14px}
 .facerow--cta img{width:58px;height:58px}
 
+/* rental car section */
+.rental{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.rental__in{display:grid;gap:20px;align-items:center}
+.rental p{max-width:720px;margin:0}
+
 /* set-B per-city extra sections */
 .hero__tagline{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--accent-dark);margin:-4px 0 14px;line-height:1.3}
 .b-extra{background:var(--white);border-bottom:1px solid var(--line)}
@@ -410,6 +415,7 @@ section{padding:48px 0}
   .hub__photo{width:100%;justify-self:end}
   .city-grid{grid-template-columns:repeat(3,1fr)}
   .b-cases__grid{grid-template-columns:repeat(2,1fr)}
+  .rental__in{grid-template-columns:1fr auto;gap:36px}
   .b-why__grid{grid-template-columns:repeat(2,1fr)}
   .b-schedule__grid{grid-template-columns:1.1fr .9fr;align-items:start}
   .sl__grid{grid-template-columns:minmax(0,1.5fr) 400px;align-items:start;gap:36px;grid-template-areas:"head side" "body side"}

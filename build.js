@@ -89,6 +89,19 @@ function callBtn(s, cls, label) {
   return `<a class="btn btn--call ${cls || ""}" href="tel:${site.phoneTel}" data-track="phone_click"><span class="btn__ico" aria-hidden="true">\u260E</span><span class="btn__lab">${label || s.cta_call}</span><span class="btn__num">${site.phoneDisplay}</span></a>`;
 }
 
+/** "Ask us about our rental car" H2 section, on every city lander in both sets. */
+function rentalSection(s) {
+  return `<section class="rental">
+  <div class="wrap rental__in">
+    <div>
+      <h2>${s.rental_h2}</h2>
+      <p>${s.rental_p}</p>
+    </div>
+    ${callBtn(s, "btn--big", s.rental_cta)}
+  </div>
+</section>`;
+}
+
 /** Full-width band whose only job is to get the phone ringing. */
 function callBand(s, tone) {
   return `<section class="callband callband--${tone || "navy"}">
@@ -280,6 +293,7 @@ function buildCity(city, lang) {
   page.callBand = callBand(s, "red");
   page.callBtn = callBtn(s, "btn--big");
   page.formCard = formCard(s, page, "lead");
+  page.rentalSection = rentalSection(s);
   write(langPath(lang, p), render(T.lander, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "city", city: city.name, alt: alternates(p, city.defaultLang) });
 }
@@ -364,6 +378,7 @@ function buildVariantB(city, lang) {
   page.formCard = formCard(s, page, "lead");
   page.formCardBottom = formCard(s, page, "lead-bottom");
   page.callBand = callBand(s, "red");
+  page.rentalSection = rentalSection(s);
   page.callBtn = callBtn(s, "btn--big");
   write(langPath(lang, p), render(T.variantB, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "variant-b", city: city.name, alt: alternates(p, city.defaultLang) });

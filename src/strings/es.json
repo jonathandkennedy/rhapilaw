@@ -232,5 +232,8 @@
   "form_or": "o deje su número",
   "band_h": "Hable con una persona de verdad ahora mismo.",
   "band_p": "24/7, en inglés y español. Consulta gratis. No paga si no ganamos.",
-  "header_call_lab": "Llame 24/7"
+  "header_call_lab": "Llame 24/7",
+  "rental_h2": "Pregúntenos por nuestro carro de renta",
+  "rental_p": "Un choque en {City} normalmente lo deja sin carro justo cuando más lo necesita: para ir al doctor, al trabajo, por los niños. Si su carro está en el taller o fue pérdida total, pregúntenos por un carro de renta mientras se resuelve el reclamo por daños. También nos encargamos de la aseguradora en lo del vehículo, para que usted no tenga que andar persiguiendo a un ajustador por un carro prestado además de todo lo demás.",
+  "rental_cta": "Pregunte por un carro de renta"
 }

@@ -136,6 +136,7 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   ok(!/Google Guaranteed/i.test(text), `${label}: fake badge`);
   ok(!/130\+/.test(text), `${label}: stale 130+ review count`);
   ok(html.includes('id="faq-5"') && !/<details/.test(html), `${label}: FAQ not an accordion`);
+  ok(html.includes(`<h2>${(lang === "es" ? ES : EN).rental_h2}</h2>`) && html.includes('class="rental"'), `${label}: rental car H2`);
   for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(text.includes(n), `${label}: review ${n}`);
   ok(html.includes('window.__RHA_KW=') && html.includes('<input type="hidden" name="kw" value="">') && html.includes('class="kw"'), `${label}: keyword swap wired`);
   ok((html.match(/class="callband/g) || []).length >= 2, `${label}: needs at least two mid-page call bands`);
@@ -162,7 +163,7 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   common(label, html, lang, logical, c.defaultLang, true, true);
   const sub = v => v.replace(/\{City\}/g, c.name).replace(/\{totalRecovered\}/g, site.totalRecovered).replace(/&amp;/g, "&");
   const O = (BOVR[c.slug] || {})[lang] || {};
-  const extra = (O.b_sections || []).map(s => "h2 " + s.h);
+  const extra = [...(O.b_sections || []).map(s => "h2 " + s.h), "h2 " + (lang === "es" ? ES : EN).rental_h2];
   const want = [
     "h1 " + sub(O.b_h1 || B.b_h1),
     ...extra,

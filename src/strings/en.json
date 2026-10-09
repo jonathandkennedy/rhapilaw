@@ -223,5 +223,8 @@
   "form_or": "or leave your number",
   "band_h": "Talk to a real person right now.",
   "band_p": "24/7, English and Spanish. Free case review. No fee unless we win.",
-  "header_call_lab": "Call 24/7"
+  "header_call_lab": "Call 24/7",
+  "rental_h2": "Ask us about our rental car",
+  "rental_p": "A crash in {City} usually leaves you without a car right when you need one most, for doctor visits, for work, for the kids. If your car is in the shop or was totaled, ask us about a rental car while the property damage claim is sorted out. We deal with the insurance company over the vehicle too, so you are not chasing an adjuster for a loaner on top of everything else.",
+  "rental_cta": "Ask about a rental car"
 }
