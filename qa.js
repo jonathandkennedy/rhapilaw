@@ -48,6 +48,8 @@ console.log("Spanish strings");
   for (const [L, S] of [["en", EN], ["es", ES]])
     for (const k of ["call_sub", "form_note", "hours", "footer_hours", "ty_hours"])
       ok(!/8am–5pm|Monday–Friday|lunes a viernes|Mon–Fri|Lun–Vie/i.test(S[k]), `${L}.${k} still states Mon–Fri hours while open24 is on`);
+  // Intake works 24/7, so nothing may promise a call back only "during business hours".
+  for (const [L, S] of [["en", EN], ["es", ES]]) for (const [k, v] of flat(S)) ok(!/business hours|horario de oficina/i.test(v), `${L}.${k} limits call-backs to business hours, but intake is 24/7`);
   ok(site.open24 === true, "site.open24 must be set while the copy claims 24/7 intake");
   ok(ES.res_offer === "$85,000" && ES.res_result === "$375,000" && EN.res_offer === "$85,000" && EN.res_result === "$375,000", "results must be the one released case");
   const ek = Object.keys(EN).filter(k => typeof EN[k] === "string"), sk = Object.keys(ES).filter(k => typeof ES[k] === "string");

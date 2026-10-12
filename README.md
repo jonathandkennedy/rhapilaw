@@ -107,7 +107,7 @@ Re-run on the live URLs with PageSpeed Insights after deploy; the target is LCP 
 **Deliberately not done**
 
 - *"Average call-back: under 5 minutes"* (§6.2). Only if intake can prove it; the pages make no time promise.
-- *Thank-you "we're already dialing you"* (§6.6). Same reason. The line says "If it's urgent, call us now at (310) 564-7911 — you don't have to wait for us to call."
+- *Thank-you "we're already dialing you"* (§6.6). Intake answers 24/7 (and the thank-you page says call-backs come day or night), but an instant call-back is a separate promise. The line says "If it's urgent, call us now at (310) 564-7911 — you don't have to wait for us to call."
 - *Scroll-50% phone slide-in* (§6.5). The mobile sticky call bar is already on screen at all times, and a second overlay would sit on top of it and the form. Revisit if the sticky bar's click share drops.
 - *Review dates* (§4.4). `reviews.json` accepts `"date": "2026-08"` per review and renders "August 2026" beside the badge, but no dates are filled in: they need to come from the Google profile, not guesses.
 - *GTM changes* (§1.4, §5.5). GTM is not on these pages; there is one async Google tag.
