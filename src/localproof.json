@@ -1,0 +1,221 @@
+{
+  "_note": "Local-proof section on every city page, both sets, both languages (Quality Score spec §3, 12 Oct 2026). Place names stay in English. Agencies, stations and hospitals checked against public sources on 12 Oct 2026; \"extra\" items are appended to the list.",
+  "compton": {
+    "en": {
+      "hot": "the 91 at Alameda Street, Rosecrans Avenue at Central Avenue, the 710 at Alondra Boulevard, and Compton Boulevard at Long Beach Boulevard.",
+      "report": "On Compton streets, the Los Angeles County Sheriff’s Department, Compton Station, takes the collision report; the people involved can request a copy from that station. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "MLK Community Hospital and St. Francis Medical Center in Lynwood.",
+      "why": "The Alameda corridor carries port trucks all day, and the business and traffic cameras along it overwrite in days, so the preservation letters have to go out this week."
+    },
+    "es": {
+      "hot": "la 91 en Alameda Street, Rosecrans Avenue con Central Avenue, la 710 en Alondra Boulevard, y Compton Boulevard con Long Beach Boulevard.",
+      "report": "En las calles de Compton, el reporte lo hace el Departamento del Sheriff del Condado de Los Angeles, Compton Station; las personas involucradas pueden pedir una copia en esa estación. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "MLK Community Hospital y St. Francis Medical Center en Lynwood.",
+      "why": "El corredor de Alameda lleva camiones del puerto todo el día, y las cámaras de negocios y de tráfico se borran en días, así que las cartas de conservación tienen que salir esta semana."
+    }
+  },
+  "huntington-park": {
+    "en": {
+      "hot": "Florence Avenue at Pacific Boulevard, Slauson Avenue at Alameda Street, the 710 at Florence Avenue, and Gage Avenue at Santa Fe Avenue.",
+      "report": "On Huntington Park streets, the Huntington Park Police Department takes the collision report; the people involved can request a copy from its records unit. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "St. Francis Medical Center in Lynwood and LAC+USC Medical Center.",
+      "why": "Pacific Boulevard is lined with storefront cameras, and most of them record over themselves within the week, so the footage of your crash has days, not months."
+    },
+    "es": {
+      "hot": "Florence Avenue con Pacific Boulevard, Slauson Avenue con Alameda Street, la 710 en Florence Avenue, y Gage Avenue con Santa Fe Avenue.",
+      "report": "En las calles de Huntington Park, el reporte lo hace el Departamento de Policía de Huntington Park; las personas involucradas pueden pedir una copia en su oficina de registros. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "St. Francis Medical Center en Lynwood y LAC+USC Medical Center.",
+      "why": "Pacific Boulevard está lleno de cámaras de tiendas, y la mayoría graba encima en una semana, así que el video de su choque dura días, no meses."
+    }
+  },
+  "van-nuys": {
+    "en": {
+      "hot": "Van Nuys Boulevard at Sherman Way, Sepulveda Boulevard at Victory Boulevard, the 405 at Roscoe Boulevard, and the 405/101 interchange just south in Sherman Oaks.",
+      "report": "Crashes on Van Nuys streets are generally handled by the LAPD Valley Traffic Division, 7870 Nollan Place in Panorama City. LAPD collision reports can be ordered online through LexisNexis BuyCrash or by mail, and LAPD says they can take two months or more. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Valley Presbyterian Hospital in Van Nuys and Dignity Health Northridge Hospital Medical Center.",
+      "why": "An LAPD report can take two months, but the camera footage from Van Nuys Boulevard and Sepulveda is gone in days, so we request the video first and the report second.",
+      "extra": [
+        "<strong>The courthouse:</strong> Van Nuys Courthouse West, at 14400 Erwin Street Mall, is the Valley’s civil courthouse. Most cases settle without a lawsuit. If yours has to be filed, we handle the filing and every appearance, wherever the court assigns it.",
+        "<strong>Neighborhoods we serve:</strong> Van Nuys, Sherman Oaks, North Hollywood, Panorama City, Encino, Reseda, Lake Balboa and the rest of the San Fernando Valley."
+      ]
+    },
+    "es": {
+      "hot": "Van Nuys Boulevard con Sherman Way, Sepulveda Boulevard con Victory Boulevard, la 405 en Roscoe Boulevard, y el cruce de la 405/101 al sur, en Sherman Oaks.",
+      "report": "Los choques en las calles de Van Nuys normalmente los atiende la LAPD Valley Traffic Division, 7870 Nollan Place en Panorama City. Los reportes de choque del LAPD se pueden pedir en línea por LexisNexis BuyCrash o por correo, y el LAPD dice que pueden tardar dos meses o más. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Valley Presbyterian Hospital en Van Nuys y Dignity Health Northridge Hospital Medical Center.",
+      "why": "Un reporte del LAPD puede tardar dos meses, pero el video de Van Nuys Boulevard y Sepulveda se borra en días, así que pedimos primero el video y después el reporte.",
+      "extra": [
+        "<strong>La corte:</strong> Van Nuys Courthouse West, en 14400 Erwin Street Mall, es la corte civil del Valle. La mayoría de los casos se arreglan sin demanda. Si el suyo se tiene que presentar, nosotros hacemos el trámite y vamos a cada audiencia, donde la corte lo asigne.",
+        "<strong>Vecindarios que atendemos:</strong> Van Nuys, Sherman Oaks, North Hollywood, Panorama City, Encino, Reseda, Lake Balboa y el resto del Valle de San Fernando."
+      ]
+    }
+  },
+  "pomona": {
+    "en": {
+      "hot": "the 10/57/71 interchange, Garey Avenue at Holt Avenue, Indian Hill Boulevard at Mission Boulevard, and the 60 at Reservoir Street.",
+      "report": "On Pomona streets, the Pomona Police Department takes the collision report; the people involved can request a copy from its records unit. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Pomona Valley Hospital Medical Center.",
+      "why": "Three freeways meet at the 10/57/71, and crashes there often involve more than two cars and more than one insurer, so every policy has to be identified before the stories harden."
+    },
+    "es": {
+      "hot": "el cruce de la 10/57/71, Garey Avenue con Holt Avenue, Indian Hill Boulevard con Mission Boulevard, y la 60 en Reservoir Street.",
+      "report": "En las calles de Pomona, el reporte lo hace el Departamento de Policía de Pomona; las personas involucradas pueden pedir una copia en su oficina de registros. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Pomona Valley Hospital Medical Center.",
+      "why": "Tres freeways se juntan en la 10/57/71, y los choques ahí muchas veces involucran más de dos carros y más de una aseguradora, así que hay que identificar cada póliza antes de que las versiones se endurezcan."
+    }
+  },
+  "palmdale": {
+    "en": {
+      "hot": "the 14 at Avenue S, Palmdale Boulevard at 10th Street West, Rancho Vista Boulevard at 10th Street West near the Antelope Valley Mall, and Pearblossom Highway (Highway 138).",
+      "report": "On Palmdale streets, the Los Angeles County Sheriff’s Department, Palmdale Station, takes the collision report; the people involved can request a copy from that station. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Palmdale Regional Medical Center and Antelope Valley Medical Center in Lancaster.",
+      "why": "High-speed crashes on Pearblossom Highway and the 14 cause serious injuries, and the long drives to treatment are part of your damages, so we start documenting them from the first visit."
+    },
+    "es": {
+      "hot": "la 14 en Avenue S, Palmdale Boulevard con 10th Street West, Rancho Vista Boulevard con 10th Street West cerca del Antelope Valley Mall, y Pearblossom Highway (carretera 138).",
+      "report": "En las calles de Palmdale, el reporte lo hace el Departamento del Sheriff del Condado de Los Angeles, Palmdale Station; las personas involucradas pueden pedir una copia en esa estación. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Palmdale Regional Medical Center y Antelope Valley Medical Center en Lancaster.",
+      "why": "Los choques a alta velocidad en Pearblossom Highway y la 14 causan lesiones graves, y los viajes largos al tratamiento son parte de sus daños, así que los documentamos desde la primera cita."
+    }
+  },
+  "hawthorne": {
+    "en": {
+      "hot": "the 405 at Rosecrans Avenue, Hawthorne Boulevard at Imperial Highway, Crenshaw Boulevard at El Segundo Boulevard, and the 105 at Hawthorne Boulevard.",
+      "report": "On Hawthorne streets, the Hawthorne Police Department takes the collision report; the people involved can request a copy from its records unit. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Memorial Hospital of Gardena and Harbor-UCLA Medical Center.",
+      "why": "Airport and freeway traffic means rideshare and commercial vehicles on every corner, and each one brings its own insurer, so we pin down which policies apply before any of them calls you."
+    },
+    "es": {
+      "hot": "la 405 en Rosecrans Avenue, Hawthorne Boulevard con Imperial Highway, Crenshaw Boulevard con El Segundo Boulevard, y la 105 en Hawthorne Boulevard.",
+      "report": "En las calles de Hawthorne, el reporte lo hace el Departamento de Policía de Hawthorne; las personas involucradas pueden pedir una copia en su oficina de registros. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Memorial Hospital of Gardena y Harbor-UCLA Medical Center.",
+      "why": "El tráfico del aeropuerto y de las freeways trae carros de Uber y vehículos comerciales en cada esquina, y cada uno tiene su aseguradora, así que aclaramos qué pólizas aplican antes de que alguna lo llame."
+    }
+  },
+  "downey": {
+    "en": {
+      "hot": "the 5/605 interchange, Firestone Boulevard at Lakewood Boulevard, Imperial Highway at Paramount Boulevard, and the 105 at Lakewood Boulevard.",
+      "report": "On Downey streets, the Downey Police Department takes the collision report; the people involved can request a copy from its records unit. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "PIH Health Downey Hospital and Kaiser Permanente Downey Medical Center.",
+      "why": "The business cameras along Firestone and Lakewood that caught your crash usually record over themselves within a week, so call before that footage is gone."
+    },
+    "es": {
+      "hot": "el cruce de la 5/605, Firestone Boulevard con Lakewood Boulevard, Imperial Highway con Paramount Boulevard, y la 105 en Lakewood Boulevard.",
+      "report": "En las calles de Downey, el reporte lo hace el Departamento de Policía de Downey; las personas involucradas pueden pedir una copia en su oficina de registros. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "PIH Health Downey Hospital y Kaiser Permanente Downey Medical Center.",
+      "why": "Las cámaras de los negocios en Firestone y Lakewood que grabaron su choque normalmente graban encima en una semana, así que llame antes de que ese video desaparezca."
+    }
+  },
+  "inglewood": {
+    "en": {
+      "hot": "the 405 at Manchester Boulevard and Century Boulevard, Century Boulevard at Prairie Avenue by SoFi Stadium and the Kia Forum, La Brea Avenue at Florence Avenue, and the 105 at Crenshaw Boulevard.",
+      "report": "On Inglewood streets, the Inglewood Police Department takes the collision report; the people involved can request a copy from its records unit. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Centinela Hospital Medical Center in Inglewood and Harbor-UCLA Medical Center.",
+      "why": "Event-day traffic around SoFi and the Forum puts more cameras on the street, and most of that footage is overwritten within the week."
+    },
+    "es": {
+      "hot": "la 405 en Manchester Boulevard y Century Boulevard, Century Boulevard con Prairie Avenue junto a SoFi Stadium y el Kia Forum, La Brea Avenue con Florence Avenue, y la 105 en Crenshaw Boulevard.",
+      "report": "En las calles de Inglewood, el reporte lo hace el Departamento de Policía de Inglewood; las personas involucradas pueden pedir una copia en su oficina de registros. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Centinela Hospital Medical Center en Inglewood y Harbor-UCLA Medical Center.",
+      "why": "El tráfico de los días de evento en SoFi y el Forum pone más cámaras en la calle, y la mayor parte de ese video se borra en una semana."
+    }
+  },
+  "paramount": {
+    "en": {
+      "hot": "the 105 at Paramount Boulevard, Alondra Boulevard at Lakewood Boulevard, Rosecrans Avenue at Downey Avenue, and the 710 at Alondra Boulevard.",
+      "report": "On Paramount streets, the Los Angeles County Sheriff’s Department, Lakewood Station, takes the collision report; the people involved can request a copy from that station. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "St. Francis Medical Center in Lynwood and Lakewood Regional Medical Center.",
+      "why": "Alondra and Rosecrans carry truck traffic off the 710 and the 105, and when a truck is involved the company’s investigators are out within hours, so your side needs to move just as fast."
+    },
+    "es": {
+      "hot": "la 105 en Paramount Boulevard, Alondra Boulevard con Lakewood Boulevard, Rosecrans Avenue con Downey Avenue, y la 710 en Alondra Boulevard.",
+      "report": "En las calles de Paramount, el reporte lo hace el Departamento del Sheriff del Condado de Los Angeles, Lakewood Station; las personas involucradas pueden pedir una copia en esa estación. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "St. Francis Medical Center en Lynwood y Lakewood Regional Medical Center.",
+      "why": "Alondra y Rosecrans llevan el tráfico de camiones que sale de la 710 y la 105, y cuando hay un camión de por medio los investigadores de la compañía llegan en horas, así que su lado tiene que moverse igual de rápido."
+    }
+  },
+  "baldwin-park": {
+    "en": {
+      "hot": "the 10/605 interchange, Ramona Boulevard at Baldwin Park Boulevard, Francisquito Avenue at Puente Avenue, and Pacific Avenue at Merced Avenue.",
+      "report": "On Baldwin Park streets, the Baldwin Park Police Department takes the collision report; the people involved can request a copy from its records unit. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Kaiser Permanente Baldwin Park Medical Center and Emanate Health Queen of the Valley Hospital in West Covina.",
+      "why": "Delivery trucks and San Gabriel Valley commuters share the 10 corridor, and every vehicle in a multi-car crash has its own policy, so we identify all of them before the insurers settle on a story."
+    },
+    "es": {
+      "hot": "el cruce de la 10/605, Ramona Boulevard con Baldwin Park Boulevard, Francisquito Avenue con Puente Avenue, y Pacific Avenue con Merced Avenue.",
+      "report": "En las calles de Baldwin Park, el reporte lo hace el Departamento de Policía de Baldwin Park; las personas involucradas pueden pedir una copia en su oficina de registros. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Kaiser Permanente Baldwin Park Medical Center y Emanate Health Queen of the Valley Hospital en West Covina.",
+      "why": "Los camiones de reparto y los que viajan del Valle de San Gabriel comparten el corredor de la 10, y cada vehículo en un choque múltiple tiene su póliza, así que las identificamos todas antes de que las aseguradoras se pongan de acuerdo en una versión."
+    }
+  },
+  "bellflower": {
+    "en": {
+      "hot": "the 91 at Bellflower Boulevard, Artesia Boulevard at Lakewood Boulevard, Alondra Boulevard at Bellflower Boulevard, and the 605 at Rosecrans Avenue.",
+      "report": "On Bellflower streets, the Los Angeles County Sheriff’s Department, Lakewood Station, takes the collision report; the people involved can request a copy from that station. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Lakewood Regional Medical Center and Los Alamitos Medical Center.",
+      "why": "Commuters between the 91 and the 605 pack Bellflower Boulevard and Artesia, and the business cameras on those corners overwrite in days."
+    },
+    "es": {
+      "hot": "la 91 en Bellflower Boulevard, Artesia Boulevard con Lakewood Boulevard, Alondra Boulevard con Bellflower Boulevard, y la 605 en Rosecrans Avenue.",
+      "report": "En las calles de Bellflower, el reporte lo hace el Departamento del Sheriff del Condado de Los Angeles, Lakewood Station; las personas involucradas pueden pedir una copia en esa estación. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Lakewood Regional Medical Center y Los Alamitos Medical Center.",
+      "why": "Los que van y vienen entre la 91 y la 605 llenan Bellflower Boulevard y Artesia, y las cámaras de los negocios en esas esquinas se borran en días."
+    }
+  },
+  "lynwood": {
+    "en": {
+      "hot": "the 105 at Long Beach Boulevard, Imperial Highway at Atlantic Avenue, the 710 at Imperial Highway, and Martin Luther King Jr. Boulevard at Bullis Road.",
+      "report": "On Lynwood streets, the Los Angeles County Sheriff’s Department, Century Station, takes the collision report; the people involved can request a copy from that station. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "St. Francis Medical Center in Lynwood and MLK Community Hospital.",
+      "why": "If you did not get a report number at the scene, the sheriff’s station can still find the report, but the cameras on Imperial and Long Beach Boulevard will not wait, so call now."
+    },
+    "es": {
+      "hot": "la 105 en Long Beach Boulevard, Imperial Highway con Atlantic Avenue, la 710 en Imperial Highway, y Martin Luther King Jr. Boulevard con Bullis Road.",
+      "report": "En las calles de Lynwood, el reporte lo hace el Departamento del Sheriff del Condado de Los Angeles, Century Station; las personas involucradas pueden pedir una copia en esa estación. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "St. Francis Medical Center en Lynwood y MLK Community Hospital.",
+      "why": "Si no le dieron número de reporte en el lugar, la estación del sheriff todavía puede encontrar el reporte, pero las cámaras de Imperial y Long Beach Boulevard no esperan, así que llame ahora."
+    }
+  },
+  "norwalk": {
+    "en": {
+      "hot": "the 5/605 interchange, Imperial Highway at Pioneer Boulevard, Rosecrans Avenue at Norwalk Boulevard, and the 105 at Studebaker Road.",
+      "report": "On Norwalk streets, the Los Angeles County Sheriff’s Department, Norwalk Station, takes the collision report; the people involved can request a copy from that station. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Coast Plaza Hospital in Norwalk and PIH Health Downey Hospital.",
+      "why": "Three freeways meet around Norwalk, so a crash here often means CHP on one side of the line and the sheriff on the other, and we track down both reports while the video still exists."
+    },
+    "es": {
+      "hot": "el cruce de la 5/605, Imperial Highway con Pioneer Boulevard, Rosecrans Avenue con Norwalk Boulevard, y la 105 en Studebaker Road.",
+      "report": "En las calles de Norwalk, el reporte lo hace el Departamento del Sheriff del Condado de Los Angeles, Norwalk Station; las personas involucradas pueden pedir una copia en esa estación. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Coast Plaza Hospital en Norwalk y PIH Health Downey Hospital.",
+      "why": "Tres freeways se juntan cerca de Norwalk, así que un choque aquí muchas veces deja a la CHP de un lado y al sheriff del otro, y buscamos los dos reportes mientras el video todavía existe."
+    }
+  },
+  "pico-rivera": {
+    "en": {
+      "hot": "the 605 at Whittier Boulevard, Washington Boulevard at Rosemead Boulevard, Beverly Boulevard at Paramount Boulevard, and Slauson Avenue at Passons Boulevard.",
+      "report": "On Pico Rivera streets, the Los Angeles County Sheriff’s Department, Pico Rivera Station, takes the collision report; the people involved can request a copy from that station. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Adventist Health White Memorial Montebello and PIH Health Whittier Hospital.",
+      "why": "The store and signal cameras along Whittier and Washington Boulevards overwrite in days, so the preservation letters go out the day you call."
+    },
+    "es": {
+      "hot": "la 605 en Whittier Boulevard, Washington Boulevard con Rosemead Boulevard, Beverly Boulevard con Paramount Boulevard, y Slauson Avenue con Passons Boulevard.",
+      "report": "En las calles de Pico Rivera, el reporte lo hace el Departamento del Sheriff del Condado de Los Angeles, Pico Rivera Station; las personas involucradas pueden pedir una copia en esa estación. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Adventist Health White Memorial Montebello y PIH Health Whittier Hospital.",
+      "why": "Las cámaras de tiendas y semáforos en Whittier y Washington Boulevard se borran en días, así que las cartas de conservación salen el día que usted llama."
+    }
+  },
+  "los-angeles": {
+    "en": {
+      "hot": "the 405/10 interchange, the 101 through Hollywood, Olympic Boulevard at Sawtelle Boulevard, and Sunset Boulevard at Vermont Avenue.",
+      "report": "On city streets, the LAPD traffic division for that area takes the collision report. LAPD collision reports can be ordered online through LexisNexis BuyCrash or by mail, and LAPD says they can take two months or more. Crashes on the freeway are handled by the California Highway Patrol; request that report from the CHP area office that responded (form CHP 190). Or let us request it for you.",
+      "er": "Ronald Reagan UCLA Medical Center, Cedars-Sinai Medical Center and LAC+USC Medical Center.",
+      "why": "An LAPD report can take two months, but the cameras that caught your crash overwrite in days, so the video gets requested first."
+    },
+    "es": {
+      "hot": "el cruce de la 405/10, la 101 por Hollywood, Olympic Boulevard con Sawtelle Boulevard, y Sunset Boulevard con Vermont Avenue.",
+      "report": "En las calles de la ciudad, el reporte lo hace la división de tránsito del LAPD de esa zona. Los reportes de choque del LAPD se pueden pedir en línea por LexisNexis BuyCrash o por correo, y el LAPD dice que pueden tardar dos meses o más. Los choques en la freeway los atiende la California Highway Patrol (CHP); ese reporte se pide a la oficina de área de la CHP que respondió (formulario CHP 190). O deje que nosotros lo pidamos por usted.",
+      "er": "Ronald Reagan UCLA Medical Center, Cedars-Sinai Medical Center y LAC+USC Medical Center.",
+      "why": "Un reporte del LAPD puede tardar dos meses, pero las cámaras que grabaron su choque se borran en días, así que pedimos primero el video."
+    }
+  }
+}

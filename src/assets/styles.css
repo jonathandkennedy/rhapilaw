@@ -433,3 +433,36 @@ section{padding:48px 0}
   .ty__links-sub{flex-basis:100%}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Quality Score pass (12 Oct 2026) */
+/* Set A: the H1 carries the keyword; the emotional line keeps the old H1 size so the hierarchy looks the same. */
+h1.h1-kw{font-family:var(--font);font-size:clamp(1.05rem,2.6vw,1.3rem);font-weight:800;letter-spacing:0;color:var(--navy);margin:0 0 .35em}
+.lead-h2{font-family:var(--font-display);font-weight:700;letter-spacing:-.005em;color:var(--ink);line-height:1.15;font-size:clamp(1.9rem,5.5vw,3rem);margin:0 0 .5em}
+/* What to say when you call */
+.say{clear:both;background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin:0 0 18px;font-size:.95rem}
+.say__h{font-weight:800;color:var(--ink);margin:0 0 4px}
+.say ul{margin:0 0 4px;padding-left:20px}
+.say li{margin:0}
+.say__p{margin:0;color:var(--muted);font-size:.9rem}
+/* Local proof */
+.localproof{background:var(--white);border-bottom:1px solid var(--line)}
+.localproof__list{list-style:none;margin:0;padding:0;max-width:820px}
+.localproof__list li{margin:0 0 12px;padding-left:18px;position:relative}
+.localproof__list li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.localproof__list strong{color:var(--ink)}
+/* Reviews link beside the 5.0 chip */
+.chip-row{margin:0 0 14px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.chip-row .chip{margin:0}
+.chip__link{font-size:.85rem;font-weight:700;color:var(--accent-dark)}
+/* Ismael's face on the Spanish hero */
+.ismael{display:flex;gap:12px;align-items:flex-start}
+.ismael__img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #fff;box-shadow:0 1px 3px rgba(11,31,58,.2)}
+/* Thank-you */
+.ty__urgent{font-weight:700;color:var(--ink)}
+.ty__urgent a{color:var(--accent-dark);font-weight:800}
+/* Sticky bar: clear the iPhone home indicator, and get out of the way while someone is typing in a form */
+.sticky{padding-bottom:env(safe-area-inset-bottom,0)}
+body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+.form-card{scroll-margin-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+.kb-open .sticky{display:none}
+@media (min-width:760px){body{padding-bottom:0}}

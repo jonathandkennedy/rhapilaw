@@ -26,7 +26,7 @@
 <header class="hdr">
   <div class="wrap hdr__in">
     <a class="logo" href="{{page.hubHref}}" aria-label="Robert Hindin &amp; Associates">
-      <img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180">
+      <img src="{{site.pathPrefix}}/assets/logo-white-420.png" srcset="{{site.pathPrefix}}/assets/logo-white-210.png 1x, {{site.pathPrefix}}/assets/logo-white-420.png 2x" alt="Robert Hindin &amp; Associates" width="210" height="34">
     </a>
     <div class="hdr__right">
       <a class="btn btn--call hdr__callbtn" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="btn__ico" aria-hidden="true">&#9742;</span><span class="btn__lab">{{header_call_lab}}</span><span class="btn__num">{{site.phoneDisplay}}</span></a>
@@ -41,10 +41,11 @@
   <div class="wrap hero__grid">
     <div class="hero__copy">
       <p class="eyebrow">{{eyebrow}}</p>
-      <h1>{{hero_h1}}</h1>
+      <h1 class="h1-kw">{{h1_kw}}</h1>
+      <p class="lead-h2">{{hero_h1}}</p>
       <p class="lead"><span class="kw">{{hero_kw}}</span> <span>{{hero_sub}}</span></p>
       <figure class="hero__photo">
-        <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" width="1080" height="1080" loading="eager" fetchpriority="high">
+        <img src="{{site.pathPrefix}}/assets/img/hindin-team-640.webp" srcset="{{site.pathPrefix}}/assets/img/hindin-team-480.webp 480w, {{site.pathPrefix}}/assets/img/hindin-team-640.webp 640w, {{site.pathPrefix}}/assets/img/hindin-team.webp 1080w" sizes="(min-width: 760px) 330px, min(42vw, 220px)" alt="{{hero_img_alt}}" width="1080" height="1080" loading="eager" fetchpriority="high">
         <figcaption>{{hero_photo_cap}}</figcaption>
       </figure>
       <ul class="checks">
@@ -52,8 +53,9 @@
         <li>{{hero_b2}}</li>
         <li>{{hero_b3}}</li>
       </ul>
-      <p class="ismael" {{page.ismaelHidden}}>{{ismael}}</p>
+      <p class="ismael" {{page.ismaelHidden}}>{{page.ismaelImg}}<span>{{ismael}}</span></p>
       <div class="hero__cta">{{page.callBtn}}<a class="hero__formlink" href="#lead">{{sl_form_link}}</a></div>
+      {{page.sayBox}}
       <ul class="benefits" aria-label="benefits">
         <li>{{benefit_1}}</li>
         <li>{{benefit_2}}</li>
@@ -85,6 +87,8 @@
     <p class="local__office"><span>{{local_office_label}}</span> <span>{{local_office}}</span> · <a href="tel:{{site.phoneTel}}" data-track="phone_click">{{site.phoneDisplay}}</a></p>
   </div>
 </section>
+
+{{page.localProof}}
 
 <section class="offer">
   <div class="wrap offer__grid">

@@ -23,6 +23,7 @@ const KW = JSON.parse(fs.readFileSync(path.join(SRC, "keywords.json"), "utf8"));
 const REVIEWS = JSON.parse(fs.readFileSync(path.join(SRC, "reviews.json"), "utf8"));
 const BOVR = JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.overrides.json"), "utf8"));
 const SITELINKS = JSON.parse(fs.readFileSync(path.join(SRC, "sitelinks.json"), "utf8"));
+const LOCALPROOF = JSON.parse(fs.readFileSync(path.join(SRC, "localproof.json"), "utf8"));
 const BSTR = {
   en: JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.en.json"), "utf8")),
   es: JSON.parse(fs.readFileSync(path.join(SRC, "strings/b.es.json"), "utf8")),
@@ -46,12 +47,19 @@ function jsonForScript(o) { return JSON.stringify(o).replace(/<\//g, "<\\/").rep
 function absUrl(p) { return site.baseUrl.replace(/\/$/, "") + prefix + p; }
 function langPath(lang, p) { return (lang === "es" ? "/es" : "") + p; }
 function cityPath(city) { return `/${city.slug}/`; }
+/** "$500 million" / "$500 millones": the figure is per language so Spanish copy never says "million". */
+function totalRecovered(lang) { const t = site.totalRecovered; return t && typeof t === "object" ? t[lang] : (t || ""); }
+/** Site-wide tokens. The review count lives once in site.json so it can be bumped without a find-and-replace. */
+function siteTokens(v, lang) { return v.replace(/\{year\}/g, YEAR).replace(/\{totalRecovered\}/g, totalRecovered(lang)).replace(/\{reviewCount\}/g, site.reviewCount); }
+function cityTokens(v, lang, city) { return siteTokens(v.replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || ""), lang); }
+/** A sitelink entry's strings for one language, tokens substituted. */
+function slMeta(entry, lang) { return Object.fromEntries(Object.entries(entry[lang]).map(([k, v]) => [k, siteTokens(v, lang)])); }
 
 function stringsFor(lang, city) {
   const out = {}, s = STR[lang];
   for (const k of Object.keys(s)) {
     if (typeof s[k] !== "string") continue;
-    out[k] = s[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR).replace(/\{totalRecovered\}/g, site.totalRecovered || "");
+    out[k] = cityTokens(s[k], lang, city);
   }
   return out;
 }
@@ -61,12 +69,19 @@ function stringsForB(lang, city) {
   const base = stringsFor(lang, city), b = BSTR[lang];
   for (const k of Object.keys(b)) {
     if (k[0] === "_" || typeof b[k] !== "string") continue;
-    base[k] = b[k].replace(/\{City\}/g, city.name).replace(/\{serve\}/g, city["serve_" + lang] || "").replace(/\{local\}/g, city["local_" + lang] || "").replace(/\{year\}/g, YEAR).replace(/\{totalRecovered\}/g, site.totalRecovered || "");
+    base[k] = cityTokens(b[k], lang, city);
   }
   const o = (BOVR[city.slug] || {})[lang] || {};
-  for (const k of Object.keys(o)) if (typeof o[k] === "string") base[k] = o[k];
+  for (const k of Object.keys(o)) if (typeof o[k] === "string") base[k] = cityTokens(o[k], lang, city);
   if (base.b_hero_tagline == null) base.b_hero_tagline = "";
   return base;
+}
+
+/** "2026-08" -> "August 2026". Review dates are shown in English because the quotes are. */
+function reviewMonth(d) {
+  const [y, m] = String(d).split("-");
+  const M = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return m ? `${M[Number(m) - 1]} ${y}` : y;
 }
 
 /** Real Google reviews, rendered as review cards. Quotes are verbatim in English in both languages. */
@@ -77,7 +92,7 @@ function reviewCards() {
       <span class="revcard__av" aria-hidden="true">${esc(r.name[0])}</span>
       <div class="revcard__who">
         <cite>${esc(r.name)}</cite>
-        <p class="revcard__meta"><span class="revcard__stars" aria-label="5 out of 5">★★★★★</span> Google${r.badge ? ` · ${esc(r.badge)}` : ""}</p>
+        <p class="revcard__meta"><span class="revcard__stars" aria-label="5 out of 5">★★★★★</span> Google${r.badge ? ` · ${esc(r.badge)}` : ""}${r.date ? ` · <time datetime="${esc(r.date)}">${esc(reviewMonth(r.date))}</time>` : ""}</p>
       </div>
     </div>
     <p class="revcard__q">${r.quote}</p>
@@ -87,6 +102,30 @@ function reviewCards() {
 /** Primary call-to-action: the phone call. Used in every hero, band and card. */
 function callBtn(s, cls, label) {
   return `<a class="btn btn--call ${cls || ""}" href="tel:${site.phoneTel}" data-track="phone_click"><span class="btn__ico" aria-hidden="true">\u260E</span><span class="btn__lab">${label || s.cta_call}</span><span class="btn__num">${site.phoneDisplay}</span></a>`;
+}
+
+/** "What to say when you call": three bullets beside the first call button, to take the anxiety out of dialing. */
+function sayBox(s) {
+  return `<div class="say"><p class="say__h">${s.say_h}</p><ul><li>${s.say_1}</li><li>${s.say_2}</li><li>${s.say_3}</li></ul><p class="say__p">${s.say_p}</p></div>`;
+}
+
+/** City-specific local proof: crash hotspots, who took the report, nearest ERs, why it matters. Both sets, both languages. */
+function localProof(city, lang, s) {
+  const d = (LOCALPROOF[city.slug] || {})[lang];
+  if (!d) throw new Error(`localproof.json: missing ${city.slug}/${lang}`);
+  const li = [[s.lp_hot, d.hot], [s.lp_report, d.report], [s.lp_er, d.er], [s.lp_why, d.why]].map(([k, v]) => `<li><strong>${k}</strong> ${v}</li>`);
+  for (const x of d.extra || []) li.push(`<li>${x}</li>`);
+  return `<section class="localproof">
+  <div class="wrap">
+    <h2>${s.lp_h2}</h2>
+    <ul class="localproof__list">${li.join("")}</ul>
+  </div>
+</section>`;
+}
+
+/** Spanish pages put Ismael's face next to the hero call button. */
+function ismaelImg(lang) {
+  return lang === "es" ? `<img class="ismael__img" src="${prefix}/assets/img/team/ismael-noriega-96.webp" alt="Ismael Noriega" width="48" height="48" decoding="async">` : "";
 }
 
 /** "Ask us about our rental car" H2 section, on every city lander in both sets. */
@@ -117,7 +156,7 @@ function formCard(s, page, id) {
   return `<div class="card form-card" id="${id}">
         <p class="form-card__h">${s.form_h2}</p>
         <p class="form-card__sub">${s.form_sub}</p>
-        <p class="chip">${s.form_chip}</p>
+        <p class="chip-row"><span class="chip">${s.form_chip}</span>${site.googleReviewsUrl ? ` <a class="chip__link" href="${site.googleReviewsUrl}" target="_blank" rel="noopener" data-track="reviews_click">${s.rev_link}</a>` : ""}</p>
         ${callBtn(s, "btn--wide btn--card")}
         <p class="form-card__or"><span>${s.form_or}</span></p>
         <form class="lead-form" data-clarity-mask="True" method="post" action="${page.formAction}" data-endpoint="${site.formEndpoint}" data-thankyou="${page.thankYouUrl}" novalidate>
@@ -129,6 +168,8 @@ function formCard(s, page, id) {
           <input type="hidden" name="page" value="${page.canonical}">
           <input type="hidden" name="source" value="">
           <input type="hidden" name="kw" value="">
+          <input type="hidden" name="keyword" value="">
+          <input type="hidden" name="gclid" value="">
           <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
           <label class="field"><span>${s.form_name}</span><input type="text" name="name" autocomplete="name" required minlength="2" placeholder="${esc(s.form_name_ph)}"></label>
           <label class="field"><span>${s.form_phone}</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required placeholder="${esc(s.form_phone_ph)}"></label>
@@ -164,6 +205,7 @@ function tags() {
   let head = "", body = "";
   head += `<link rel="preconnect" href="https://www.googletagmanager.com">`;
   if (site.callrailSwapUrl) head += `<link rel="preconnect" href="https://cdn.calltrk.com">`;
+  if (site.formEndpoint) head += `<link rel="preconnect" href="${new URL(site.formEndpoint).origin}" crossorigin>`;
   if (site.clickceaseScriptUrl) head += `<link rel="dns-prefetch" href="https://ob.belvionetta.com">`;
   if (site.googleTagId) {
     const id = site.googleTagId;
@@ -172,7 +214,10 @@ function tags() {
     head += `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());if(navigator.globalPrivacyControl){gtag('set','allow_ad_personalization_signals',false);}gtag('config','${id}');</script>`;
   }
   if (site.clarityId) {
-    head += `<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${site.clarityId}");</script>`;
+    // Session recording on paid landers is capped: a visit is sampled in (claritySampleRate) once and the decision
+    // is kept for the rest of the tab session, so a sampled visitor is recorded on every page and an unsampled one on none.
+    const rate = typeof site.claritySampleRate === "number" ? site.claritySampleRate : 1;
+    head += `<script>(function(){var k="rha_clarity",v=null;try{v=sessionStorage.getItem(k)}catch(e){}if(v!=="1"&&v!=="0"){v=Math.random()<${rate}?"1":"0";try{sessionStorage.setItem(k,v)}catch(e){}}if(v!=="1")return;(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${site.clarityId}");})();</script>`;
   }
   if (site.gtmId) {
     head += `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.gtmId}');</script>`;
@@ -196,7 +241,9 @@ function alternates(p, xDefaultLang) {
 /** Shared footer: contact, legal links, language alternate, city cross-links. */
 function footer(lang, s, p) {
   const other = lang === "es" ? "en" : "es";
-  const cityLinks = cities.map(c => `<a href="${prefix}${langPath(lang, cityPath(c))}">${esc(c.name)}</a>`).join(" · ");
+  // Footer city links stay inside the set the visitor is on: /attorneys/ pages link to /attorneys/ pages.
+  const base = p.startsWith("/attorneys/") ? "/attorneys" : "";
+  const cityLinks = cities.map(c => `<a href="${prefix}${langPath(lang, base + cityPath(c))}">${esc(c.name)}</a>`).join(" · ");
   const ext = u => u ? u + (u.includes("?") ? "&" : "?") + "utm_source=lander&utm_medium=footer" : "";
   return `<footer class="ftr">
   <div class="wrap">
@@ -294,6 +341,9 @@ function buildCity(city, lang) {
   page.callBtn = callBtn(s, "btn--big");
   page.formCard = formCard(s, page, "lead");
   page.rentalSection = rentalSection(s);
+  page.localProof = localProof(city, lang, s);
+  page.sayBox = sayBox(s);
+  page.ismaelImg = ismaelImg(lang);
   write(langPath(lang, p), render(T.lander, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "city", city: city.name, alt: alternates(p, city.defaultLang) });
 }
@@ -337,7 +387,7 @@ function buildHub(lang) {
     (c.isDefault ? " city-card--default" : "") + (c.defaultLang === "es" ? " city-card--es" : ""), ...[pair(cityPath(c), c.defaultLang === "es"), ""])).join("\n");
   page.variantBCards = cities.map(c => card(prefix + langPath(lang, `/attorneys/${c.slug}/`), c.isDefault ? esc(s.hub_default) : esc(c.name), esc(c["serve_" + lang]),
     (c.isDefault ? " city-card--default" : "") + (c.defaultLang === "es" ? " city-card--es" : ""), ...[pair(`/attorneys/${c.slug}/`, c.defaultLang === "es"), ""])).join("\n");
-  page.sitelinkCards = SITELINKS.map(e => card(prefix + langPath(lang, `/${e.slug}/`), esc(e[lang].h1), esc(e[lang].desc), " city-card--sitelink", ...[pair(`/${e.slug}/`, false), ""])).join("\n");
+  page.sitelinkCards = SITELINKS.map(e => card(prefix + langPath(lang, `/${e.slug}/`), esc(slMeta(e, lang).h1), esc(slMeta(e, lang).desc), " city-card--sitelink", ...[pair(`/${e.slug}/`, false), ""])).join("\n");
   write(langPath(lang, "/"), render(T.hub, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "hub", alt: alternates("/", "en") });
 }
@@ -379,6 +429,9 @@ function buildVariantB(city, lang) {
   page.formCardBottom = formCard(s, page, "lead-bottom");
   page.callBand = callBand(s, "red");
   page.rentalSection = rentalSection(s);
+  page.localProof = localProof(city, lang, s);
+  page.sayBox = sayBox(s);
+  page.ismaelImg = ismaelImg(lang);
   page.callBtn = callBtn(s, "btn--big");
   write(langPath(lang, p), render(T.variantB, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "variant-b", city: city.name, alt: alternates(p, city.defaultLang) });
@@ -388,7 +441,7 @@ function buildSitelink(entry, lang) {
   const la = cities.find(c => c.isDefault) || cities[cities.length - 1];
   const p = `/${entry.slug}/`;
   const { page, ctx } = baseCtx(lang, la, p, "en");
-  const meta = entry[lang];
+  const meta = slMeta(entry, lang);
   page.title = esc(meta.title);
   page.desc = esc(meta.desc);
   page.eyebrow = esc(meta.eyebrow);
@@ -399,7 +452,7 @@ function buildSitelink(entry, lang) {
   page.ctaH = esc(meta.cta_h);
   page.ctaP = esc(meta.cta_p);
   page.ctaBtn = esc(meta.cta_btn);
-  page.body = fs.readFileSync(path.join(SRC, "sitelinks", `${entry.slug}.${lang}.html`), "utf8").replace(/\{totalRecovered\}/g, site.totalRecovered || "").replace(/\{reviewCards\}/g, reviewCards()).replace(/\{reviewCount\}/g, site.reviewCount);
+  page.body = siteTokens(fs.readFileSync(path.join(SRC, "sitelinks", `${entry.slug}.${lang}.html`), "utf8").replace(/\{reviewCards\}/g, reviewCards()), lang);
   page.formCard = formCard(ctx, page, "lead");
   page.callBtn = callBtn(ctx, "btn--big", meta.cta_btn);
   page.callBtnMid = callBtn(ctx, "btn--big");
@@ -407,7 +460,7 @@ function buildSitelink(entry, lang) {
     `<div class="facerow facerow--cta"><img src="${prefix}/assets/img/team/kyle-hindin.webp" alt="Kyle Hindin" width="480" height="480" loading="lazy" decoding="async"><img src="${prefix}/assets/img/team/abigail-noriega.webp" alt="Abigail Noriega" width="480" height="480" loading="lazy" decoding="async"><img src="${prefix}/assets/img/team/ismael-noriega.webp" alt="Ismael Noriega" width="480" height="480" loading="lazy" decoding="async"></div>`;
   page.callBand = callBand(ctx, "red");
   page.related = SITELINKS.filter(o => o.slug !== entry.slug).map(o =>
-    `<li><a href="${prefix}${langPath(lang, `/${o.slug}/`)}">${esc(o[lang].h1)}</a></li>`).join("");
+    `<li><a href="${prefix}${langPath(lang, `/${o.slug}/`)}">${esc(slMeta(o, lang).h1)}</a></li>`).join("");
   page.jsonld = jsonld(la, ctx, page);
   write(langPath(lang, p), render(T.sitelink, ctx));
   built.push({ path: page.path, url: page.canonical, lang, kind: "sitelink", city: entry.slug, alt: alternates(p, "en") });
@@ -421,11 +474,17 @@ function copyDir(from, to) {
   }
 }
 
-/** Content-hash styles.css and lander.js and rewrite every reference.
- *  Without this the long /assets/ cache header serves stale CSS to returning visitors. */
+/** Inline styles.css into every page (it is small, and a render-blocking request is the main LCP cost on a
+ *  first paid visit), then content-hash lander.js and rewrite its references.
+ *  Without the hash the long /assets/ cache header serves stale JS to returning visitors. */
 function fingerprintAssets() {
+  const cssFile = path.join(OUT, "assets", "styles.css");
+  const css = fs.readFileSync(cssFile, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\n\s+/g, "\n").trim();
+  if (/<\/style/i.test(css)) throw new Error("styles.css must not contain </style");
+  fs.rmSync(cssFile);
+  const cssLink = `<link rel="stylesheet" href="${prefix}/assets/styles.css">`;
   const map = {};
-  for (const name of ["styles.css", "lander.js"]) {
+  for (const name of ["lander.js"]) {
     const file = path.join(OUT, "assets", name);
     const buf = fs.readFileSync(file);
     const hash = crypto.createHash("sha256").update(buf).digest("hex").slice(0, 8);
@@ -440,13 +499,14 @@ function fingerprintAssets() {
       if (ent.isDirectory()) walk(p);
       else if (ent.name.endsWith(".html")) {
         let html = fs.readFileSync(p, "utf8"), changed = false;
+        if (html.includes(cssLink)) { html = html.split(cssLink).join(`<style>${css}</style>`); changed = true; }
         for (const [from, to] of Object.entries(map)) if (html.includes(from)) { html = html.split(from).join(to); changed = true; }
         if (changed) fs.writeFileSync(p, html);
       }
     }
   };
   walk(OUT);
-  console.log("fingerprinted:", Object.values(map).map(v => v.replace("/assets/", "")).join(", "));
+  console.log(`inlined styles.css (${css.length} bytes); fingerprinted:`, Object.values(map).map(v => v.replace("/assets/", "")).join(", "));
 }
 
 function main() {

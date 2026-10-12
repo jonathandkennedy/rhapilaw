@@ -25,7 +25,7 @@
 
 <header class="hdr">
   <div class="wrap hdr__in">
-    <a class="logo" href="{{page.hubHref}}" aria-label="Robert Hindin &amp; Associates"><img src="{{site.pathPrefix}}/assets/logo-white.png" alt="Robert Hindin &amp; Associates" width="1101" height="180"></a>
+    <a class="logo" href="{{page.hubHref}}" aria-label="Robert Hindin &amp; Associates"><img src="{{site.pathPrefix}}/assets/logo-white-420.png" srcset="{{site.pathPrefix}}/assets/logo-white-210.png 1x, {{site.pathPrefix}}/assets/logo-white-420.png 2x" alt="Robert Hindin &amp; Associates" width="210" height="34"></a>
     <div class="hdr__right">
       <a class="btn btn--call hdr__callbtn" href="tel:{{site.phoneTel}}" data-track="phone_click"><span class="btn__ico" aria-hidden="true">&#9742;</span><span class="btn__lab">{{header_call_lab}}</span><span class="btn__num">{{site.phoneDisplay}}</span></a>
       <a class="hdr__formlink" href="#lead">{{header_cta}}</a>
@@ -44,7 +44,7 @@
       {{page.heroTagline}}
       <p class="lead"><span class="kw">{{hero_kw}}</span> {{b_hero_sub}}</p>
       <figure class="hero__photo">
-        <img src="{{site.pathPrefix}}/assets/img/hindin-team.webp" alt="{{hero_img_alt}}" width="1080" height="1080" loading="eager" fetchpriority="high">
+        <img src="{{site.pathPrefix}}/assets/img/hindin-team-640.webp" srcset="{{site.pathPrefix}}/assets/img/hindin-team-480.webp 480w, {{site.pathPrefix}}/assets/img/hindin-team-640.webp 640w, {{site.pathPrefix}}/assets/img/hindin-team.webp 1080w" sizes="(min-width: 760px) 330px, min(42vw, 220px)" alt="{{hero_img_alt}}" width="1080" height="1080" loading="eager" fetchpriority="high">
         <figcaption>{{hero_photo_cap}}</figcaption>
       </figure>
       <ul class="checks">
@@ -54,8 +54,9 @@
         <li>{{b_trust_4}}</li>
         {{page.trustMore}}
       </ul>
-      <p class="ismael" {{page.ismaelHidden}}>{{ismael}}</p>
+      <p class="ismael" {{page.ismaelHidden}}>{{page.ismaelImg}}<span>{{ismael}}</span></p>
       <div class="hero__cta">{{page.callBtn}}<a class="hero__formlink" href="#lead">{{sl_form_link}}</a></div>
+      {{page.sayBox}}
       <p class="cred"><strong>Kyle Hindin</strong> · {{hero_kyle_line}}</p>
     </div>
     <div class="hero__side">
@@ -76,6 +77,8 @@
   </div>
 </section>
 
+{{page.localProof}}
+
 {{page.extraSections}}
 
 {{page.rentalSection}}
@@ -90,6 +93,8 @@
       <div class="b-case"><h3>{{b_case_3_t}}</h3><p>{{b_case_3_b}}</p></div>
       <div class="b-case"><h3>{{b_case_4_t}}</h3><p>{{b_case_4_b}}</p></div>
       <div class="b-case"><h3>{{b_case_5_t}}</h3><p>{{b_case_5_b}}</p></div>
+      <div class="b-case"><h3>{{b_case_6_t}}</h3><p>{{b_case_6_b}}</p></div>
+      <div class="b-case"><h3>{{b_case_7_t}}</h3><p>{{b_case_7_b}}</p></div>
     </div>
   </div>
 </section>

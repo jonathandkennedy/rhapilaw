@@ -8,22 +8,43 @@
   var LANG = root.getAttribute("lang") || "en";
   var CITY = root.getAttribute("data-city") || "";
 
-  var KW_TOKEN = "";
+  var KW_TOKEN = "", KEYWORD = "", qs = null;
   try {
-    var qs = new URLSearchParams(location.search);
-    var raw = (qs.get("kw") || qs.get("utm_term") || "").toLowerCase().trim().replace(/[\s_]+/g, "-");
+    qs = new URLSearchParams(location.search);
+    var rawKw = qs.get("kw") || qs.get("utm_term") || "";
+    var raw = rawKw.toLowerCase().trim().replace(/[\s_]+/g, "-");
     if (Object.prototype.hasOwnProperty.call(KW, raw)) KW_TOKEN = raw;
+    // The search keyword as sent (?kw= or utm_term), cleaned, for reporting only. Never written into the page copy.
+    KEYWORD = rawKw.replace(/[<>"'`{}\\]/g, "").replace(/\s+/g, " ").trim().slice(0, 80);
   } catch (e) {}
   if (KW_TOKEN) {
     var kwEls = document.querySelectorAll(".kw");
     for (var q = 0; q < kwEls.length; q++) kwEls[q].textContent = KW[KW_TOKEN];
     root.setAttribute("data-kw", KW_TOKEN);
   }
+  if (KEYWORD) root.setAttribute("data-keyword", KEYWORD);
+
+  // Google click id, so intake can match a signed case to the ad click: the URL first, then the _gcl_aw cookie the
+  // Google tag sets (GCL.<timestamp>.<gclid>), then whatever an earlier page in this tab saw.
+  function store(k, v) { try { if (v == null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  function recall(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  var GCLID = "";
+  try {
+    GCLID = (qs && qs.get("gclid")) || "";
+    if (!GCLID) { var m = document.cookie.match(/(?:^|;\s*)_gcl_aw=([^;]+)/); if (m) GCLID = decodeURIComponent(m[1]).split(".").slice(2).join("."); }
+    if (!GCLID) GCLID = recall("rha_gclid") || "";
+    GCLID = GCLID.replace(/[^\w\-]/g, "").slice(0, 200);
+    if (GCLID) store("rha_gclid", GCLID);
+  } catch (e) {}
+
+  // Hide the sticky call bar while someone is typing, so it never sits on top of the submit button.
+  document.addEventListener("focusin", function (e) { if (e.target.closest && e.target.closest("form") && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) root.classList.add("kb-open"); });
+  document.addEventListener("focusout", function () { root.classList.remove("kb-open"); });
 
   function track(ev, data) {
     try {
       window.dataLayer = window.dataLayer || [];
-      var o = { event: ev, lang: LANG, city: CITY, kw: KW_TOKEN, variant: root.getAttribute("data-variant") || "a" };
+      var o = { event: ev, lang: LANG, language: LANG, city: CITY, kw: KW_TOKEN, keyword: KEYWORD, variant: root.getAttribute("data-variant") || "a" };
       if (data) for (var k in data) o[k] = data[k];
       if (typeof window.gtag === "function") { var params = {}; for (var pk in o) if (pk !== "event") params[pk] = o[pk]; window.gtag("event", ev, params); }
       window.dataLayer.push(o);
@@ -36,6 +57,15 @@
     var tel = e.target.closest && e.target.closest('a[href^="tel:"]');
     if (tel) track("phone_click", { href: tel.getAttribute("href") });
   });
+
+  // lead_submit fires here, on the thank-you URL, once per submitted lead: the form page leaves a pending marker and
+  // the thank-you page reports it, so the event can't be lost to the redirect and a reload can't count it twice.
+  var pending = null;
+  try { pending = JSON.parse(recall("rha_lead_pending") || "null"); } catch (e) {}
+  if (pending && document.querySelector("form.qual-form")) {
+    store("rha_lead_pending", null);
+    track("lead_submit", pending);
+  }
 
   // Thank-you page: optional qualifying questions, matched to the lead by phone.
   var qual = document.querySelector("form.qual-form");
@@ -73,6 +103,10 @@
   var srcIn = form.querySelector('input[name="source"]');
   var kwIn = form.querySelector('input[name="kw"]');
   if (kwIn) kwIn.value = KW_TOKEN;
+  var keywordIn = form.querySelector('input[name="keyword"]');
+  if (keywordIn) keywordIn.value = KEYWORD;
+  var gclidIn = form.querySelector('input[name="gclid"]');
+  if (gclidIn) gclidIn.value = GCLID;
 
   try {
     var src = {};
@@ -110,7 +144,7 @@
       city: form.querySelector('input[name="city"]').value,
       city_slug: form.querySelector('input[name="city_slug"]').value,
       practice: form.querySelector('input[name="practice"]').value,
-      page: location.href, source: srcIn ? srcIn.value : "", kw: KW_TOKEN,
+      page: location.href, source: srcIn ? srcIn.value : "", kw: KW_TOKEN, keyword: KEYWORD, gclid: GCLID,
       variant: (form.querySelector('input[name="variant"]') || {}).value || "a",
       submitted_at: new Date().toISOString(),
       tcpa: S.form_tcpa ? S.form_tcpa.replace(/<[^>]+>/g, "") : "",
@@ -122,8 +156,10 @@
     btn.disabled = true; btn.innerHTML = S.form_sending || "Sending…";
 
     function done() {
-      try { sessionStorage.setItem("rha_lead", JSON.stringify({ name: name, phone: digits, city: payload.city, city_slug: payload.city_slug, lang: LANG, kw: KW_TOKEN })); } catch (e) {}
-      track("lead_submit", { practice: payload.practice });
+      store("rha_lead", JSON.stringify({ name: name, phone: digits, city: payload.city, city_slug: payload.city_slug, lang: LANG, kw: KW_TOKEN }));
+      var ev = { practice: payload.practice, lang: LANG, language: LANG, city: payload.city, kw: KW_TOKEN, keyword: KEYWORD, variant: payload.variant, form_page: location.pathname };
+      // No session storage (private mode, blocked storage): report it from this page rather than not at all.
+      if (!store("rha_lead_pending", JSON.stringify(ev))) track("lead_submit", ev);
       location.href = thanks;
     }
     function fail() { btn.disabled = false; btn.innerHTML = label; showErr(S.form_err_send || "That didn't go through. Call (310) 564-7911."); track("lead_error"); }

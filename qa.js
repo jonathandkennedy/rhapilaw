@@ -13,6 +13,13 @@ const SITELINKS = JSON.parse(fs.readFileSync(path.join(__dirname, "src/sitelinks
 const BEN = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.en.json"), "utf8"));
 const BOVR = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.overrides.json"), "utf8"));
 const BES = JSON.parse(fs.readFileSync(path.join(__dirname, "src/strings/b.es.json"), "utf8"));
+const LP = JSON.parse(fs.readFileSync(path.join(__dirname, "src/localproof.json"), "utf8"));
+const TR = lang => site.totalRecovered[lang];
+const words = t => t.trim().split(/\s+/).filter(Boolean);
+/** Visible text of <main>, for the "first 150 words" keyword checks. */
+function mainText(html) { const m = html.match(/<main[^>]*>([\s\S]*?)<\/main>/); return strip(m ? m[1] : html).trim(); }
+function first150(html) { return words(mainText(html)).slice(0, 150).join(" "); }
+function section(html, cls) { const m = html.match(new RegExp(`<section class="${cls}">([\\s\\S]*?)</section>`)); return m ? m[1] : ""; }
 function headings(html) {
   return [...html.matchAll(/<(h[123])[^>]*>([\s\S]*?)<\/\1>/g)].map(m => m[1] + " " + m[2].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim());
 }
@@ -91,7 +98,10 @@ function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   ok(!/href="[^"]*[?&]lang=/.test(html), `${label}: internal link still uses ?lang=`);
   ok(html.includes(indexable ? 'content="index, follow"' : 'content="noindex, nofollow"'), `${label}: robots`);
   ok(html.includes(`href="${lang === "es" ? "/es" : ""}/privacy/"`) && html.includes(`href="${lang === "es" ? "/es" : ""}/terms/"`), `${label}: footer privacy/terms links`);
-  for (const c of cities) ok(html.includes(`href="${lang === "es" ? "/es" : ""}/${c.slug}/"`), `${label}: footer cross-link to ${c.name}`);
+  const set = logical.startsWith("/attorneys/") ? "/attorneys" : "";
+  for (const c of cities) ok(html.includes(`href="${lang === "es" ? "/es" : ""}${set}/${c.slug}/"`), `${label}: footer cross-link to ${c.name} (${set || "set A"})`);
+  const ftr = (html.match(/<p class="ftr__cities">[\s\S]*?<\/p>/) || [""])[0];
+  ok(set ? !/href="(\/es)?\/(?!attorneys\/)[a-z-]+\/"/.test(ftr) : !/\/attorneys\//.test(ftr), `${label}: footer city links must stay in the visitor's set`);
   ok(html.includes(`href="${lang === "es" ? "" : "/es"}${logical}"`), `${label}: footer/header link to other language`);
   ok(text.includes("11400 W Olympic Blvd, Suite 200"), `${label}: office address`);
   ok((text.match(/\(310\) 564-7911/g) || []).length >= 3, `${label}: phone`);
@@ -105,9 +115,15 @@ function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   ok((html.match(/href="tel:/g) || []).length >= 4, `${label}: fewer than 4 click-to-call links`);
   ok(!html.includes("lead-form") || html.indexOf('href="tel:') < html.indexOf('class="lead-form"'), `${label}: a call link must come before the first form`);
   // --- cache-busted assets (reported added on 25 Sep; actually added here) ---
-  ok(/href="\/assets\/styles\.[a-f0-9]{8}\.css"/.test(html), `${label}: stylesheet must be content-hashed (long cache header)`);
+  ok(/<style>[^<]{10000,}<\/style>/.test(html) && !/rel="stylesheet"/.test(html), `${label}: CSS must be inlined (no render-blocking stylesheet request)`);
+  ok(html.indexOf("<style>") < html.indexOf("gtag/js"), `${label}: inline CSS must come before third-party scripts`);
   ok(/src="\/assets\/lander\.[a-f0-9]{8}\.js"/.test(html), `${label}: script must be content-hashed`);
   ok(!/\/assets\/(styles\.css|lander\.js)"/.test(html), `${label}: unhashed asset reference`);
+  ok(html.includes('<link rel="preconnect" href="https://formspree.io" crossorigin>'), `${label}: Formspree preconnect`);
+  ok(html.includes('srcset="/assets/logo-white-210.png 1x, /assets/logo-white-420.png 2x"') && !/src="\/assets\/logo-white\.png"/.test(html), `${label}: header logo must be the resized PNG`);
+  for (const f of (html.match(/<form [^>]*class="lead-form"[\s\S]*?<\/form>/g) || []))
+    ok(f.includes('<input type="hidden" name="gclid" value="">') && f.includes('<input type="hidden" name="keyword" value="">'), `${label}: lead form needs gclid + keyword fields`);
+  if (lang === "es") ok(!/\$500 million\b/.test(text), `${label}: English "million" in Spanish copy`);
   // --- third-party script inventory: each loads at most once ---
   const cnt = re => (html.match(re) || []).length;
   ok(cnt(/googletagmanager\.com\/gtm\.js/g) === 0, `${label}: GTM must not load on the landers`);
@@ -116,6 +132,7 @@ function common(label, html, lang, logical, xDefaultLang, indexable, allow24) {
   for (const id of site.blockedTagIds) ok(!html.includes(id), `${label}: blocked main-site tag ${id} is on the page`);
   ok(!/belvionetta|clickcease/i.test(html), `${label}: ClickCease was removed and must not return`);
   ok((html.match(/clarity\.ms\/tag\//g) || []).length === 1 && html.includes(`"${site.clarityId}"`), `${label}: Microsoft Clarity must load exactly once`);
+  ok(site.claritySampleRate > 0 && site.claritySampleRate <= 0.2 && html.includes(`Math.random()<${site.claritySampleRate}?"1":"0"`) && html.includes('if(v!=="1")return;'), `${label}: Clarity must be sampled at <= 20% of sessions`);
   ok((html.match(/<form /g) || []).length === (html.match(/<form [^>]*data-clarity-mask="True"/g) || []).length, `${label}: every form must be masked from Clarity recordings`);
   ok(html.includes("navigator.globalPrivacyControl"), `${label}: Global Privacy Control must switch off ad personalization`);
   ok(cnt(/calltrk\.com\/companies/g) <= 1, `${label}: CallRail loaded more than once`);
@@ -137,6 +154,12 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   ok(!/130\+/.test(text), `${label}: stale 130+ review count`);
   ok(html.includes('id="faq-5"') && !/<details/.test(html), `${label}: FAQ not an accordion`);
   ok(html.includes(`<h2>${(lang === "es" ? ES : EN).rental_h2}</h2>`) && html.includes('class="rental"'), `${label}: rental car H2`);
+  const h1A = lang === "es" ? `Abogado de Accidentes de Auto en ${c.name}` : `${c.name} Car Accident Lawyer`;
+  ok(html.includes(`<h1 class="h1-kw">${h1A}</h1>`) && (html.match(/<h1/g) || []).length === 1, `${label}: H1 must be the keyword "${h1A}"`);
+  ok(/<p class="lead-h2">[^<]+<br>/.test(html), `${label}: the emotional line moves to p.lead-h2`);
+  ok(html.indexOf('class="localproof"') > html.indexOf('class="local"') && html.indexOf('class="localproof"') < html.indexOf('class="rental"'), `${label}: local proof between the local strip and the rental section`);
+  ok(/<div class="hero__cta">[\s\S]*?<\/div>\s*<div class="say">/.test(html), `${label}: what-to-say box beside the hero call button`);
+  ok(/srcset="\/assets\/img\/hindin-team-480\.webp 480w, \/assets\/img\/hindin-team-640\.webp 640w, \/assets\/img\/hindin-team\.webp 1080w"/.test(html), `${label}: hero image srcset`);
   for (const n of ["Julio Barberena", "Rob Cruize", "Chelsea Israelsky"]) ok(text.includes(n), `${label}: review ${n}`);
   ok(html.includes('window.__RHA_KW=') && html.includes('<input type="hidden" name="kw" value="">') && html.includes('class="kw"'), `${label}: keyword swap wired`);
   ok((html.match(/class="callband/g) || []).length >= 2, `${label}: needs at least two mid-page call bands`);
@@ -161,14 +184,14 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   const html = read((lang === "es" ? "/es" : "") + logical);
   const B = lang === "es" ? BES : BEN;
   common(label, html, lang, logical, c.defaultLang, true, true);
-  const sub = v => v.replace(/\{City\}/g, c.name).replace(/\{totalRecovered\}/g, site.totalRecovered).replace(/&amp;/g, "&");
+  const sub = v => v.replace(/\{City\}/g, c.name).replace(/\{totalRecovered\}/g, TR(lang)).replace(/&amp;/g, "&");
   const O = (BOVR[c.slug] || {})[lang] || {};
-  const extra = [...(O.b_sections || []).map(s => "h2 " + s.h), "h2 " + (lang === "es" ? ES : EN).rental_h2];
+  const extra = ["h2 " + sub((lang === "es" ? ES : EN).lp_h2), ...(O.b_sections || []).map(s => "h2 " + s.h), "h2 " + (lang === "es" ? ES : EN).rental_h2];
   const want = [
     "h1 " + sub(O.b_h1 || B.b_h1),
     ...extra,
     "h2 " + sub(B.b_h2_cases),
-    "h3 " + sub(B.b_case_1_t), "h3 " + sub(B.b_case_2_t), "h3 " + sub(B.b_case_3_t), "h3 " + sub(B.b_case_4_t), "h3 " + sub(B.b_case_5_t),
+    "h3 " + sub(B.b_case_1_t), "h3 " + sub(B.b_case_2_t), "h3 " + sub(B.b_case_3_t), "h3 " + sub(B.b_case_4_t), "h3 " + sub(B.b_case_5_t), "h3 " + sub(B.b_case_6_t), "h3 " + sub(B.b_case_7_t),
     "h2 " + sub(B.b_h2_24h),
     "h2 " + sub(B.b_h2_why),
     "h3 " + sub(B.b_why_1_t), "h3 " + sub(B.b_why_2_t), "h3 " + sub(B.b_why_3_t), "h3 " + sub(B.b_why_4_t), "h3 " + sub(B.b_why_5_t),
@@ -198,10 +221,56 @@ for (const c of cities) for (const lang of ["en", "es"]) {
   ok(html.includes(`data-thankyou="${lang === "es" ? "/es" : ""}/attorneys/thank-you/"`), `${label}: variant B thank-you`);
   ok(html.includes('<input type="hidden" name="variant" value="b">'), `${label}: variant flag on the lead`);
   ok(html.includes('data-variant="b"'), `${label}: variant attribute for analytics`);
-  ok(html.includes(site.totalRecovered), `${label}: recovered total`);
+  ok(html.includes(TR(lang)), `${label}: recovered total`);
+  // --- Quality Score spec, 12 Oct 2026 (§2.1, §3, §4, §7) ---
+  const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
+  const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
+  const h1 = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1] || "";
+  const wantH1 = lang === "es" ? `Abogado de Accidentes de Auto en ${c.name}` : `${c.name} Car Accident Lawyers &amp; Attorneys`;
+  ok(h1 === wantH1, `${label}: H1 must be "${wantH1}" — got "${h1}"`);
+  const wantTitle = lang === "es" ? `Abogado de Accidentes de Auto en ${c.name} | Consulta Gratis 24/7 | Robert Hindin &amp; Associates`
+    : c.slug === "huntington-park" ? `${c.name} Car Accident Lawyer | Robert Hindin &amp; Associates` : `${c.name} Car Accident Lawyer | Free 24/7 Case Review | Robert Hindin &amp; Associates`;
+  ok(title === wantTitle, `${label}: title must be "${wantTitle}" — got "${title}"`);
+  ok(desc.startsWith(lang === "es" ? `Abogado de accidentes de auto en ${c.name}. No paga si no ganamos` : `${c.name} car accident lawyer. No fee unless we win`) && desc.includes(TR(lang)) && !/\(310\)/.test(desc), `${label}: meta description leads with the keyword and the offer, no phone`);
+  const low = strip(html).toLowerCase();
+  ok(lang === "es" ? low.includes("choque y fuga") : low.includes("hit and run"), `${label}: hit and run phrase`);
+  ok(lang === "es" ? /cami[oó]n/.test(low) && /\bmoto\b/.test(low) && low.includes("bicicleta") && low.includes("peat") : low.includes("truck") && low.includes("motorcycle") && low.includes("pedestrian") && low.includes("bicycle"), `${label}: truck, motorcycle, pedestrian and bicycle coverage`);
+  // §7 keyword matrix: the ad group's core words in the title, the H1 and the first 150 words of body copy.
+  const f150 = first150(html).toLowerCase(), t = title.toLowerCase(), hh = h1.replace(/&amp;/g, "&").toLowerCase(), cn = c.name.toLowerCase();
+  if (lang === "en") {
+    ok(t.includes(`${cn} car accident lawyer`) && hh.includes(`${cn} car accident lawyers`) && hh.includes("attorneys"), `${label}: matrix — "${c.name} car accident lawyer" in title and H1`);
+    for (const k of [`${cn} car accident lawyer`, "car accident attorney", "auto accident", "personal injury lawyer"]) ok(f150.includes(k), `${label}: matrix — "${k}" in the first 150 words`);
+    if (c.slug === "los-angeles") for (const k of ["truck", "motorcycle", "pedestrian", "hit and run", "uber/lyft"]) ok(f150.includes(k), `${label}: matrix (core) — "${k}" in the first 150 words`);
+  } else {
+    ok(t.includes(`abogado de accidentes de auto en ${cn}`) && hh.includes(`abogado de accidentes de auto en ${cn}`), `${label}: matrix — keyword in title and H1`);
+    for (const k of [`abogado de accidentes en ${cn}`, "abogado de choque", `abogados de accidentes`]) ok(f150.includes(k), `${label}: matrix — "${k}" in the first 150 words`);
+    if (c.slug === "los-angeles") for (const k of ["abogado de accidente de carro", "los ángeles", "uber", "camión", "moto"]) ok(f150.includes(k), `${label}: matrix (core) — "${k}" in the first 150 words`);
+  }
   ok((html.match(/class="callband/g) || []).length >= 2, `${label}: needs at least two mid-page call bands`);
   ok(html.includes('class="hero__cta"'), `${label}: hero call CTA`);
   ok(!/\bTravis\b|\bAustin\b|\bTexas\b|, TX\b/.test(strip(html)), `${label}: Texas copy leaked in`);
+}
+
+console.log("Local proof (§3)");
+{
+  const seen = new Map();
+  for (const c of cities) for (const lang of ["en", "es"]) for (const set of ["", "/attorneys"]) {
+    const label = (lang === "es" ? "/es" : "") + set + `/${c.slug}/`;
+    const html = read(label);
+    const sec = section(html, "localproof"), d = (LP[c.slug] || {})[lang];
+    ok(!!sec && !!d, `${label}: local-proof section`);
+    if (!sec || !d) continue;
+    const txt = strip(sec).trim(), n = words(txt).length;
+    const max = d.extra ? 260 : 180;
+    ok(n >= 120 && n <= max, `${label}: local proof should be 120–${max} words — ${n}`);
+    ok((sec.match(/<li>/g) || []).length >= 4 && (sec.match(/<strong>/g) || []).length >= 4, `${label}: hotspots, report, ERs, why it matters`);
+    ok(html.indexOf('class="localproof"') > html.indexOf('class="stats"') && html.indexOf('class="localproof"') < html.indexOf('class="rental"'), `${label}: local proof sits under the stats bar and above the rental section`);
+    ok(txt.includes(c.name) || c.slug === "los-angeles", `${label}: local proof names the city`);
+    const key = lang + "|" + d.hot;
+    ok(!seen.has(key) || seen.get(key) === c.slug, `${label}: hotspots duplicated from ${seen.get(key)}`);
+    seen.set(key, c.slug);
+    ok(!/Beverly Hospital|Antelope Valley Hospital\b|47th St/.test(txt), `${label}: outdated place name`);
+  }
 }
 
 console.log("Sitelink pages");
@@ -217,7 +286,11 @@ for (const e of SITELINKS) for (const lang of ["en", "es"]) {
   ok(html.indexOf('class="sl__side"') < html.indexOf('class="sl__body"'), `${label}: form must precede the article in DOM order (mobile)`);
   ok(html.includes('class="callband'), `${label}: closing call band`);
   ok(strip(html).length > 2500, `${label}: body too thin`);
-  ok(!/\{totalRecovered\}/.test(html), `${label}: unsubstituted token`);
+  ok(!/\{totalRecovered\}|\{reviewCount\}/.test(html), `${label}: unsubstituted token`);
+  {
+    const lead = ((html.match(/<p class="lead">([\s\S]*?)<\/p>/) || [])[1] || "") + " " + ((html.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1] || "");
+    ok(lang === "es" ? /abogados? de accidentes de auto/i.test(lead) : /car accident lawyers?/i.test(lead), `${label}: "car accident lawyer" in the H1 or first paragraph (§2.3)`);
+  }
 }
 {
   const STAFF = ["Robert Hindin", "Kyle Hindin", "Abigail Noriega", "Ismael Noriega", "Felix Trauernicht", "Jesimiel Trauernicht"];
@@ -259,6 +332,8 @@ for (const lang of ["en", "es"]) {
   ok(/class="qual-form"/.test(ty) && ty.includes(`<input type="hidden" name="lang" value="${lang}">`), `${pre}/thank-you/: qualifying form`);
   ok(/href="https:\/\/www\.rhapilaw\.com\?utm_source=lander[^"]*" target="_blank" rel="noopener"/.test(ty), `${pre}/thank-you/: corporate link`);
   ok(ty.includes('href="/assets/rha.vcf"') && fs.existsSync(path.join(DIST, "assets/rha.vcf")), `${pre}/thank-you/: vCard`);
+  ok(/<p class="ty__urgent">[^<]*<a href="tel:\+13105647911"[^>]*>\(310\) 564-7911<\/a>/.test(ty), `${pre}/thank-you/: urgent call line with the number`);
+  ok(!/already dialing/i.test(ty), `${pre}/thank-you/: no "already dialing" claim (intake can't promise it)`);
   for (const kind of ["privacy", "terms"]) {
     const html = read(`${pre}/${kind}/`), text = strip(html);
     common(`${pre}/${kind}/`, html, lang, `/${kind}/`, "en", true, true);
@@ -279,6 +354,28 @@ for (const lang of ["en", "es"]) {
   ok(!/\?lang=/.test(sm), "sitemap: no query variants");
   const v = JSON.parse(fs.readFileSync(path.join(__dirname, "vercel.json"), "utf8"));
   ok(Array.isArray(v.redirects) && v.redirects.length === 2, "vercel.json: ?lang redirects");
+}
+
+console.log("Measurement and single-source facts");
+{
+  const js = fs.readFileSync(path.join(DIST, "assets", fs.readdirSync(path.join(DIST, "assets")).find(f => /^lander\.[a-f0-9]{8}\.js$/.test(f))), "utf8");
+  ok(/track\("lead_submit", pending\)/.test(js) && js.includes('querySelector("form.qual-form")'), "lander.js: lead_submit fires on the thank-you page");
+  ok(js.includes('if (!store("rha_lead_pending", JSON.stringify(ev))) track("lead_submit", ev);') && (js.match(/track\("lead_submit"/g) || []).length === 2, "lander.js: lead_submit fires on the form page only when storage is unavailable");
+  ok(js.includes("_gcl_aw") && js.includes('qs.get("gclid")') && js.includes('"rha_gclid"'), "lander.js: gclid from URL, then _gcl_aw cookie, then session");
+  ok(js.includes("keyword: KEYWORD") && js.includes('setAttribute("data-keyword"') && js.includes("language: LANG"), "lander.js: keyword + language on every event and the lead");
+  ok(js.includes('classList.add("kb-open")'), "lander.js: sticky bar hides while typing");
+  ok(!fs.existsSync(path.join(DIST, "assets", "styles.css")), "styles.css is inlined, not shipped");
+  for (const f of ["img/hindin-team-480.webp", "img/hindin-team-640.webp", "logo-white-210.png", "logo-white-420.png", "img/team/ismael-noriega-96.webp"]) ok(fs.existsSync(path.join(DIST, "assets", f)), `asset ${f}`);
+  ok(typeof site.totalRecovered === "object" && site.totalRecovered.es.includes("millones") && !site.totalRecovered.es.includes("million "), "site.totalRecovered must be per language");
+  // The review count lives in site.json only, so it can be bumped once a month without a find-and-replace.
+  for (const f of ["strings/en.json", "strings/es.json", "strings/b.en.json", "strings/b.es.json", "strings/b.overrides.json", "sitelinks.json"])
+    ok(!/\b144\b/.test(fs.readFileSync(path.join(__dirname, "src", f), "utf8")), `src/${f}: hard-coded review count (use {reviewCount})`);
+  for (const p of ["/compton/", "/es/compton/", "/attorneys/compton/", "/es/attorneys/compton/"]) {
+    const html = read(p);
+    ok(html.includes(`${site.reviewCount} `) && html.includes('class="chip__link"') && html.includes(`href="${site.googleReviewsUrl}"`), `${p}: "Read all reviews" link beside the 5.0 chip`);
+    if (p.startsWith("/es/")) ok(/<p class="ismael" ><img class="ismael__img" src="\/assets\/img\/team\/ismael-noriega-96\.webp"/.test(html), `${p}: Ismael's face on the Spanish hero`);
+    ok(/<div class="say"><p class="say__h">[^<]+<\/p><ul>(<li>[^<]+<\/li>){3}<\/ul>/.test(html), `${p}: what-to-say box`);
+  }
 }
 
 {

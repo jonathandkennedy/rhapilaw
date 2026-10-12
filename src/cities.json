@@ -35,9 +35,9 @@
     "defaultLang": "en",
     "spanishAds": true,
     "serve_en": "Serving Pomona and the 10 / 57 / 60 / 210 freeways.",
-    "local_en": "Pomona is the east end of the county. Same insurers, same delay. Real office in West LA.",
+    "local_en": "Three freeways meet at the 10/57/71 interchange, and the cameras that watch it overwrite in days.",
     "serve_es": "Sirviendo Pomona y las freeways 10 / 57 / 60 / 210.",
-    "local_es": "Pomona es el este del condado. Misma aseguradora, mismo retraso. Oficina real en West LA."
+    "local_es": "Tres freeways se juntan en la 10/57/71, y las cámaras que la vigilan se borran en días."
   },
   {
     "slug": "palmdale",
@@ -65,9 +65,9 @@
     "defaultLang": "en",
     "spanishAds": true,
     "serve_en": "Serving Downey and the 5 / 605 / 105.",
-    "local_en": "We're the West LA firm that actually takes Downey crashes.",
+    "local_en": "The store cameras along Firestone Boulevard point at the street, and most of them overwrite within the week.",
     "serve_es": "Sirviendo Downey y las 5 / 605 / 105.",
-    "local_es": "Somos la firma de West LA que sí toma los choques de Downey."
+    "local_es": "Las cámaras de las tiendas en Firestone Boulevard apuntan a la calle, y la mayoría se borra en una semana."
   },
   {
     "slug": "inglewood",
@@ -75,9 +75,9 @@
     "defaultLang": "en",
     "spanishAds": false,
     "serve_en": "Serving Inglewood, Century and the 405.",
-    "local_en": "Stadium and airport traffic. Same insurance playbook.",
+    "local_en": "Event-day traffic around SoFi and the Forum means more cameras — and more footage that gets overwritten within the week.",
     "serve_es": "Sirviendo Inglewood, Century y la 405.",
-    "local_es": "Tráfico del estadio y del aeropuerto. Mismo manual de la aseguradora."
+    "local_es": "El tráfico de los días de evento en SoFi y el Forum significa más cámaras — y más video que se borra en una semana."
   },
   {
     "slug": "paramount",
@@ -85,9 +85,9 @@
     "defaultLang": "en",
     "spanishAds": true,
     "serve_en": "Serving Paramount, 105 / 710.",
-    "local_en": "Small city, same insurers, same stall tactic.",
+    "local_en": "Alondra and Rosecrans carry truck traffic off the 710, and a truck company’s investigators move within hours.",
     "serve_es": "Sirviendo Paramount, 105 / 710.",
-    "local_es": "Ciudad chica, mismas aseguradoras, misma táctica de alargar."
+    "local_es": "Alondra y Rosecrans llevan camiones que salen de la 710, y los investigadores de la compañía del camión se mueven en horas."
   },
   {
     "slug": "baldwin-park",
@@ -105,9 +105,9 @@
     "defaultLang": "en",
     "spanishAds": true,
     "serve_en": "Serving Bellflower, 91 / 605.",
-    "local_en": "We take the insurance company's calls so you can go to therapy.",
+    "local_en": "Bellflower Boulevard and Artesia carry commuters between the 91 and the 605, and the corner cameras overwrite in days.",
     "serve_es": "Sirviendo Bellflower, 91 / 605.",
-    "local_es": "Nosotros tomamos las llamadas de la aseguradora para que usted vaya a terapia."
+    "local_es": "Bellflower Boulevard y Artesia llevan el tráfico entre la 91 y la 605, y las cámaras de las esquinas se borran en días."
   },
   {
     "slug": "lynwood",
@@ -135,9 +135,9 @@
     "defaultLang": "en",
     "spanishAds": true,
     "serve_en": "Serving Pico Rivera, 605 / Whittier / Washington.",
-    "local_en": "Same insurers as downtown. Different zip. Same fight.",
+    "local_en": "Whittier Boulevard meets the 605 at a busy merge, and the cameras along it overwrite in days.",
     "serve_es": "Sirviendo Pico Rivera, 605 / Whittier / Washington.",
-    "local_es": "Mismas aseguradoras que en el centro. Distinto zip. Misma pelea."
+    "local_es": "Whittier Boulevard se junta con la 605 en una entrada muy transitada, y las cámaras ahí se borran en días."
   },
   {
     "slug": "los-angeles",
