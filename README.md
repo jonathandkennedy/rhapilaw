@@ -127,7 +127,9 @@ Re-run on the live URLs with PageSpeed Insights after deploy; the target is LCP 
 
 `styles.css` (about 26 KB, 6 KB gzipped) is **inlined into every page** at build time, so the first paint no longer waits on a stylesheet request. `lander.js` is still a file and is **content-hashed** (`lander.9b35f98d.js`) because `/assets/` carries a seven-day cache header. `qa.js` fails the build if a page links a stylesheet or an unhashed script.
 
-The hero photo ships at 480, 640 and 1080 px with `srcset`/`sizes` (it displays at 220–330 px, so phones get the 480), the header logo is a 210/420 px PNG pair instead of the 1101 px original, and every page preconnects to googletagmanager.com, cdn.calltrk.com and formspree.io. Fonts are system fonts, so there is nothing to self-host.
+The hero photo ships at 480, 640 and 1080 px with `srcset`/`sizes` (it displays at 220–330 px, so phones get the 480), the header logo is a 210/420 px PNG pair instead of the 1101 px original, and every page preconnects to googletagmanager.com, cdn.calltrk.com and formspree.io. Fonts are system fonts, so there is nothing to self-host. Only the six strings `lander.js` actually reads (form errors, "Sending…", the TCPA text) are inlined as `window.__RHA_S`; it used to be the whole strings file, about 27 KB per page. `/es/attorneys/huntington-park/` on 14 Oct: LCP 1.6 s, page 59 KB before gzip.
+
+Google Ads changes that go with the landers are in `ads/<date>/` (Ads Editor import files plus a checklist).
 
 ## Photos
 

@@ -40,6 +40,7 @@ const T = {
 const YEAR = String(new Date().getFullYear());
 const prefix = (site.pathPrefix || "").replace(/\/$/, "");
 const LANGS = ["en", "es"];
+const RUNTIME_STRINGS = ["form_err_name", "form_err_phone", "form_err_send", "form_sending", "form_tcpa", "ty_q_err"];
 
 // ---------- helpers ----------
 function esc(v) { return String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
@@ -288,7 +289,8 @@ function baseCtx(lang, city, p, xDefaultLang, resolver) {
     toggleLang: other,
     robots: site.index ? "index, follow" : "noindex, nofollow",
     footer: footer(lang, s, p),
-    strJson: jsonForScript(s),
+    // lander.js needs only these strings; inlining the whole file put ~27 KB of unused JSON on every page.
+    strJson: jsonForScript(Object.fromEntries(RUNTIME_STRINGS.filter(k => s[k] != null).map(k => [k, s[k]]))),
     kwJson: jsonForScript(Object.fromEntries(Object.entries(KW).map(([k, v]) => [k, v[lang]]))),
     thankYouUrl: prefix + langPath(lang, site.thankYouPath),
     formAction: site.formEndpoint || (prefix + langPath(lang, site.thankYouPath)),

@@ -366,6 +366,13 @@ console.log("Measurement and single-source facts");
   ok(js.includes("_gcl_aw") && js.includes('qs.get("gclid")') && js.includes('"rha_gclid"'), "lander.js: gclid from URL, then _gcl_aw cookie, then session");
   ok(js.includes("keyword: KEYWORD") && js.includes('setAttribute("data-keyword"') && js.includes("language: LANG"), "lander.js: keyword + language on every event and the lead");
   ok(js.includes('classList.add("kb-open")'), "lander.js: sticky bar hides while typing");
+  // Every S.<key> lander.js reads must be inlined, and nothing else (the whole strings file was 27 KB per page).
+  const used = [...new Set((js.match(/\bS\.([a-z0-9_]+)/g) || []).map(x => x.slice(2)))].sort();
+  for (const p of ["/compton/", "/es/attorneys/huntington-park/", "/thank-you/", "/es/reviews/"]) {
+    const S = JSON.parse(read(p).match(/window\.__RHA_S=(\{[\s\S]*?\});window\.__RHA_KW=/)[1]);
+    ok(JSON.stringify(Object.keys(S).sort()) === JSON.stringify(used), `${p}: inline strings must be exactly what lander.js reads (${used.join(",")}) — got ${Object.keys(S).length} keys`);
+  }
+  for (const lang of ["en", "es"]) ok(/<title>Kyle Hindin (&amp;|y) Robert Hindin \|/.test(read((lang === "es" ? "/es" : "") + "/our-team/")), `our-team ${lang}: attorney names lead the title (Attorney Names ad group)`);
   ok(!fs.existsSync(path.join(DIST, "assets", "styles.css")), "styles.css is inlined, not shipped");
   for (const f of ["img/hindin-team-480.webp", "img/hindin-team-640.webp", "logo-white-210.png", "logo-white-420.png", "img/team/ismael-noriega-96.webp"]) ok(fs.existsSync(path.join(DIST, "assets", f)), `asset ${f}`);
   ok(typeof site.totalRecovered === "object" && site.totalRecovered.es.includes("millones") && !site.totalRecovered.es.includes("million "), "site.totalRecovered must be per language");
